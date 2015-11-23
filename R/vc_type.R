@@ -21,7 +21,7 @@ vc_type <- function(x, type, colnames = "the column"  ){
 			   "cip" = vc_cipcode(x, colnames = colnames  ),
 			   "email" = vc_email(x, colnames = colnames  ),
 			   "integer" = vc_integer(x, colnames = colnames  ),
-			   "zip" = vc_zip(x, colnames = colnames  ),
+			   "zip" = vc_zipcode(x, colnames = colnames  ),
 			   "logical" = vc_categories(x, levels = c("true", "false"), colnames = colnames ),
 			   "enumerated" = return(NULL),
                # "enumerated" = TRUE,
