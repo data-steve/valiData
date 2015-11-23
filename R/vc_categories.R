@@ -1,0 +1,27 @@
+#' Validates and Reports If Correct Categories Used
+#'
+#' Validates and Reports If Correct Categories Used
+#'
+#' @param x character vector
+#' @param levels levels of the category
+#' @param colnames vector's colname
+#' @export
+vc_categories <- function(x, levels = "the levels", colnames = "the column"  ){
+
+	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
+
+	is_category <- tolower(x) %in% tolower(levels)
+	are_categories <- all(is_category|is.na(x))
+
+	if (!are_categories ){
+		message <- sprintf(
+			"The following rows of %s are not accepted categories:\n\n%s\n\n\n\n",
+			sQuote(colnames)
+			, paste(which(!is_category )
+					,collapse=", "))
+		cat(message)
+
+	}
+
+	return(are_categories )
+}

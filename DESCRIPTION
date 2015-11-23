@@ -1,0 +1,15 @@
+Package: valiData
+Title: What the Package Does (one line)
+Version: 0.0.1
+Authors@R: c(person("Steven", "Simpson", email =
+        "steven.troy.simpson@gmail.com", role = c("aut", "cre")),
+        person("Tyler", "Rinker", email = "tyler.rinker@gmail.com",
+        role = c("aut")))
+Maintainer: Steven Simpson <steven.troy.simpson@gmail.com>
+Description: What the package does (one paragraph)
+Depends: R (>= 3.2.2)
+Imports: parsedate, stringi, magrittr
+Date: 2015-11-23
+License: GPL-2
+LazyData: TRUE
+Roxygen: list(wrap = FALSE)
