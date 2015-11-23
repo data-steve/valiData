@@ -1,12 +1,12 @@
 Package: valiData
-Title: What the Package Does (one line)
+Title: Data Validation
 Version: 0.0.1
 Authors@R: c(person("Steven", "Simpson", email =
         "steven.troy.simpson@gmail.com", role = c("aut", "cre")),
         person("Tyler", "Rinker", email = "tyler.rinker@gmail.com",
         role = c("aut")))
 Maintainer: Steven Simpson <steven.troy.simpson@gmail.com>
-Description: What the package does (one paragraph)
+Description: Validates data imports against a mapping of data conditions.
 Depends: R (>= 3.2.2)
 Imports: parsedate, stringi, magrittr
 Date: 2015-11-23

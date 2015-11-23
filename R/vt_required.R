@@ -112,23 +112,24 @@ required_report <- function(ls, ...) {
 
 }
 
-
-required_report_df <- function(x, ...){
-	x <- x[["df"]]
-
-	Map(function(y, z){
-		mess <- missing_helper_ls(y)
-		if (is.null(mess)) {
-			message <- sprintf(mess, z, z)
-			class(message) <- c("invalid_report", "character")
-			message
-		}  else {
-			message <- ""
-			class(message) <- c("valid_report", "character")
-			message
-		} } , x, names(x))
-
-}
+## NOT currently used...
+## may be used in future iterations
+# required_report_df <- function(x, ...){
+# 	x <- x[["df"]]
+#
+# 	Map(function(y, z){
+# 		mess <- missing_helper_ls(y)
+# 		if (is.null(mess)) {
+# 			message <- sprintf(mess, z, z)
+# 			class(message) <- c("invalid_report", "character")
+# 			message
+# 		}  else {
+# 			message <- ""
+# 			class(message) <- c("valid_report", "character")
+# 			message
+# 		} } , x, names(x))
+#
+# }
 
 
 missing_helper_df <- function(x, ...){

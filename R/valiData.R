@@ -18,6 +18,7 @@
 #' valiData("C:/Users/trinker/Desktop/myfolder", mymap)
 #' }
 valiData <- function(path, core_data_map, column_map, delete = TRUE) {
+    . <- NULL
 	if (delete) {
 		delete_old_reports(path)
 	}

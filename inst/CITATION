@@ -2,15 +2,15 @@ citHeader("To cite valiData in publications, please use:")
 
 
 citEntry(entry = "manual",
-    title = "{valiData}: A ...",
-    author = "Tyler W. Rinker",
-    organization = "University at Buffalo/SUNY",
+    title = "{valiData}: Data Validation",
+    author = "Steven Simpson and Tyler W. Rinker",
+    organization = "Capus Labs",
     address = "Buffalo, New York",
-    note = "version 0.1.0",
+    note = "version 0.0.1",
     year = "2015",
-    url = "http://github.com/trinker/valiData", 
-    textVersion  = paste("Rinker, T. W. (2015).",
-        "valiData: ...",
-        "version 0.1.0. University at Buffalo. Buffalo, New York.",
-        "http://github.com/trinker/valiData")
+    url = "http://github.com/steventsimpson/valiData",
+    textVersion  = paste("Simpson, S. & Rinker, T. W. (2015).",
+        "valiData: Data validation.",
+        "version 0.0.1. Campus Labs. Buffalo, New York.",
+        "http://github.com/steventsimpson/valiData")
 )

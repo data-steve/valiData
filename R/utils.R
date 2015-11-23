@@ -26,6 +26,7 @@ print.report_print_arbitrary <- function(x, ...){
 
 
 get_paths_to_csvs <- function(path){
+    . <- NULL
 	invisible(lapply(dir(path, pattern = ".csv$",recursive = TRUE), function(x) file.path(path,x))) %>%
 		sapply(., "[[",1) %>%
 		sapply(.,function(x) gsub("//","/", x), USE.NAMES = FALSE) %>%
@@ -35,6 +36,7 @@ get_paths_to_csvs <- function(path){
 # report on which folders had no csv files to report on
 
 get_paths_root_to_files <- function(path) {
+    . <- NULL
 	list.dirs(list.dirs(path, recursive=FALSE), recursive=FALSE) %>%
 		sapply(.,function(x) gsub("//","/", x), USE.NAMES = FALSE)
 }
@@ -48,6 +50,7 @@ find_lowest_folder <- function(path){
 }
 
 delete_old_reports <- function(path){
+    . <- NULL
 	previous_reports_folders <- file.path(path,
 										  dir(path, recursive=TRUE)[
 										  	grepl(pattern="`Reports", dir(path, recursive=TRUE))
@@ -63,6 +66,7 @@ delete_old_reports <- function(path){
 }
 
 find_highest_parent_folder <- function(path) {
+    . <- NULL
 	sapply(get_paths_root_to_files(path), function(x) {
 		strsplit(x, "/")[[1]]
 	}, USE.NAMES = FALSE) %>%
