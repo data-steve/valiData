@@ -9,6 +9,7 @@
 #' @export
 
 vf_empty_subfolders <- function(all_subpaths, csv_subpaths){
+	. <- NULL
 	
 	empties <- setdiff(all_subpaths
 					   , sapply(csv_subpaths , function(x) {paste(strsplit(x, "/")[[1]] %>%

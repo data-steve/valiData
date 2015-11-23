@@ -17,7 +17,7 @@ vc_type <- function(x, type, colnames = "the column"  ){
                # "guid" = TRUE,
 			   "credit" = vc_credits(x, colnames = colnames  ),
 			   "datetime" = vc_iso_datetime(x, colnames = colnames  ),
-			   "date_utc" = vc_date_utc(x, colnames = colnames  ),
+			   "date_utc" = vc_utc_date(x, colnames = colnames  ),
 			   "cip" = vc_cipcode(x, colnames = colnames  ),
 			   "email" = vc_email(x, colnames = colnames  ),
 			   "integer" = vc_integer(x, colnames = colnames  ),

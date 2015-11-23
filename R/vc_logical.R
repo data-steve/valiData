@@ -11,16 +11,16 @@ vc_logicial <- function(x, colnames = "the column") {
 	
 	
 	is_logical <- x %in% c("true", "false", "TRUE", "FALSE", "T", "F") | is.na(x)
-	are_credits <- all(is_credit|is.na(x))
+	are_logical <- all(is_logical|is.na(x))
 	
 	if (!are_credits ){
 		message <- sprintf(
-			"The following rows of %s do not follow the format of allowable credits:\n\n%s\n\n\n\n",	
+			"The following rows of %s do not follow the format of true/false:\n\n%s\n\n\n\n",	
 			sQuote(colnames)
-			, paste(which(!is_credit)
+			, paste(which(!is_logical)
 					,collapse=", "))
 		cat(message)
 		
 	}
-	return(are_credits)
+	return(are_logical)
 }

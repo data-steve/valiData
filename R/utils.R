@@ -42,6 +42,7 @@ get_paths_root_to_files <- function(path) {
 }
 
 find_lowest_folder <- function(path){
+	. <- NULL
 	paths <- list.dirs(list.dirs(path, recursive=FALSE), recursive=FALSE)
 	lapply(1:length(paths), function(x) strsplit(paths, "/")[[x]] %>% .[length(.)]) %>%
 		unlist() -> templates

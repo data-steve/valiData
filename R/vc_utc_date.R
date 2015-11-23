@@ -14,7 +14,7 @@ vc_utc_date <- function(x, colnames = "the column"){
 	original_na <- is.na(x)
 	x[!original_na] <- parsedate::parse_date(x[!original_na])
 	which_non_utc <- setdiff(which(original_na), which(is.na(x)))
-	are_utc_dates <- all(length(which_non_iso)==0)
+	are_utc_dates <- all(length(which_non_utc)==0)
 	
 	if (!are_utc_dates){
 		message <- sprintf(
