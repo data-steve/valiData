@@ -34,7 +34,7 @@ vf_comma_broken <- function(path){
 	list(
 		valid = valid,            ## logical did enough (proportion) elements validate
 		locations = list(
-			rows = offender_rows -1,        ## location of those not validating
+			rows = offender_rows,        ## location of those not validating
 			columns = cols
 		),
 		proportion = proportion,          ## proportion of those vaidating

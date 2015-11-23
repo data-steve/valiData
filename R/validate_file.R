@@ -30,9 +30,11 @@ validate_file <- function(file, map, column_map,...){
 		## Check columns
 		data <- read_csv_character(file)
 
-		## eliminating broken rows from broken_csv
+		## converting broken rows from broken_csv to NA
 		if (!broken_csv[["valid"]]){
-		    data <- data[which(!seq_len(nrow(data)) %in%  broken_csv[["locations"]][["rows"]]),]
+
+		    data[broken_csv[["locations"]][["rows"]]-1, ] <- NA
+		    #data <- data[which(!seq_len(nrow(data)) %in%  broken_csv[["locations"]][["rows"]]),]
 		}
 
 		base_file <- basename(file)
