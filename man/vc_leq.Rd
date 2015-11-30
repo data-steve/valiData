@@ -4,16 +4,16 @@
 \alias{vc_leq}
 \title{Validates and Reports If Less Than Or Equal To}
 \usage{
-vc_leq(x, y, colnames = "the X column", colname_y = "the Y column")
+vc_leq(x, y, colname_x = "the X column", colname_y = "the Y column")
 }
 \arguments{
 \item{x}{character vector to be coerced}
 
 \item{y}{character vector to be coerced and compared}
 
-\item{colnames}{X vector's colname}
-
 \item{colname_y}{Y vector's colname}
+
+\item{colnames}{X vector's colname}
 }
 \description{
 Validates and Reports If Less Than Or Equal To

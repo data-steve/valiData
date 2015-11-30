@@ -7,7 +7,7 @@
 #' @param colnames X vector's colname
 #' @param colname_y Y vector's colname
 
-vc_less_than <- function(x, y, colname_x = "the X column" , colname_y = "the Y column"){
+vc_less_than <- function(x, y, colnames = "the X column" , colname_y = "the Y column"){
 
 	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
 
