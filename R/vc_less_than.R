@@ -17,7 +17,7 @@ vc_less_than <- function(x, y, colnames = "the X column" , colname_y = "the Y co
 	if (!are_less_than ){
 		message <- sprintf(
 			"The following rows of %s are not less than %s:\n\n%s\n\n\n\n",
-			sQuote(colname_x)
+			sQuote(colnames)
 			, sQuote(colname_y)
 			, paste(which(!is_less_than )
 					,collapse=", "))

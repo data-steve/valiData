@@ -17,7 +17,7 @@ vc_greater_than <- function(x, y, colnames = "the X column" , colname_y = "the Y
 	if (!are_greater_than ){
 		message <- sprintf(
 			"The following rows of %s are not greater than %s:\n\n%s\n\n\n\n",
-			sQuote(colname_x)
+			sQuote(colnames)
 			, sQuote(colname_y)
 			, paste(which(!is_greater_than )
 					,collapse=", "))
