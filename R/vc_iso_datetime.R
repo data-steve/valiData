@@ -20,7 +20,7 @@ vc_iso_datetime <- function(x, colname_x = "the column"){
 		message <- sprintf(
 			"The following rows of %s do not follow the ISO 8601 date format:\n\n%s\n\n\n\n",
 			sQuote(colname_x)
-			, paste(which_non_iso
+			, paste(which_non_iso+1
 					,collapse=", "))
 		cat(message)
 

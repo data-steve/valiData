@@ -27,7 +27,7 @@ vc_non_response <- function(x, prop.acceptable = 0,
 
 	list(
 		valid = prop_missing <= prop.acceptable, ## logical did enough (proportion) elements validate
-		locations = which(is.na(x)),                 ## location of those not validating
+		locations = which(is.na(x))+1,                 ## location of those not validating
 		proportion = 1 - prop_missing,               ## proportion of those vaidating
 		call = "vc_non_response",                     ## function name that was called
 		required = required,

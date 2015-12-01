@@ -17,7 +17,7 @@ vc_logicial <- function(x, colname_x = "the column") {
 		message <- sprintf(
 			"The following rows of %s do not follow the format of true/false:\n\n%s\n\n\n\n",	
 			sQuote(colname_x)
-			, paste(which(!is_logical)
+			, paste(which(!is_logical)+1
 					,collapse=", "))
 		cat(message)
 		

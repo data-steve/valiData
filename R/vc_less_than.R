@@ -19,7 +19,7 @@ vc_less_than <- function(x, y, colname_x = "the X column" , colname_y = "the Y c
 			"The following rows of %s are not less than %s:\n\n%s\n\n\n\n",
 			sQuote(colname_x)
 			, sQuote(colname_y)
-			, paste(which(!is_less_than )
+			, paste(which(!is_less_than )+1
 					,collapse=", "))
 		cat(message)
 

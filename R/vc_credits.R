@@ -17,7 +17,7 @@ vc_credits <- function(x, colname_x = "the column"){
 		message <- sprintf(
 			"The following rows of %s do not follow the format of allowable credits:\n\n%s\n\n\n\n",
 			sQuote(colname_x)
-			, paste(which(!is_credit & !original_na)
+			, paste(which(!is_credit & !original_na)+1
 					,collapse=", "))
 		cat(message)
 

@@ -10,16 +10,16 @@
 vc_geq <- function(x, y, colname_x = "the X column" , colname_y = "the Y column"){
 
     x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
-
+    original_na <- is.na(x)
     is_geq <- x >= y
-    are_geq <- all(is_geq|is.na(x))
+    are_geq <- all(is_geq|original_na)
 
     if (!are_geq ){
         message <- sprintf(
             "The following rows of %s are not greater than or equal to %s:\n\n%s\n\n\n\n",
             sQuote(colname_x)
             , sQuote(colname_y)
-            , paste(which(!is_geq )
+            , paste(which(!is_geq &!original_na ) +1
                     ,collapse=", "))
         cat(message)
 

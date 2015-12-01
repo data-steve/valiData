@@ -18,7 +18,7 @@ vc_regex <- function(x, regex , colname_x = "the column"){
 		message <- sprintf(
 			"The following rows of %s do not follow the format provided:\n\n%s\n\n\n\n",
 			sQuote(colname_x)
-			, paste(which(!is_regex & !original_na)
+			, paste(which(!is_regex & !original_na)+1
 					,collapse=", "))
 		cat(message)
 

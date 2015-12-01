@@ -25,7 +25,7 @@ vc_null <- function(x, prop.acceptable = 0, null = c("", "NULL"),
 
 	list(
 		valid = prop_null <= prop.acceptable, ## logical did enough (proportion) elements validate
-		locations = which(is.na(x)),                 ## location of those not validating
+		locations = which(is.na(x))+1,                 ## location of those not validating
 		proportion = 1 - prop_null,               ## proportion of those vaidating
 		call = "vc_null",                          ## function name that was called
 		required = required,

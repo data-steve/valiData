@@ -17,7 +17,7 @@ vc_categories <- function(x, levels = "the levels", colname_x = "the column"  ){
 		message <- sprintf(
 			"The following rows of %s are not accepted categories:\n\n%s\n\n\n\n",
 			sQuote(colname_x)
-			, paste(which(!is_category )
+			, paste(which(!is_category )+1
 					,collapse=", "))
 		cat(message)
 

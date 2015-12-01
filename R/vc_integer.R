@@ -16,7 +16,7 @@ vc_integer <- function(x, colname_x = "the column"){
 		message <- sprintf(
 			"The following rows of %s are not integer format:\n\n%s\n\n\n\n",	
 			sQuote(colname_x)
-			, paste(which_integer
+			, paste(which_integer+1
 					,collapse=", "))
 		cat(message)
 		

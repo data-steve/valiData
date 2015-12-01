@@ -19,7 +19,7 @@ vc_leq <- function(x, y, colname_x = "the X column" , colname_y = "the Y column"
             "The following rows of %s are not less than or equal to %s:\n\n%s\n\n\n\n",
             sQuote(colname_x)
             , sQuote(colname_y)
-            , paste(which(!is_leq )
+            , paste(which(!is_leq )+1
                     ,collapse=", "))
         cat(message)
 

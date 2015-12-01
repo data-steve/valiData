@@ -11,9 +11,9 @@
 vc_compare <- function(x, y, comparison, colname_x = "the X column" , colname_y = "the Y column", ...){
 
     x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
-
+    original_na <- is.na(x)
     is_compare <- compare(x, y, comparison)
-    are_compare <- all(is_compare|is.na(x))
+    are_compare <- all(is_compare|original_na)
 
 
     if (!are_compare ){
@@ -28,7 +28,7 @@ vc_compare <- function(x, y, comparison, colname_x = "the X column" , colname_y 
                      , ">=" = "not greater than or equal to"
                      , "<=" = "not less than or equal to")
             , sQuote(colname_y)
-            , paste(which(!is_compare )
+            , paste(which(!is_compare & !original_na )+1
                     ,collapse=", "))
         cat(message)
 

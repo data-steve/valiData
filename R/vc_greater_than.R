@@ -19,7 +19,7 @@ vc_greater_than <- function(x, y, colname_x = "the X column" , colname_y = "the 
 			"The following rows of %s are not greater than %s:\n\n%s\n\n\n\n",
 			sQuote(colname_x)
 			, sQuote(colname_y)
-			, paste(which(!is_greater_than )
+			, paste(which(!is_greater_than )+1
 					,collapse=", "))
 		cat(message)
 

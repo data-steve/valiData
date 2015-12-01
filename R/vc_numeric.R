@@ -16,7 +16,7 @@ vc_numeric <- function(x, colname_x = "the column"){
 		message <- sprintf(
 			"The following rows of %s are not numeric format:\n\n%s\n\n\n\n",	
 			sQuote(colname_x)
-			, paste(which_numeric
+			, paste(which_numeric+1
 					,collapse=", "))
 		cat(message)
 		
