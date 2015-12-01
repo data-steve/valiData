@@ -5,7 +5,7 @@
 \title{Validates and Reports If Comparison Met}
 \usage{
 vc_compare(x, y, comparison, colname_x = "the X column",
-  colname_y = "the Y column")
+  colname_y = "the Y column", ...)
 }
 \arguments{
 \item{x}{character vector to be coerced}

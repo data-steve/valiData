@@ -8,7 +8,7 @@
 #' @param colname_x X vector's colname
 #' @param colname_y Y vector's colname
 #' @export
-vc_compare <- function(x, y, comparison, colname_x = "the X column" , colname_y = "the Y column"){
+vc_compare <- function(x, y, comparison, colname_x = "the X column" , colname_y = "the Y column", ...){
 
     x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
 
