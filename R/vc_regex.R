@@ -4,9 +4,9 @@
 #'
 #' @param x character vector
 #' @param regex regex
-#' @param colnames vector's colname
+#' @param colname_x vector's colname
 #' @export
-vc_regex <- function(x, regex , colnames = "the column"){
+vc_regex <- function(x, regex , colname_x = "the column"){
 
 	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
 
@@ -17,7 +17,7 @@ vc_regex <- function(x, regex , colnames = "the column"){
 	if (!are_credits ){
 		message <- sprintf(
 			"The following rows of %s do not follow the format provided:\n\n%s\n\n\n\n",
-			sQuote(colnames)
+			sQuote(colname_x)
 			, paste(which(!is_regex & !original_na)
 					,collapse=", "))
 		cat(message)

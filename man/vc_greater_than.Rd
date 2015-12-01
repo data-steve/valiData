@@ -4,14 +4,15 @@
 \alias{vc_greater_than}
 \title{Validates and Reports If Greater Than}
 \usage{
-vc_greater_than(x, y, colnames = "the X column", colname_y = "the Y column")
+vc_greater_than(x, y, colname_x = "the X column",
+  colname_y = "the Y column")
 }
 \arguments{
 \item{x}{character vector to be coerced}
 
 \item{y}{character vector to be coerced and compared}
 
-\item{colnames}{X vector's colname}
+\item{colname_x}{X vector's colname}
 
 \item{colname_y}{Y vector's colname}
 }

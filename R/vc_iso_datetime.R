@@ -3,11 +3,11 @@
 #' Validates and Reports If ISO 8601
 #'
 #' @param x character vector
-#' @param colnames vector's colname
+#' @param colname_x vector's colname
 #' @export
-vc_iso_datetime <- function(x, colnames = "the column"){
+vc_iso_datetime <- function(x, colname_x = "the column"){
 
-# if (colnames == "RegisteredDate") browser()
+# if (colname_x == "RegisteredDate") browser()
 
 	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
 
@@ -19,7 +19,7 @@ vc_iso_datetime <- function(x, colnames = "the column"){
 	if (!are_iso_datetimes ){
 		message <- sprintf(
 			"The following rows of %s do not follow the ISO 8601 date format:\n\n%s\n\n\n\n",
-			sQuote(colnames)
+			sQuote(colname_x)
 			, paste(which_non_iso
 					,collapse=", "))
 		cat(message)

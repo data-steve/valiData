@@ -4,12 +4,12 @@
 \alias{vc_integer}
 \title{Validates and Reports If Integer}
 \usage{
-vc_integer(x, colnames = "the column")
+vc_integer(x, colname_x = "the column")
 }
 \arguments{
 \item{x}{character vector}
 
-\item{colnames}{vector's colname}
+\item{colname_x}{vector's colname}
 }
 \description{
 Validates and Reports If Integer

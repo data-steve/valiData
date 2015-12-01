@@ -3,9 +3,9 @@
 #' Validates and Reports If Formatted Like Credit
 #' 
 #' @param x character vector
-#' @param colnames vector's colname
+#' @param colname_x vector's colname
 #' @export
-vc_credits <- function(x, colnames = "the column"){
+vc_credits <- function(x, colname_x = "the column"){
 	
 	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
 	
@@ -16,7 +16,7 @@ vc_credits <- function(x, colnames = "the column"){
 	if (!are_credits ){
 		message <- sprintf(
 			"The following rows of %s do not follow the format of allowable credits:\n\n%s\n\n\n\n",	
-			sQuote(colnames)
+			sQuote(colname_x)
 			, paste(which(!is_credit & !original_na)
 					,collapse=", "))
 		cat(message)

@@ -4,12 +4,12 @@
 \alias{vc_iso_datetime}
 \title{Validates and Reports If ISO 8601}
 \usage{
-vc_iso_datetime(x, colnames = "the column")
+vc_iso_datetime(x, colname_x = "the column")
 }
 \arguments{
 \item{x}{character vector}
 
-\item{colnames}{vector's colname}
+\item{colname_x}{vector's colname}
 }
 \description{
 Validates and Reports If ISO 8601

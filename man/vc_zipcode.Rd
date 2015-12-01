@@ -4,12 +4,12 @@
 \alias{vc_zipcode}
 \title{Validates and Reports If ZipCode}
 \usage{
-vc_zipcode(x, colnames = "the column")
+vc_zipcode(x, colname_x = "the column")
 }
 \arguments{
 \item{x}{character vector}
 
-\item{colnames}{vector's colname}
+\item{colname_x}{vector's colname}
 }
 \description{
 Validates and Reports If ZipCode

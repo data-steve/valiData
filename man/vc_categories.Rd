@@ -4,14 +4,14 @@
 \alias{vc_categories}
 \title{Validates and Reports If Correct Categories Used}
 \usage{
-vc_categories(x, levels = "the levels", colnames = "the column")
+vc_categories(x, levels = "the levels", colname_x = "the column")
 }
 \arguments{
 \item{x}{character vector}
 
 \item{levels}{levels of the category}
 
-\item{colnames}{vector's colname}
+\item{colname_x}{vector's colname}
 }
 \description{
 Validates and Reports If Correct Categories Used

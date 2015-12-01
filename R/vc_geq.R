@@ -4,7 +4,7 @@
 #'
 #' @param x character vector to be coerced
 #' @param y character vector to be coerced and compared
-#' @param colnames X vector's colname
+#' @param colname_x X vector's colname
 #' @param colname_y Y vector's colname
 
 vc_geq <- function(x, y, colname_x = "the X column" , colname_y = "the Y column"){

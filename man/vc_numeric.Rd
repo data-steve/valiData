@@ -4,12 +4,12 @@
 \alias{vc_numeric}
 \title{Validates and Reports If Numeric}
 \usage{
-vc_numeric(x, colnames = "the column")
+vc_numeric(x, colname_x = "the column")
 }
 \arguments{
 \item{x}{character vector}
 
-\item{colnames}{vector's colname}
+\item{colname_x}{vector's colname}
 }
 \description{
 Validates and Reports If Numeric

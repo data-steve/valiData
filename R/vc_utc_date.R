@@ -3,10 +3,10 @@
 #' Validates and Reports If Date UTC
 #' 
 #' @param x character vector
-#' @param colnames vector's colname
+#' @param colname_x vector's colname
 #' @export
 
-vc_utc_date <- function(x, colnames = "the column"){
+vc_utc_date <- function(x, colname_x = "the column"){
 	
 	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
 	# as long as we can parse, we're fine
@@ -19,7 +19,7 @@ vc_utc_date <- function(x, colnames = "the column"){
 	if (!are_utc_dates){
 		message <- sprintf(
 			"The following rows of %s do not follow the UTC date format:\n\n%s\n\n\n\n",	
-			sQuote(colnames)
+			sQuote(colname_x)
 			, paste(which_non_utc
 					,collapse=", "))
 		cat(message)

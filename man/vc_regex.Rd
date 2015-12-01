@@ -4,14 +4,14 @@
 \alias{vc_regex}
 \title{Validates and Reports If Formatted Like Regex Provided}
 \usage{
-vc_regex(x, regex, colnames = "the column")
+vc_regex(x, regex, colname_x = "the column")
 }
 \arguments{
 \item{x}{character vector}
 
 \item{regex}{regex}
 
-\item{colnames}{vector's colname}
+\item{colname_x}{vector's colname}
 }
 \description{
 Validates and Reports If Formatted Like Regex Provided

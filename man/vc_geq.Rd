@@ -11,9 +11,9 @@ vc_geq(x, y, colname_x = "the X column", colname_y = "the Y column")
 
 \item{y}{character vector to be coerced and compared}
 
-\item{colname_y}{Y vector's colname}
+\item{colname_x}{X vector's colname}
 
-\item{colnames}{X vector's colname}
+\item{colname_y}{Y vector's colname}
 }
 \description{
 Validates and Reports If Greater Than Or Equal To

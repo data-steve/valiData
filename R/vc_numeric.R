@@ -3,9 +3,9 @@
 #' Validates and Reports If Numeric
 #' 
 #' @param x character vector
-#' @param colnames vector's colname
+#' @param colname_x vector's colname
 #' @export
-vc_numeric <- function(x, colnames = "the column"){
+vc_numeric <- function(x, colname_x = "the column"){
 	
 	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
 	
@@ -15,7 +15,7 @@ vc_numeric <- function(x, colnames = "the column"){
 	if (!are_numeric ){
 		message <- sprintf(
 			"The following rows of %s are not numeric format:\n\n%s\n\n\n\n",	
-			sQuote(colnames)
+			sQuote(colname_x)
 			, paste(which_numeric
 					,collapse=", "))
 		cat(message)

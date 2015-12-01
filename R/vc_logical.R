@@ -3,9 +3,9 @@
 #' Validates and Reports If Logical
 #' 
 #' @param x character vector
-#' @param colnames vector's colname
+#' @param colname_x vector's colname
 #' @export
-vc_logicial <- function(x, colnames = "the column") {
+vc_logicial <- function(x, colname_x = "the column") {
 	
 	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
 	
@@ -16,7 +16,7 @@ vc_logicial <- function(x, colnames = "the column") {
 	if (!are_credits ){
 		message <- sprintf(
 			"The following rows of %s do not follow the format of true/false:\n\n%s\n\n\n\n",	
-			sQuote(colnames)
+			sQuote(colname_x)
 			, paste(which(!is_logical)
 					,collapse=", "))
 		cat(message)

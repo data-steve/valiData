@@ -4,12 +4,12 @@
 \alias{vc_credits}
 \title{Validates and Reports If Formatted Like Credit}
 \usage{
-vc_credits(x, colnames = "the column")
+vc_credits(x, colname_x = "the column")
 }
 \arguments{
 \item{x}{character vector}
 
-\item{colnames}{vector's colname}
+\item{colname_x}{vector's colname}
 }
 \description{
 Validates and Reports If Formatted Like Credit

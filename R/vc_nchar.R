@@ -1,4 +1,4 @@
-vc_nchar <- function(x, nchar, colnames = "the column" ){
+vc_nchar <- function(x, nchar, colname_x = "the column" ){
 
 	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
 
@@ -9,7 +9,7 @@ vc_nchar <- function(x, nchar, colnames = "the column" ){
 	if (!are_nchar){
 		message <- sprintf(
 			"The following rows of column %s are not less than or equal to %s characters long:\n\n%s\n\n\n\n",
-			sQuote(colnames)
+			sQuote(colname_x)
 			, nchar
 			, paste(which(!is_nchar)
 					,collapse=", "))

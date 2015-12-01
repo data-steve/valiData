@@ -13,7 +13,7 @@ vc_column_apply <- function(data, colmap){
 
     Map(function(x, y, z){
 
-        y <- gsub("\\)$", paste0(", colnames = \"", z, "\")"), y)
+        y <- gsub("\\)$", paste0(", colname_x = \"", z, "\")"), y)
         results <- unlist(invisible(lapply(y, function(w) {
             eval(parse(text=w))
             })))

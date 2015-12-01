@@ -4,9 +4,9 @@
 #'
 #' @param x character vector
 #' @param levels levels of the category
-#' @param colnames vector's colname
+#' @param colname_x vector's colname
 #' @export
-vc_categories <- function(x, levels = "the levels", colnames = "the column"  ){
+vc_categories <- function(x, levels = "the levels", colname_x = "the column"  ){
 
 	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
 
@@ -16,7 +16,7 @@ vc_categories <- function(x, levels = "the levels", colnames = "the column"  ){
 	if (!are_categories ){
 		message <- sprintf(
 			"The following rows of %s are not accepted categories:\n\n%s\n\n\n\n",
-			sQuote(colnames)
+			sQuote(colname_x)
 			, paste(which(!is_category )
 					,collapse=", "))
 		cat(message)

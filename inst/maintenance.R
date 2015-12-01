@@ -1,7 +1,7 @@
 #========
 # BUILD
 #========
-source("inst/build.R")  ## Tyler ruses this
+source("inst/build.R")  ## Tyler uses this
 devtools::document()
 
 
