@@ -23,13 +23,19 @@ vf_comma_broken <- function(path){
 #     regex_counts <- stringi::stri_count_regex(data, ",")
 # 	offender_rows <- which(regex_counts > as.numeric(names(which.max(table(regex_counts)))))
     data <- suppressWarnings(readr::read_csv(path))
-	offender_rows <- attributes(data)[["problems"]][["row"]]
+    problem_rows <- attributes(data)[["problems"]]
+    if (!is.null(problem_rows[["expected"]])) {
+        offending_problems <- grepl("^\\d+\\s*columns$", problem_rows[["expected"]])
+        if (any(offending_problems)) {
+	        offender_rows <- attributes(data)[["problems"]][["row"]][offending_problems]
+        }
+    }
 
 # 	y <- stringi::stri_count_regex(data, ",")
 # 	offender_rows <- which(y > as.numeric(names(which.max(table(y)))))
 
 
-	if (length(offender_rows) > 0) {
+	if (!is.null(offender_rows)) {
 		cols <- candidates_for_quotes(path)
 		valid <- FALSE
 		proportion <- 1 - length(offender_rows)/length(data)
