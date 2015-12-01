@@ -11,13 +11,19 @@ vf_comma_broken <- function(path){
 	cols  <- NULL
 	proportion <- NULL
 
-	# if (vf_file_type(path)) {
-	data <- readLines(path)
-
-    ## Tyler updated b/c comma_broken was broken on 11/20/15
-	data <- stringi::stri_replace_all_regex(data, "(?<=(,|^))(\")(.*?)(\")(?=($|,))", "[PLACE HOLDER]")
-    regex_counts <- stringi::stri_count_regex(data, ",")
-	offender_rows <- which(regex_counts > as.numeric(names(which.max(table(regex_counts)))))
+# 	# if (vf_file_type(path)) {
+# 	data <- readLines(path)
+# browser()
+# m <- readr::read_csv(path)
+# data[287]
+# # readr::read_csv(path)
+#     ## Tyler updated b/c comma_broken was broken on 11/20/15
+# 	data <- stringi::stri_replace_all_regex(data, "(?<=(,|^))(\")(.*?)(\")(?=($|,))", "[PLACE HOLDER]")
+# data[287]
+#     regex_counts <- stringi::stri_count_regex(data, ",")
+# 	offender_rows <- which(regex_counts > as.numeric(names(which.max(table(regex_counts)))))
+    data <- suppressWarnings(readr::read_csv(path))
+	offender_rows <- attributes(data)[["problems"]][["row"]]
 
 # 	y <- stringi::stri_count_regex(data, ",")
 # 	offender_rows <- which(y > as.numeric(names(which.max(table(y)))))
