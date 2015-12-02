@@ -18,11 +18,17 @@ vc_compare <- function(x, y, comparison, colname_x = "the X column" ,
     if(missing(y)) (return())
 
     x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
-    if (date) x[!is.na(x)] <- parsedate::parse_iso_8601(trimws(x[!is.na(x)]))
-    original_na <- is.na(x)
+    y[(y %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", y)] <- NA
+
+    original_na <- is.na(x)|is.na(y)
+
+    if (date) {
+        x[!is.na(x)] <- parsedate::parse_iso_8601(trimws(x[!is.na(x)]))
+        y[!is.na(y)] <- parsedate::parse_iso_8601(trimws(y[!is.na(y)]))
+    }
+
     is_compare <- compare(x, y, comparison)
     are_compare <- all(is_compare|original_na)
-
 
     if (!are_compare ){
         message <- sprintf(
