@@ -9,7 +9,7 @@
 
 vc_geq <- function(x, y, colname_x = "the X column" , colname_y = "the Y column"){
 
-    x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
+    x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
     original_na <- is.na(x)
     is_geq <- x >= y
     are_geq <- all(is_geq|original_na)

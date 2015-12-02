@@ -7,7 +7,7 @@
 #' @export
 vc_unique <- function(x,  colname_x = "the column"  ){
 
-    x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
+    x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
 
     is_unique <- duplicated(x)
     are_unique <- all(!is_unique|is.na(x))

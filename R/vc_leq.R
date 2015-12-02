@@ -9,7 +9,7 @@
 
 vc_leq <- function(x, y, colname_x = "the X column" , colname_y = "the Y column"){
 
-    x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
+    x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
 
     is_leq <- x < y
     are_leq <- all(is_leq|is.na(x))

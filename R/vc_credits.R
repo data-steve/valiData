@@ -7,7 +7,7 @@
 #' @export
 vc_credits <- function(x, colname_x = "the column"){
 
-	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
+	x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
 
 	original_na <- is.na(x)
 	is_credit <- stringi::stri_detect_regex(x,"[0-9]{1,2}\\.?[0-9]{0,2}")

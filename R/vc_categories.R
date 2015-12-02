@@ -8,7 +8,7 @@
 #' @export
 vc_categories <- function(x, levels = "the levels", colname_x = "the column"  ){
 
-	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
+	x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
 
 	is_category <- tolower(x) %in% tolower(levels)
 	are_categories <- all(is_category|is.na(x))

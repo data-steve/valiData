@@ -7,7 +7,7 @@
 #' @export
 vc_logicial <- function(x, colname_x = "the column") {
 	
-	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
+	x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
 	
 	
 	is_logical <- x %in% c("true", "false", "TRUE", "FALSE", "T", "F") | is.na(x)

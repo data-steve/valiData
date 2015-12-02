@@ -1,6 +1,6 @@
 vc_nchar <- function(x, nchar, colname_x = "the column" ){
 
-	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
+	x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
 
 
 	is_nchar <- nchar(x, keepNA=TRUE) <= nchar

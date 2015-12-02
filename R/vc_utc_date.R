@@ -8,7 +8,7 @@
 
 vc_utc_date <- function(x, colname_x = "the column"){
 	
-	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
+	x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
 	# as long as we can parse, we're fine
 
 	original_na <- is.na(x)

@@ -8,7 +8,7 @@
 #' @export
 vc_regex <- function(x, regex , colname_x = "the column"){
 
-	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
+	x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
 
 	original_na <- is.na(x)
 	is_regex <- stringi::stri_detect_regex(x, regex)

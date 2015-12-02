@@ -10,7 +10,7 @@
 #' @export
 vc_compare <- function(x, y, comparison, colname_x = "the X column" , colname_y = "the Y column", ...){
 
-    x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
+    x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
     original_na <- is.na(x)
     is_compare <- compare(x, y, comparison)
     are_compare <- all(is_compare|original_na)

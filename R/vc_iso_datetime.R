@@ -9,7 +9,7 @@ vc_iso_datetime <- function(x, colname_x = "the column"){
 
 # if (colname_x == "RegisteredDate") browser()
 
-	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
+	x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
 
 	original_na <- is.na(x)
 	x[!is.na(x)] <- parsedate::parse_iso_8601(x[!is.na(x)])

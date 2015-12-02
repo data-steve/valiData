@@ -9,7 +9,7 @@
 
 vc_less_than <- function(x, y, colname_x = "the X column" , colname_y = "the Y column"){
 
-	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
+	x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
 
 	is_less_than <- x < y
 	are_less_than <- all(is_less_than|is.na(x))

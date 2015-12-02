@@ -9,7 +9,7 @@
 
 vc_greater_than <- function(x, y, colname_x = "the X column" , colname_y = "the Y column"){
 
-	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
+	x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
 
 	is_greater_than <- x > y
 	are_greater_than <- all(is_greater_than|is.na(x))

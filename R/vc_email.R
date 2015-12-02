@@ -8,7 +8,7 @@
 
 vc_email <- function(x, colname_x = "the column"){
 	
-	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
+	x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
 	
 	original_na <- is.na(x)
 	is_email <- grepl("([_+a-z0-9-]+(\\.[_+a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4}))", x, ignore.case = TRUE)

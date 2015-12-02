@@ -1,6 +1,6 @@
 vc_cipcode <- function (x, colname_x = "the column"){
 	
-	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
+	x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
 	
 	original_na <- is.na(x)
 	is_cipcode <- stringi::stri_detect_regex(x, "\\d{2}\\.\\d{4}")

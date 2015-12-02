@@ -7,7 +7,7 @@
 #' @export
 vc_integer <- function(x, colname_x = "the column"){
 	
-	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
+	x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
 	
 	which_integer <- setdiff(is.na(x), is.na(as.integer(x)))
 	are_integer <- all(length(which_integer)==0)

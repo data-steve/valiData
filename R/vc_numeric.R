@@ -7,7 +7,7 @@
 #' @export
 vc_numeric <- function(x, colname_x = "the column"){
 	
-	x[x %in% c("", "NULL", "NA", "N/A", "na", "n/a")] <- NA
+	x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
 	
 	which_numeric <- setdiff(is.na(x), is.na(as.numeric(x)))
 	are_numeric <- all(length(which_numeric)==0)
