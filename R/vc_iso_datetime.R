@@ -7,13 +7,12 @@
 #' @export
 vc_iso_datetime <- function(x, colname_x = "the column"){
 
-# if (colname_x == "RegisteredDate") browser()
 
 	x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
 
 	original_na <- is.na(x)
-	x[!is.na(x)] <- parsedate::parse_iso_8601(x[!is.na(x)])
-	which_non_iso <- setdiff(which(original_na), which(is.na(x)))
+	x[!is.na(x)] <- parsedate::parse_iso_8601(trimws(x[!is.na(x)]))
+	which_non_iso <- setdiff(which(is.na(x)), which(original_na)) #Tyler switched order of these args on 12/2/15
 	are_iso_datetimes <- all(length(which_non_iso)==0)
 
 	if (!are_iso_datetimes ){

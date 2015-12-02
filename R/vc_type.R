@@ -8,7 +8,7 @@
 #' @param colname_x the vector's colname
 #' @export
 
-vc_type <- function(x, type, colname_x = "the column"  ){
+vc_type <- function(x, type, colname_x = "the column"){
 
 	# message <- function(x, type, colname_x = "the column"  ) {
     # browser()

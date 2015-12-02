@@ -12,7 +12,6 @@ vc_column_apply <- function(data, colmap){
     data <- data[names(map)]
 
     Map(function(x, y, z){
-
         y <- gsub("\\)$", paste0(", colname_x = \"", z, "\")"), y)
         results <- unlist(invisible(lapply(y, function(w) {
             eval(parse(text=w))

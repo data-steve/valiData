@@ -5,7 +5,7 @@
 \title{Validates and Reports If Comparison Met}
 \usage{
 vc_compare(x, y, comparison, colname_x = "the X column",
-  colname_y = "the Y column", ...)
+  colname_y = "the Y column", date = FALSE, ...)
 }
 \arguments{
 \item{x}{character vector to be coerced}
@@ -17,6 +17,11 @@ vc_compare(x, y, comparison, colname_x = "the X column",
 \item{colname_x}{X vector's colname}
 
 \item{colname_y}{Y vector's colname}
+
+\item{date}{logical.  If \code{TRUE} x and y are converted to dates via
+\code{parsedate::parse_iso_8601}.}
+
+\item{\ldots}{ignored.}
 }
 \description{
 Validates and Reports If Comparison Met

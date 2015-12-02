@@ -7,10 +7,18 @@
 #' @param comparison logical operator for the comparison
 #' @param colname_x X vector's colname
 #' @param colname_y Y vector's colname
+#' @param date logical.  If \code{TRUE} x and y are converted to dates via
+#' \code{parsedate::parse_iso_8601}.
+#' @param \ldots ignored.
 #' @export
-vc_compare <- function(x, y, comparison, colname_x = "the X column" , colname_y = "the Y column", ...){
+vc_compare <- function(x, y, comparison, colname_x = "the X column" ,
+    colname_y = "the Y column", date = FALSE, ...){
+
+    if(missing(x)) (return())
+    if(missing(y)) (return())
 
     x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
+    if (date) x[!is.na(x)] <- parsedate::parse_iso_8601(trimws(x[!is.na(x)]))
     original_na <- is.na(x)
     is_compare <- compare(x, y, comparison)
     are_compare <- all(is_compare|original_na)
