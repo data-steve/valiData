@@ -75,40 +75,62 @@ colnames_report <- function(x, ...){
 
 	if (!isTRUE(x[["valid"]])) {
 
-		if (isTRUE(x[["ignore_case"]])|isTRUE(x[["ignore_space"]])) {
-			ignores <- gsub("(^ & )|( & $)", "", paste(
-				ifelse(x[["ignore_case"]], "capitalization", ""),
-				ifelse(x[["ignore_space"]],"white space", ""),
-				sep=" & "
-			))
-			additional <- sprintf("Ignoring %s t", ignores)
-		} else {
-			additional <- "T"
-			ignores <- NULL
-		}
+# changed message below per consultants request 12/2/15
 
+# 		if (isTRUE(x[["ignore_case"]])|isTRUE(x[["ignore_space"]])) {
+# 			ignores <- gsub("(^ & )|( & $)", "", paste(
+# 				ifelse(x[["ignore_case"]], "capitalization", ""),
+# 				ifelse(x[["ignore_space"]],"white space", ""),
+# 				sep=" & "
+# 			))
+# 			additional <- sprintf("Ignoring %s t", ignores)
+# 		} else {
+# 			additional <- "T"
+# 			ignores <- NULL
+# 		}
+
+# 		if (length(x[["locations"]][["unexpected_headers"]]) > 0) {
+# 			additional2 <- sprintf(
+# 				"Additionally, %sthe following columns were present but not expected:\n\n",
+# 				ifelse(is.null(ignores), "", gsub(" t$", ",", tolower(additional)))
+# 			)
+# 		} else {
+# 			additional2 <- ""
+# 		}
 		if (length(x[["locations"]][["unexpected_headers"]]) > 0) {
-			additional2 <- sprintf(
-				"Additionally, %sthe following columns were present but not expected:\n\n",
-				ifelse(is.null(ignores), "", gsub(" t$", ",", tolower(additional)))
-			)
+			additional2 <- "Additionally, the following columns were present but not expected:\n\n"
 		} else {
 			additional2 <- ""
 		}
 
+# 		message <- sprintf(
+# 			paste0(header("Column Names Test"),
+# 				"'%s' has column names that do not match the expected template column names.\n",
+# 				"%she following column names are not present in %s but expected:\n\n%s\n\n\n\n",
+# 				"%s%s\n\n\n\n"
+# 			),
+# 			x[["file_name"]],
+# 			additional,
+# 			x[["file_name"]],
+# 	        paste(paste0("\t- ", x[["locations"]][["missing_headers"]]), collapse = "\n"),
+# 			additional2,
+# 	        paste(paste0("\t- ", x[["locations"]][["unexpected_headers"]]), collapse = "\n")
+# 		)
+
 		message <- sprintf(
 			paste0(header("Column Names Test"),
 				"'%s' has column names that do not match the expected template column names.\n",
-				"%she following column names are not present in %s but expected:\n\n%s\n\n\n\n",
+				"The following column names are not present in %s but expected:\n\n%s\n\n\n\n",
 				"%s%s\n\n\n\n"
 			),
 			x[["file_name"]],
-			additional,
+			#additional,
 			x[["file_name"]],
 	        paste(paste0("\t- ", x[["locations"]][["missing_headers"]]), collapse = "\n"),
 			additional2,
 	        paste(paste0("\t- ", x[["locations"]][["unexpected_headers"]]), collapse = "\n")
 		)
+
 
 		class(message) <- c('invalid_report', "character")
 		message
