@@ -12,15 +12,21 @@ vc_iso_datetime <- function(x, colname_x = "the column"){
 
 	original_na <- is.na(x)
 	x[!is.na(x)] <- parsedate::parse_iso_8601(trimws(x[!is.na(x)]))
-	which_non_iso <- setdiff(which(is.na(x)), which(original_na)) #Tyler switched order of these args on 12/2/15
+	locs <- which_non_iso <- setdiff(which(is.na(x)), which(original_na)) #Tyler switched order of these args on 12/2/15
 	are_iso_datetimes <- all(length(which_non_iso)==0)
+
+	if (length(locs) > 100) {
+	    locs <- paste0(paste(locs[1:100]+1, collapse=", "), "...[truncated]...")
+	} else {
+	    locs <- paste(locs+1, collapse=", ")
+    }
 
 	if (!are_iso_datetimes ){
 		message <- sprintf(
-			"The following rows of %s do not follow the ISO 8601 date format:\n\n%s\n\n\n\n",
-			sQuote(colname_x)
-			, paste(which_non_iso+1
-					,collapse=", "))
+			"%s contains %s that do not follow the ISO 8601 date format:\n\n%s\n\n\n\n",
+			sQuote(colname_x),
+		    length(which_non_iso),
+			locs)
 		cat(message)
 
 	}
