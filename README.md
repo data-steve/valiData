@@ -1,4 +1,4 @@
-![](img/and_validata.png)
+![](img/and-validata.png)
 
 valiData
 ============
