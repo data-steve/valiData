@@ -1,8 +1,10 @@
+![](img/and-validata.png)
+
 valiData
 ============
 
 
-**valiData** validates data imports against a mapping of data conditions
+**valiData** lets you keep calm about data imports, by validating it against a mapping of data conditions
 
 
 Table of Contents
