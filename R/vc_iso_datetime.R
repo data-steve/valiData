@@ -23,7 +23,7 @@ vc_iso_datetime <- function(x, colname_x = "the column"){
 
 	if (!are_iso_datetimes ){
 		message <- sprintf(
-			"%s contains %s that do not follow the ISO 8601 date format:\n\n%s\n\n\n\n",
+			"%s contains %s rows that do not follow the ISO 8601 date format:\n\n%s\n\n\n\n",
 			sQuote(colname_x),
 		    length(which_non_iso),
 			locs)

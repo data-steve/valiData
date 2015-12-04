@@ -23,7 +23,7 @@ vc_utc_date <- function(x, colname_x = "the column"){
 
 	if (!are_utc_dates){
 		message <- sprintf(
-			"%s contains %s that do not follow the UTC date format:\n\n%s\n\n\n\n",
+			"%s contains %s rows that do not follow the UTC date format:\n\n%s\n\n\n\n",
 			sQuote(colname_x),
 		    length(which_non_iso),
 			locs)

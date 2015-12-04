@@ -7,9 +7,15 @@ Authors@R: c(person("Steven", "Simpson", email =
         role = c("aut")))
 Maintainer: Steven Simpson <steven.troy.simpson@gmail.com>
 Description: Validates data imports against a mapping of data conditions.
-Depends: R (>= 3.2.2)
-Imports: parsedate, readr, stringi, magrittr
+Depends:
+    R (>= 3.2.2)
+Imports:
+    parsedate,
+    readr,
+    stringi,
+    magrittr
 Date: 2015-11-23
 License: GPL-2
 LazyData: TRUE
 Roxygen: list(wrap = FALSE)
+RoxygenNote: 5.0.1
