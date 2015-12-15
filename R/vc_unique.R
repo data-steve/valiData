@@ -22,10 +22,11 @@ vc_unique <- function(x,  colname_x = "the column"  ){
             locs <- paste(locs, collapse=", ")
         }
 
+
         message <- sprintf(
             "%s contains %s duplicates.\nThe following rows are duplicates:\n\n%s\n\n\n\n",
             sQuote(colname_x)
-            , length(is_unique)
+            , sum(is_unique)
             , paste(locs
                     ,collapse=", "))
         cat(message)
