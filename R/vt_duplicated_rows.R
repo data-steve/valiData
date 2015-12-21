@@ -15,6 +15,8 @@
 vt_duplicated_rows <- function(data, file.name = NULL) {
 
 	if (is.null(file.name)) file.name <- "The file"
+
+
 	dups <- duplicated(data)
 
 	if (sum(dups)>0){
@@ -22,15 +24,24 @@ vt_duplicated_rows <- function(data, file.name = NULL) {
 		prop <- sum(dups)/nrow(data)
 		loc <- which(dups)
 
+		add_rownames(data) %>%
+		    group_by_(.dots= names(data)) %>%
+		    filter(n()>1) %>%
+		    summarise(rn= paste(rowname, collapse=", "))%>%
+		    .$rn %>%
+		    paste0("(", ., ")", collapse="") -> dup_groups
+
 	} else {
 
 		prop <- NULL
 		loc <- NULL
+		dup_groups <- NULL
 	}
-
+	# browser()
 	list(
 		valid = sum(dups) == 0,                          ## logical did enough (proportion) elements validate
-		locations = loc,    ## location of those not validating
+		locations = dup_groups,    ## location of those not validating
+		# dup_groups = dup_groups,
 		proportion = prop,                  ## proportion of those vaidating
 		call = "vt_duplicated_rows",                        ## function name that was called
 		file_name = file.name
@@ -53,17 +64,17 @@ duplicated_rows_report <- function(x, ...){
 
 	if (!isTRUE(x[["valid"]])) {
 
-		locs <- x[["locations"]]
-		if (length(locs) > 100) {
-			locs <- locs[1:100]
+	    dups <- strsplit(trimws(gsub("[(]|[)]|,|s+", " ", x[["locations"]])), "\\s+")[[1]]
+		dup_len <- length(dups)
+		if (dup_len > 100) {
+			locs <- paste0(paste(substring(x[["locations"]],1,100), collapse=", "), "...[truncated]...")
 			truncmess <- " (truncated to first 100 elements)"
-			locs <- paste0(paste(locs, collapse=", "), "...[truncated]...")
 		} else {
 			truncmess <- ""
-			locs <- paste(locs, collapse=", ")
+			locs <- paste(x[["locations"]], collapse=", ")
 		}
 		message <- sprintf(
-			paste0(header("Duplicated Rows Test"),
+			paste0(#header("Duplicated Rows Test"),
 				"'%s' appears to have %s duplicated rows.\n",
 				"This is often the result of not using unique IDs/GUIDs or a data entry error.\n\n",
 				"These suggestions are likey to fix the problem:\n",
@@ -74,7 +85,7 @@ duplicated_rows_report <- function(x, ...){
 				"The following rows appear to be duplicates%s:\n\n%s\n\n\n\n"
 			),
 			x[["file_name"]],
-		    length(x[["locations"]]),
+			dup_len,
 			truncmess,
 	        locs
 		)
