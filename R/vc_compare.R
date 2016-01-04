@@ -26,30 +26,37 @@ vc_compare <- function(x, y, comparison, colname_x = "the X column" ,
         x[!is.na(x)] <- parsedate::parse_iso_8601(trimws(x[!is.na(x)]))
         y[!is.na(y)] <- parsedate::parse_iso_8601(trimws(y[!is.na(y)]))
     }
-
-    is_compare <- compare(x, y, comparison)
-    are_compare <- all(is_compare|original_na)
-
-    if (!are_compare ){
-        message <- sprintf(
-            "The following rows of %s fail \nbecause they are %s %s:\n\n%s\n\n\n\n"
-            , sQuote(colname_x)
-            , switch(comparison
-                     , "==" = "not equal to"
-                     , "!=" = "equal to"
-                     , ">"  = "not greater than"
-                     , "<"  = "not less than"
-                     , ">=" = "not greater than or equal to"
-                     , "<=" = "not less than or equal to")
-            , sQuote(colname_y)
-            , paste(which(!is_compare & !original_na )+1
-                    ,collapse=", "))
+    if (all(is.na(x))|all(is.na(y))) {
+        message <- sprintf("The date formats used in either %s or %s or both do not follow the ISO 8601 required.", colname_x, colname_y)
         cat(message)
+    } else {
 
-    }
 
-    return(are_compare)
+        is_compare <- compare(x, y, comparison)
+        are_compare <- all(is_compare|original_na)
 
+
+
+        if (!are_compare ){
+            message <- sprintf(
+                "The following rows of %s fail \nbecause they are %s %s:\n\n%s\n\n\n\n"
+                , sQuote(colname_x)
+                , switch(comparison
+                         , "==" = "not equal to"
+                         , "!=" = "equal to"
+                         , ">"  = "not greater than"
+                         , "<"  = "not less than"
+                         , ">=" = "not greater than or equal to"
+                         , "<=" = "not less than or equal to")
+                , sQuote(colname_y)
+                , paste(which(!is_compare & !original_na )+1
+                        ,collapse=", "))
+            cat(message)
+
+        }
+
+        return(are_compare)
+        }
 }
 
 #' Main Helper Function for vc_compare
