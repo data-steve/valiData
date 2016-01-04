@@ -12,7 +12,7 @@ vc_email <- function(x, colname_x = "the column"){
 	
 	original_na <- is.na(x)
 	is_email <- grepl("([_+a-z0-9-]+(\\.[_+a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)*(\\.[a-z]{2,4}))", x, ignore.case = TRUE)
-	are_emails <- all(is_email|is.na(x))
+	are_emails <- all(is_email|original_na)
 	
 	if (!are_emails ){
 		message <- sprintf(
