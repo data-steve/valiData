@@ -24,10 +24,10 @@ vt_duplicated_rows <- function(data, file.name = NULL) {
 		prop <- sum(dups)/nrow(data)
 		loc <- which(dups)
 
-		add_rownames(data) %>%
-		    group_by_(.dots= names(data)) %>%
-		    filter(n()>1) %>%
-		    summarise(rn= paste(rowname, collapse=", "))%>%
+		dplyr::add_rownames(data) %>%
+		    dplyr::group_by_(.dots= names(data)) %>%
+		    dplyr::filter(n()>1) %>%
+		    dplyr::summarise(rn= paste(rowname, collapse=", "))%>%
 		    .$rn %>%
 		    paste0("(", ., ")", collapse="") -> dup_groups
 
