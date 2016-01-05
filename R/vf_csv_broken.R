@@ -112,7 +112,7 @@ broken_report <- function(x, ...){
 	            paste0(header("Broken CSV Test"),
                "The file '%s' appears to be a broken csv by a trailing column being empty.\n",
                "Brokenness can affect the reliability of later tests.\n",
-               "This is common when exported CSVs are manually inspected, introducing changes to original SQL pull.\n"
+               "This is common when exported CSVs are manually inspected, introducing changes to original SQL pull.\n\n\n\n"
 	        ),
 	        x[["file_name"]]
 	        )

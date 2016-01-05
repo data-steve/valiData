@@ -27,7 +27,7 @@ vc_compare <- function(x, y, comparison, colname_x = "the X column" ,
         y[!is.na(y)] <- parsedate::parse_iso_8601(trimws(y[!is.na(y)]))
     }
     if (all(is.na(x))|all(is.na(y))) {
-        message <- sprintf("The date formats used in either %s or %s or both do not follow the ISO 8601 required.", colname_x, colname_y)
+        message <- sprintf("The date formats used in either %s or %s or both do not follow the ISO 8601 required.\n\n\n\n", colname_x, colname_y)
         cat(message)
     } else {
 
