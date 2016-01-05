@@ -49,7 +49,7 @@ valiData <- function(path, core_data_map, column_map, delete = TRUE) {
 			print(report_print_arbitrary(header_file(basename(dirname(x)),
 				gsub("/+", "/", gsub("\\\\+", "/", gsub(path, "~/",  x, fixed=TRUE)))
 				)))
-			validate_file(file = x, map = core_data_map[[map_folder]], column_map[[map_folder]])
+			validate_file(file = x, core_data_map = core_data_map[[map_folder]], column_map[[map_folder]])
 		}))
 
 		sink()
@@ -60,7 +60,7 @@ valiData <- function(path, core_data_map, column_map, delete = TRUE) {
 		sink(file.path(report_path,
 					   paste(map_folder,"valiData_report.txt", sep="_")
 		), split = TRUE)
-		validate_file(path= path, map = core_data_map[[map_folder]], column_map[[map_folder]])
+		validate_file(path= path, core_data_map = core_data_map[[map_folder]], column_map[[map_folder]])
 		sink()
 	}
 }

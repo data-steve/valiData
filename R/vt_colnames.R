@@ -75,7 +75,9 @@ colnames_report <- function(x, ...){
 
 	if (!isTRUE(x[["valid"]])) {
 
-# changed message below per consultants request 12/2/15
+# changed message below per consultants request
+	    # we are no longer rejecting imports based on
+	    # case-sensitivity 12/2/15 Tyler
 
 # 		if (isTRUE(x[["ignore_case"]])|isTRUE(x[["ignore_space"]])) {
 # 			ignores <- gsub("(^ & )|( & $)", "", paste(

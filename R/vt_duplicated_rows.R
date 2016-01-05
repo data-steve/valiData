@@ -8,11 +8,17 @@
 #' @return Returns a list of validation results.
 #' @rdname vt_duplicated_rows
 #' @export
+#' @importFrom magrittr %>%
 #' @examples
 #' vt_duplicated_rows(CO2)
 #' vt_duplicated_rows(CO2[, 1:3])
 #' duplicated_rows_report(vt_duplicated_rows(CO2[, 1:3]))
 vt_duplicated_rows <- function(data, file.name = NULL) {
+
+    . <- NULL
+    dups <- NULL
+    loc <- NULL
+    dup_groups <- NULL
 
 	if (is.null(file.name)) file.name <- "The file"
 
@@ -27,7 +33,7 @@ vt_duplicated_rows <- function(data, file.name = NULL) {
 		dplyr::add_rownames(data) %>%
 		    dplyr::group_by_(.dots= names(data)) %>%
 		    dplyr::filter(n()>1) %>%
-		    dplyr::summarise(rn= paste(rowname, collapse=", "))%>%
+		    dplyr::summarise(rn= paste(rowname, collapse=", ")) %>%
 		    .$rn %>%
 		    paste0("(", ., ")", collapse="") -> dup_groups
 

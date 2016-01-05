@@ -5,7 +5,7 @@
 #'
 #' @param path Path to a .csv file.
 #' @export
-vf_comma_broken <- function(path){
+vf_csv_broken <- function(path){
 
 	offender_rows <- NULL
 	cols  <- NULL
@@ -20,22 +20,40 @@ vf_comma_broken <- function(path){
 # 	offender_rows <- which(regex_counts > as.numeric(names(which.max(table(regex_counts)))))
     data <- suppressWarnings(readr::read_csv(path))
 
-    problem_rows <- readr::problems(data)
+    problem_cases <- readr::problems(data)
 
-    if (!is.null(problem_rows[["expected"]])) {
-        offending_problems <- grepl("^\\d+\\s*columns$", problem_rows[["expected"]])
+    if (!is.null(problem_cases[["expected"]])) {
+        offending_problems <- grepl("^\\d+\\s*columns$", problem_cases[["expected"]])
         if (any(offending_problems)) {
-	        offender_rows <- problem_rows[["row"]][offending_problems]
+	        offender_rows <- problem_cases[["row"]][offending_problems]
         }
     }
 
-	if (!is.null(offender_rows)) {
-		cols <- candidates_for_quotes(path)
-		valid <- FALSE
-		proportion <- 1 - length(offender_rows)/length(data)
-	} else {
-		valid <- TRUE
-	}
+    if (nrow(problem_cases)>0) {
+        offending_problems <- grepl("^\\d+\\s*columns$", problem_cases[["expected"]])
+
+            if (nrow(problem_cases[offending_problems, ])>=nrow(data) ) {
+                cols = NULL
+                valid = FALSE
+                error = "empty-column"
+                offender_rows = 1:nrow(data)
+                proportion = 1 - length(offender_rows)/nrow(data)
+            } else {
+                cols <- candidates_for_quotes(path)
+                valid = FALSE
+                error = "comma-broken"
+                offender_rows = problem_cases[["row"]][offending_problems]
+                proportion = 1 - length(offender_rows)/nrow(data)
+            }
+        } else {
+            cols = NULL
+            offender_rows = NULL
+            error = NULL
+            valid = TRUE
+            proportion = 0
+        }
+
+
 
 	list(
 		valid = valid,            ## logical did enough (proportion) elements validate
@@ -43,6 +61,7 @@ vf_comma_broken <- function(path){
 			rows = offender_rows,        ## location of those not validating
 			columns = cols
 		),
+		error=error,
 		proportion = proportion,          ## proportion of those vaidating
 		call = "vf_comma_broken",         ## function name that was called
 		file_name = basename(path)        ## file name
@@ -69,25 +88,38 @@ candidates_for_quotes <- function(path) {
 #' @param \ldots ignored.
 #' @rdname vt_comma_broken
 #' @export
-comma_broken_report <- function(x, ...){
+broken_report <- function(x, ...){
 
 	if (!isTRUE(x[["valid"]])) {#{
 
-    message <- sprintf(
-        paste0(header("Broken CSV Test"),
-               "The file '%s' appears to be a comma broken csv with about %f %% being broken.",
-               "Comma-broken status can affect the reliability of later tests.\n",
+	    if (x[["error"]]=="comma-broken"){
+	        message <- sprintf( paste0(header("Broken CSV Test"),
+               "The file '%s' appears to be a broken csv with about %d %% of rows being broken.\n",
+               "Brokenness can affect the reliability of later tests.\n",
                "This is common when character columns are not quoted and exported to a .CSV.\n",
                "Please quote character columns in file '%s.'\n\n",
                "The following columns are potential unquoted character columns and may be the source of the break:\n\n%s\n\n",
                "Elements in the following rows appear to contain character values without quotes:\n\n%s\n\n\n\n"
         ),
         x[["file_name"]],
-        x[["proportion"]],
+        round(x[["proportion"]]*100,0),
         x[["file_name"]],
         paste(paste0("\t- ", x[["locations"]][["columns"]]), collapse = "\n"),
         paste(x[["locations"]][["rows"]], collapse = ", ")
     )
+	    } else {
+	        message <- sprintf(
+	            paste0(header("Broken CSV Test"),
+               "The file '%s' appears to be a broken csv by a trailing column being empty.\n",
+               "Brokenness can affect the reliability of later tests.\n",
+               "This is common when exported CSVs are manually inspected, introducing changes to original SQL pull.\n"
+	        ),
+	        x[["file_name"]]
+	        )
+
+	    }
+
+
 	class(message) <- c("invalid_report", "character")
 	message
 	} else {

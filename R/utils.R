@@ -1,7 +1,7 @@
-read_csv_character <- function(file, ...){
-	cols <- ncol(read.csv(file, header = TRUE, nrows = 1, stringsAsFactors = FALSE))
-	read.csv(file, ..., stringsAsFactors = FALSE, colClasses = rep("character", cols), check.names=FALSE)
-}
+# read_csv_character <- function(file, ...){
+# 	col_num <- ncol(readr::read_csv(file, n_max=1, ...))
+# 	readr::read_csv(file, col_types = cols(rep("c", col_num)), ...)
+# }
 
 header <- function(x, len = nchar(x), char = "=", line.begin = "", additional =  NULL){
 	border <-paste(rep(char, len), collapse="")

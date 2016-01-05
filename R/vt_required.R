@@ -29,13 +29,13 @@ vt_required <- function(data, map, missing = c("", "NULL", "NA", "N/A", "na", "n
     stopifnot(all(c("header", "required") %in% colnames(map)))
     prop.acceptable <- 0
 
-    camel_case_cols <- map[["header"]]
+    map_cols <- map[["header"]]
 	colnames(data) <- gsub("\\s+", "", tolower(colnames(data)))
-	map[["header"]] <- gsub("\\s+", "", tolower(camel_case_cols))
+	map[["header"]] <- gsub("\\s+", "", tolower(map_cols))
 	#map[["required"]][is.na(map[["required"]])] <- "FALSE"  # maybe remove once map gets improved
 
 	required <- map[['header']][as.logical(map[["required"]])]
-	camel_case_cols <- camel_case_cols[as.logical(map[["required"]])]
+	map_cols <- map_cols[as.logical(map[["required"]])]
 	#fix the map because Tyler should never no never have hard-code a crutch instead of really fixing this problem
 
     # don't assess columns unless present in both data and map
@@ -43,11 +43,17 @@ vt_required <- function(data, map, missing = c("", "NULL", "NA", "N/A", "na", "n
 
 	# for campus labs the following is an artifact of bad mapping...knowing what's required
 	# grep("[2-90]", required, value = TRUE, invert=TRUE)
-
+ # browser()
 	required_list <- invisible(lapply(required_columns, vc_non_response,
 		prop.acceptable = prop.acceptable, missing = missing, required = TRUE))
 
-	data.frame( cols = camel_case_cols[is.element(gsub("\\s+", "", tolower(camel_case_cols)), names(required_columns))]
+
+	# Dear Future DS_subjugate,
+	# We (Steve-n-Tyler) added unique to defining cols below because CrossListing import
+	# allows for SectionIdentifier to show up multiple times
+	# all the test for valid, location, proportions, ... thus only treat SectionIdentifier once
+	# so we get more cols obs than for other vars 1/4/16 Love, data_steve
+	data.frame( cols = unique(map_cols[is.element(gsub("\\s+", "", tolower(map_cols)), names(required_columns))])
 				, valid = sapply(required_list, function(x) x[["valid"]])
 				, locations = sapply(required_list, function(x) paste(x[["locations"]], collapse=", ") )
 				, proportions = sapply(required_list, function(x) x[["proportion"]])
@@ -60,7 +66,7 @@ vt_required <- function(data, map, missing = c("", "NULL", "NA", "N/A", "na", "n
 
 	miss_cols <- required_df[c("cols", "required", "valid")]
 
-	list(cols =  camel_case_cols[is.element(gsub("\\s+", "", tolower(camel_case_cols)), names(required_columns))]
+	list(cols =  map_cols[is.element(gsub("\\s+", "", tolower(map_cols)), names(required_columns))]
 		 , valid = all(required_df[["valid"]])
 		 , locations =  paste(sort(unique(unlist(lapply(required_list, function(x) x[["locations"]] ) ))), collapse=", ")
 		 , proportions = mean(required_df[["proportions"]])
