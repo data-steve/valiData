@@ -1,11 +1,11 @@
 vc_required_condition <- function(x, colname_x = "The Empty Column", data){
 
     non_responses <- vc_non_response(x)
-
+    compared <- vc_compare(data[["ParentIdentifier"]], data[["OrgUnitIdentifier"]], "!=", colname_x ="ParentIdentifier", colname_y ="OrgUnitIdentifier")
     # Steve 1/5/2016 We set length >1 because ParentIdentifier can be
     # empty when is it at institution level.
     # since vt_required is also reporting on it, we thought this more clarified
-    if (length(non_responses[["locations"]]) >1){
+    if (compared && length(non_responses[["locations"]]) != 0){
 
         institutions <- which(data[["Type"]] %in% c("institution", "Institution"))
 
@@ -22,7 +22,7 @@ vc_required_condition <- function(x, colname_x = "The Empty Column", data){
 		cat(message)
     }
 
-    compared <- vc_compare(data[["ParentIdentifier"]], data[["OrgUnitIdentifier"]], "!=", colname_x ="ParentIdentifier", colname_y ="OrgUnitIdentifier")
+
 
     return(compared && length(non_responses[["locations"]]) != 0)
 }
