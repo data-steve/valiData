@@ -23,7 +23,7 @@
 #' df[c(1, 4), c("drat", "cyl")] <- NA
 #' vt_required(df, map)
 #' required_report(vt_required(df, map))
-vt_required <- function(data, map, missing = c("", "NULL", "NA", "N/A", "na", "n/a"), file.name = NULL){
+vt_required <- function(data, map, missing = c("", "NULL", "NA", "N/A", "na", "n/a"),prop.acceptable = 0, file.name = NULL){
 
     if (is.null(file.name)) file.name <- "The file"
     stopifnot(all(c("header", "required") %in% colnames(map)))
