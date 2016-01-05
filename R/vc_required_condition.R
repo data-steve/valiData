@@ -1,7 +1,7 @@
 vc_required_condition <- function(x, colname_x = "The Empty Column", data){
 
     non_responses <- vc_non_response(x)
-    if (length(non_responses[["locations"]]) > 1){
+    if (length(non_responses[["locations"]]) !=0){
 
         institutions <- which(data[["Type"]] %in% c("institution", "Institution"))
 
