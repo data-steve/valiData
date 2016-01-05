@@ -6,7 +6,7 @@
 \title{Validate that a CSV Has No Missing/Null Values in Required Fields}
 \usage{
 vt_required(data, map, missing = c("", "NULL", "NA", "N/A", "na", "n/a"),
-  file.name = NULL)
+  prop.acceptable = 0, file.name = NULL)
 
 required_report(ls, ...)
 }

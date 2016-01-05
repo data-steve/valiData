@@ -4,7 +4,7 @@
 \alias{validate_file}
 \title{Validate a CSV File}
 \usage{
-validate_file(file, map, column_map, ...)
+validate_file(file, core_data_map, column_map, ...)
 }
 \arguments{
 \item{file}{A path to a .csv file to be validated.}
