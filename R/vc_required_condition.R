@@ -5,7 +5,7 @@ vc_required_condition <- function(x, colname_x = "The Empty Column", data){
     # Steve 1/5/2016 We set length >1 because ParentIdentifier can be
     # empty when is it at institution level.
     # since vt_required is also reporting on it, we thought this more clarified
-    if (compared && length(non_responses[["locations"]]) != 0){
+    if (!(compared && length(non_responses[["locations"]]) != 0)){
 
         institutions <- which(data[["Type"]] %in% c("institution", "Institution"))
 
