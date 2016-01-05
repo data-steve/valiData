@@ -10,8 +10,7 @@ vc_nchar <- function(x, nchar, colname_x = "the column" ){
 			"The following rows of column %s are not less than or equal to %s characters long:\n\n%s\n\n\n\n",
 			sQuote(colname_x)
 			, nchar
-			, paste(which(!is_nchar)+1
-					,collapse=", "))
+			, output_truncate(which(!is_nchar)+1))
 		cat(message)
 	}
 

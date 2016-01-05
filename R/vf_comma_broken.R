@@ -86,7 +86,7 @@ comma_broken_report <- function(x, ...){
         x[["proportion"]],
         x[["file_name"]],
         paste(paste0("\t- ", x[["locations"]][["columns"]]), collapse = "\n"),
-        paste(x[["locations"]][["rows"]], collapse = ", ")
+        output_truncate(x[["locations"]][["rows"]])
     )
 	class(message) <- c("invalid_report", "character")
 	message

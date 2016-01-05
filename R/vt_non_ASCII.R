@@ -15,7 +15,7 @@ vt_non_ASCII <- function(data,...){
             "The following rows of "
             , sQuote(which_hv_nonASCII)
             , " contain non-ASCII characters:\n\n"
-            ,  sapply(where_is_nonASCII, paste,collapse=", ")
+            ,  sapply(where_is_nonASCII, output_truncate)
             , "\n\n")
         cat(message)
     }

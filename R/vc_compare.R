@@ -49,8 +49,7 @@ vc_compare <- function(x, y, comparison, colname_x = "the X column" ,
                          , ">=" = "not greater than or equal to"
                          , "<=" = "not less than or equal to")
                 , sQuote(colname_y)
-                , paste(which(!is_compare & !original_na )+1
-                        ,collapse=", "))
+                , output_truncate(which(!is_compare & !original_na )+1))
             cat(message)
 
         }

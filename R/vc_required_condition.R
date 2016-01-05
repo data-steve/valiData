@@ -17,8 +17,7 @@ vc_required_condition <- function(x, colname_x = "The Empty Column", data){
 			"it is ParentIdentifier and the missing observations aren't Instituion Level.\n\n",
 			"The following rows of column %s are required and missing:\n\n%s\n\n\n\n"),
 			sQuote(colname_x)
-			, paste(missings
-					,collapse=", "))
+			, output_truncate(missings))
 		cat(message)
     }
 

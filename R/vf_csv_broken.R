@@ -105,7 +105,7 @@ broken_report <- function(x, ...){
         round(x[["proportion"]]*100,0),
         x[["file_name"]],
         paste(paste0("\t- ", x[["locations"]][["columns"]]), collapse = "\n"),
-        paste(x[["locations"]][["rows"]], collapse = ", ")
+        output_truncate(x[["locations"]][["rows"]])
     )
 	    } else {
 	        message <- sprintf(

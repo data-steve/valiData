@@ -40,7 +40,7 @@ spaced_colnames_report <- function(x, ...){
 
 		message <- sprintf(
 			paste0(header("Column Order Test"),
-				"'%s' appears to contain %s column names with sapces.\n\n",
+				"'%s' appears to contain %s column names with spaces.\n\n",
                 "Please remove white spaces from the following column headers:\n\n",
 				"%s\n\n\n\n"
 			),

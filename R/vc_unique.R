@@ -14,21 +14,12 @@ vc_unique <- function(x,  colname_x = "the column"  ){
 
     if (!are_unique){
         locs <- which(is_unique)
-        if (sum(is_unique) > 100) {
-            truncmess <- " (truncated to first 100 elements)"
-            locs <- paste0(paste(locs[1:100], collapse=", "), "...[truncated]...")
-        } else {
-            truncmess <- ""
-            locs <- paste(locs, collapse=", ")
-        }
-
 
         message <- sprintf(
             "%s contains %s duplicates.\nThe following rows are duplicates:\n\n%s\n\n\n\n",
             sQuote(colname_x)
             , sum(is_unique)
-            , paste(locs
-                    ,collapse=", "))
+            , output_truncate(locs))
         cat(message)
 
     }

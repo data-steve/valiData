@@ -11,8 +11,7 @@ vc_cipcode <- function (x, colname_x = "the column"){
 		message <- sprintf(
 			"The following rows of %s do not follow the format of a\\nstandard (##. or ##.## or ##.####) CIP Code:\n\n%s\n\n\n\n",
 			sQuote(colname_x)
-			, paste(which(!is_cipcode & !original_na)+1
-					,collapse=", "))
+			, output_truncate(which(!is_cipcode & !original_na)+1))
 		cat(message)
 	}
 

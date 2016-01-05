@@ -105,7 +105,7 @@ required_report <- function(ls, ...) {
 			x[["file_name"]],
 			x[["n_cols_missing"]],
 			paste(paste0("\t- ", x[["missing_columns"]]), collapse = "\n"),
-			x[["locations"]]
+			output_truncate(x[["locations"]])
 		)
 
 		class(message) <- c("invalid_report", "character")
@@ -152,7 +152,7 @@ missing_helper_df <- function(x, ...){
 				round(100*(1-x[["proportion"]]), 1),
 				ifelse(x[["required"]], "", "not "),
 				round(100*(x[["prop_acceptable"]]), 1),
-				paste(paste0("\t- ", x[["locations"]]), collapse = "\n")
+				output_truncate(paste0("\t- ", x[["locations"]]))
 	)
 		class(message) <- c("invalid_report", "character")
 		message
