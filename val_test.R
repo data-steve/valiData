@@ -15,7 +15,7 @@ map_loc <- cl::go(map_wkd,"core_data_map.rds")
 core_data_map <- readRDS(map_loc)
 
 
-valiData::valiData(path=wkd, core_data_map=core_data_map, column_map=col_map, delete = TRUE)
+valiData(path=wkd, core_data_map=core_data_map, column_map=col_map, delete = TRUE)
 
 validate_file(file, core_data_map=core_data_map, column_map=col_map)
 

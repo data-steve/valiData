@@ -55,7 +55,7 @@ vt_required <- function(data, map, missing = c("", "NULL", "NA", "N/A", "na", "n
 	# so we get more cols obs than for other vars 1/4/16 Love, data_steve
 	data.frame( cols = unique(map_cols[is.element(gsub("\\s+", "", tolower(map_cols)), names(required_columns))])
 				, valid = sapply(required_list, function(x) x[["valid"]])
-				, locations = sapply(required_list, function(x) paste(x[["locations"]], collapse=", ") )
+				, locations = sapply(required_list, function(x) paste(x[["locations"]], collapse=", ") )  # should we change this by removing paste?
 				, proportions = sapply(required_list, function(x) x[["proportion"]])
 				, call = sapply(required_list, function(x) x[["call"]])
 				, required = sapply(required_list, function(x) x[["required"]])
@@ -68,7 +68,7 @@ vt_required <- function(data, map, missing = c("", "NULL", "NA", "N/A", "na", "n
 
 	list(cols =  map_cols[is.element(gsub("\\s+", "", tolower(map_cols)), names(required_columns))]
 		 , valid = all(required_df[["valid"]])
-		 , locations =  paste(sort(unique(unlist(lapply(required_list, function(x) x[["locations"]] ) ))), collapse=", ")
+		 , locations =  sort(unique(unlist(lapply(required_list, function(x) x[["locations"]] ) )))
 		 , proportions = mean(required_df[["proportions"]])
 		 , call = unique(required_df[["call"]])
 		 , required = unique(required_df[["required"]])
@@ -96,7 +96,6 @@ required_report <- function(ls, ...) {
 	x <- ls[["ls"]]
 
 	if (!isTRUE(x[["valid"]])) {
-
 		message <- sprintf(
 			paste0(header("Required Columns Test"),
 				"'%s' contains the following %s required columns with missing/null values:\n\n%s\n\n",
