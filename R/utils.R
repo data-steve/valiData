@@ -76,3 +76,31 @@ find_highest_parent_folder <- function(path) {
 
 }
 
+## Makes a text tree diagram of a directory subdirectory, and files
+## Use...
+## dir_tree(system.file("texts", package = "tm"))
+dir_tree <- function(path = ".", include.files = TRUE, all.files = TRUE, copy2clip = TRUE){
+
+    if (isTRUE(include.files)){
+        fls <- dir(path, all.files = all.files, full.names = TRUE, recursive = TRUE)
+    } else {
+        fls <- list.files(path, all.files = all.files)
+    }
+    parsed <- parse_path(fls)
+    contents <- back(parsed, -(-1 + length(unlist(parse_path(path)))))
+    y <- attributes(back(contents, -1))[["parsed"]]
+    z <- data.frame(matrix(NA, ncol = max(sapply(y, length)), nrow = length(y)))
+    for (i in seq_along(y)){
+        z[i, 1:length(y[[i]])] <- y[[i]]
+    }
+    z[["pathString"]] <- contents
+
+    out <- data.tree::as.Node(z)
+    out2 <- capture.output(out)[-1]
+    out2 <- gsub("^\\d+\\s+", "", out2)
+    out2[-1] <- paste0("  ", out2[-1])
+    #cat(paste(out2, collapse="\n"), "\n")
+    if (copy2clip) clipr::write_clip(out2)
+    out
+
+}
