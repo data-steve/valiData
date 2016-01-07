@@ -1,6 +1,7 @@
 pacman::p_install_gh("steventsimpson/valiData")
 
 clDev::source_R_folder("~/Documents/repos/github_packages/valiData/R/")
+# clDev::source_R_folder()
 
 wkd <- cl::l_drive_go("FTP/williamjewell")
 
