@@ -40,6 +40,12 @@ validate_file <- function(file, core_data_map, column_map,...){
 		}
 
 		base_file <- basename(file)
+		has_header <- vt_header(data, core_data_map, file.name=base_file)
+        if (!has_header[["valid"]]) {
+            print(header_report(has_header))
+            return(invisible())
+        }
+
 		enough_cols <- vt_ncols(data, core_data_map, file.name=base_file)
 		spaced_colnames <- vt_spaced_colnames(data, file.name=base_file)
 		correct_colnames  <- vt_colnames(data, core_data_map, file.name=base_file, ignore.case=TRUE)
