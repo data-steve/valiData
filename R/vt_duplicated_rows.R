@@ -9,6 +9,7 @@
 #' @rdname vt_duplicated_rows
 #' @export
 #' @importFrom magrittr %>%
+#' @importFrom data.table :=
 #' @examples
 #' vt_duplicated_rows(CO2)
 #' vt_duplicated_rows(CO2[, 1:3])
