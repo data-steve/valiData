@@ -14,7 +14,8 @@ Imports:
     readr,
     stringi,
     magrittr,
-    dplyr
+    dplyr,
+    data.table
 Date: 2015-11-23
 License: GPL-2
 LazyData: TRUE
