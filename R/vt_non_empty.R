@@ -11,7 +11,6 @@
 #' @examples
 #' vt_non_empty(CO2)
 #' vt_non_empty(CO2[, 1:3])
-#' duplicated_non_empty(vt_non_empty(CO2[, 1:3]))
 vt_non_empty <- function(data, file.name = NULL) {
 
 	if (is.null(file.name)) file.name <- "The file"

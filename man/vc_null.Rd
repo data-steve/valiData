@@ -23,7 +23,7 @@ Checks For Null Elements In Vector
 }
 \examples{
 set.seed(10)
-x <- sample(unlist(c(missing, NA, rep(LETTERS[1:10], 100))), 10000, T)
+x <- sample(c(NA, rep(LETTERS[1:10], 100)), 10000, TRUE)
 vc_null(x)
 }
 

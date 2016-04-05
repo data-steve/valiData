@@ -9,10 +9,8 @@
 #' @param file.name name of file containing the table of vectors
 #' @export
 #' @examples set.seed(10)
-#' x <- sample(unlist(c(missing, NA, rep(LETTERS[1:10], 100))), 10000, T)
+#' x <- sample(c(NA, rep(LETTERS[1:10], 100)), 10000, TRUE)
 #' vc_non_response(x)
-#'
-
 vc_non_response <- function(x, prop.acceptable = 0,
 							missing = c("", "NULL", "NA", "N/A", "na", "n/a"), required = FALSE, file.name = NULL){
 

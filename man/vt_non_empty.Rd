@@ -31,6 +31,5 @@ Returns a list of validation results.
 \examples{
 vt_non_empty(CO2)
 vt_non_empty(CO2[, 1:3])
-duplicated_non_empty(vt_non_empty(CO2[, 1:3]))
 }
 

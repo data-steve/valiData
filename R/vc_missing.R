@@ -8,8 +8,9 @@
 #' @param required whether the vector in the table is required
 #' @param file.name name of file containing the table of vectors
 #' @export
-#' @examples set.seed(10)
-#' x <- sample(unlist(c(missing, NA, rep(LETTERS[1:10], 100))), 10000, T)
+#' @examples
+#' set.seed(10)
+#' x <- sample(c(NA, rep(LETTERS[1:10], 100)), 10000, TRUE)
 #' vc_missing(x)
 vc_missing <- function(x, prop.acceptable = 0,
 					   missing = c("", "NULL", "NA", "N/A", "na", "n/a"), required = FALSE, file.name = NULL){

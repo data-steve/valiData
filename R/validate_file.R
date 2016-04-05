@@ -71,7 +71,8 @@ validate_file <- function(file, core_data_map, column_map,...){
 		print(required_report(has_required_cols))
 
 		## check for duplicated rows
-		data <- data[rowSums(!apply(data, 1, is.na)) != 0, ]
+		data <- data[rowSums(!t(apply(data, 1, is.na))) != 0, ]
+
 		duplicated_rows <- vt_duplicated_rows(data, file.name=base_file)
 		print(duplicated_rows_report(duplicated_rows))
 
