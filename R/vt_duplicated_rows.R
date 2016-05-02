@@ -16,7 +16,7 @@
 #' duplicated_rows_report(vt_duplicated_rows(CO2[, 1:3]))
 vt_duplicated_rows <- function(data, file.name = NULL) {
 
-    . <- NULL
+    . <- .GRP <- .N <- N <- .I <- GRP <- NULL
     dups <- NULL
     loc <- NULL
     dup_groups <- NULL
@@ -55,11 +55,11 @@ vt_duplicated_rows <- function(data, file.name = NULL) {
 	}
 	# browser()
 	list(
-		valid = sum(dups) == 0,                          ## logical did enough (proportion) elements validate
-		locations = dup_groups,    ## location of those not validating
+		valid = sum(dups) == 0,       ## logical did enough (proportion) elements validate
+		locations = dup_groups,       ## location of those not validating
 		# dup_groups = dup_groups,
-		proportion = prop,                  ## proportion of those vaidating
-		call = "vt_duplicated_rows",                        ## function name that was called
+		proportion = prop,            ## proportion of those vaidating
+		call = "vt_duplicated_rows",  ## function name that was called
 		file_name = file.name
 	)
 

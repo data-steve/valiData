@@ -25,7 +25,7 @@ vc_utc_date <- function(x, colname_x = "the column"){
 		message <- sprintf(
 			"%s contains %s rows that do not follow the UTC date format:\n\n%s\n\n\n\n",
 			sQuote(colname_x),
-		    length(which_non_iso),
+		    length(which_non_utc),
 			output_truncate(locs))
 		cat(message)
 

@@ -3,7 +3,9 @@
 #' Validate a .csv file.
 #'
 #' @param file A path to a .csv file to be validated.
-#' @param map A \code{data.frame} with a \code{header} (header name) &
+#' @param core_data_map A \code{data.frame} with a \code{header} (header name) &
+#' \code{required} (logical,; Is column required?).
+#' @param column_map A \code{data.frame} with a \code{header} (header name) &
 #' \code{required} (logical,; Is column required?).
 #' @param \ldots ignored.
 #' @return Prints a report to the console of tests for file type, comma broken

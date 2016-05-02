@@ -3,8 +3,9 @@
 #' Validates and Reports If Non-ASCII characters present
 #'
 #' @param data the data to be tested
+#' @param \ldots ignored
 #' @export
-vt_non_ASCII <- function(data,...){
+vt_non_ASCII <- function(data, ...){
 
     is_non_ASCII <- sapply(data, function(x) any(grepl("[[:cntrl:]]", suppressWarnings(stringi::stri_enc_toascii(x)))))
 

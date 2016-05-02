@@ -9,9 +9,9 @@ compare(xx, yy, fun)
 \arguments{
 \item{xx}{character vector to be coerced}
 
-\item{fun}{logical operator}
+\item{yy}{character vector to be coerced and compared}
 
-\item{yx}{character vector to be coerced and compared}
+\item{fun}{logical operator}
 }
 \description{
 Helper Function for vc_compare

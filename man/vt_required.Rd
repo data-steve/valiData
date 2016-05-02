@@ -18,9 +18,11 @@ required_report(ls, ...)
 
 \item{missing}{Values considered to be missing or null.}
 
+\item{prop.acceptable}{proportion of allowable missing}
+
 \item{file.name}{An optional file name for use in reporting.}
 
-\item{x}{A file or table validation function's (prefixed with \code{vf_} or
+\item{ls}{A file or table validation function's (prefixed with \code{vf_} or
 \code{vt_}) output.}
 
 \item{\ldots}{ignored.}

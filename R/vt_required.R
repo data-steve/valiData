@@ -8,6 +8,7 @@
 #' @param map A \code{data.frame} with a \code{header} (header name) &
 #' \code{required} (logical,; Is column required?).
 #' @param missing Values considered to be missing or null.
+#' @param prop.acceptable proportion of allowable missing
 #' @param file.name An optional file name for use in reporting.
 #' @return Returns a list of validation results.
 #' @rdname vt_required
@@ -23,7 +24,7 @@
 #' df[c(1, 4), c("drat", "cyl")] <- NA
 #' vt_required(df, map)
 #' required_report(vt_required(df, map))
-vt_required <- function(data, map, missing = c("", "NULL", "NA", "N/A", "na", "n/a"),prop.acceptable = 0, file.name = NULL){
+vt_required <- function(data, map, missing = c("", "NULL", "NA", "N/A", "na", "n/a"), prop.acceptable = 0, file.name = NULL){
 
     if (is.null(file.name)) file.name <- "The file"
     stopifnot(all(c("header", "required") %in% colnames(map)))
@@ -87,7 +88,7 @@ vt_required <- function(data, map, missing = c("", "NULL", "NA", "N/A", "na", "n
 #'
 #' \code{required_report} - Generates accomanying report.
 #'
-#' @param x A file or table validation function's (prefixed with \code{vf_} or
+#' @param ls A file or table validation function's (prefixed with \code{vf_} or
 #' \code{vt_}) output.
 #' @param \ldots ignored.
 #' @rdname vt_required

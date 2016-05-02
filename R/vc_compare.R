@@ -63,7 +63,7 @@ vc_compare <- function(x, y, comparison, colname_x = "the X column" ,
 #' Helper Function for vc_compare
 #'
 #' @param xx character vector to be coerced
-#' @param yx character vector to be coerced and compared
+#' @param yy character vector to be coerced and compared
 #' @param fun logical operator
 #' @export
 compare <- function(xx, yy, fun){

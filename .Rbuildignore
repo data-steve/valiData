@@ -2,3 +2,4 @@
 ^\.Rproj\.user$
 .DS_Store
 val_test.R
+.travis.yml

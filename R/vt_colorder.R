@@ -6,7 +6,6 @@
 #' @param data \code{\link[base]{data.frame}}.
 #' @param map A \code{data.frame} with a \code{header} (header name) &
 #' \code{required} (logical,; Is column required?).
-#' @param missing Values considered to be missing or null.
 #' @param file.name An optional file name for use in reporting.
 #' @return Returns a list of validation results.
 #' @rdname vt_colorder

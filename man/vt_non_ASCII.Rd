@@ -8,6 +8,8 @@ vt_non_ASCII(data, ...)
 }
 \arguments{
 \item{data}{the data to be tested}
+
+\item{\ldots}{ignored}
 }
 \description{
 Validates and Reports If Non-ASCII characters present

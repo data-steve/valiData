@@ -4,7 +4,7 @@
 #'
 #' @param x char vector
 #' @param prop.acceptable proportion of allowable null
-#' @param missing values null can take
+#' @param null values null can take
 #' @param required whether the vector in the table is required
 #' @param file.name name of file containing the table of vectors
 #' @export

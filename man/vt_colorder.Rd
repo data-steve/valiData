@@ -20,8 +20,6 @@ colorder_report(x, ...)
 \item{x}{A file or table validation function's (prefixed with \code{vf_} or
 \code{vt_}) output.}
 
-\item{missing}{Values considered to be missing or null.}
-
 \item{\ldots}{ignored.}
 }
 \value{

@@ -1,9 +1,10 @@
 #' Validate that a CSV's Is Properly Quoted
 #'
-#' \code{vt_comma_broken} - Validates that a .csv file has properly quoted character
+#' \code{vf_comma_broken} - Validates that a .csv file has properly quoted character
 #' columns (is not a broken .csv).
 #'
 #' @param path Path to a .csv file.
+#' @rdname vf_comma_broken
 #' @export
 vf_comma_broken <- function(path){
 
@@ -67,7 +68,7 @@ candidates_for_quotes <- function(path) {
 #' @param x A file or table validation function's (prefixed with \code{vf_} or
 #' \code{vt_}) output.
 #' @param \ldots ignored.
-#' @rdname vt_comma_broken
+#' @rdname vf_comma_broken
 #' @export
 comma_broken_report <- function(x, ...){
 

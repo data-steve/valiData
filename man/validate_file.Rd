@@ -9,7 +9,10 @@ validate_file(file, core_data_map, column_map, ...)
 \arguments{
 \item{file}{A path to a .csv file to be validated.}
 
-\item{map}{A \code{data.frame} with a \code{header} (header name) &
+\item{core_data_map}{A \code{data.frame} with a \code{header} (header name) &
+\code{required} (logical,; Is column required?).}
+
+\item{column_map}{A \code{data.frame} with a \code{header} (header name) &
 \code{required} (logical,; Is column required?).}
 
 \item{\ldots}{ignored.}

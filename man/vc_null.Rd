@@ -12,11 +12,11 @@ vc_null(x, prop.acceptable = 0, null = c("", "NULL"), required = FALSE,
 
 \item{prop.acceptable}{proportion of allowable null}
 
+\item{null}{values null can take}
+
 \item{required}{whether the vector in the table is required}
 
 \item{file.name}{name of file containing the table of vectors}
-
-\item{missing}{values null can take}
 }
 \description{
 Checks For Null Elements In Vector

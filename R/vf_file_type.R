@@ -1,17 +1,16 @@
 #' Checks If File CSV
-#' 
+#'
 #' Checks If File CSV
-#' 
+#'
 #' @param file path to file
 #' @param type extension of file representing type
-
-#' @rdname vf_empty_subfolders
 #' @export
-#' @examples 
+#' @rdname vf_file_type
+#' @examples
 #' x <- vf_file_type("broken_csv.R")           #  FALSE
 #' x <- vf_file_type("broken_csv.R", type="R") #  TRUE
 #' x <- vf_file_type("hello.csv")              #  TRUE
-#' report_file_type(x) 
+#' report_file_type(x)
 vf_file_type <- function(file, type= "csv") {
 	list(
 		valid = tools::file_ext(file) == type,  ## logical did enough (proportion) elements validate
@@ -26,16 +25,16 @@ vf_file_type <- function(file, type= "csv") {
 
 #' @param x output of \code{vf_file_type()}
 #' @param \ldots extra parameters
-#' @rdname vf_empty_subfolders
 #' @export
+#' @rdname vf_file_type
 report_file_type <- function(x, ...){
-	
+
 	if (!isTRUE(x[["valid"]])) {
 		message <- ""
 		class(message) <- c("valid_report", "character")
 		message
-		
-		
+
+
 	} else {
 		message <- sprintf(
 			paste0(header("File Type = CSV Test"),
@@ -51,6 +50,6 @@ report_file_type <- function(x, ...){
 		class(message) <- c("invalid_report", "character")
 		message
 	}
-	
-	
+
+
 }

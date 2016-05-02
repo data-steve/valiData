@@ -12,9 +12,9 @@ vc_regex <- function(x, regex , colname_x = "the column"){
 
 	original_na <- is.na(x)
 	is_regex <- stringi::stri_detect_regex(x, regex)
-	are_regex <- all(is_cregex|is.na(x))
+	are_regex <- all(is_regex|is.na(x))
 
-	if (!are_credits ){
+	if (!are_regex ){
 		message <- sprintf(
 			"The following rows of %s do not follow the format provided:\n\n%s\n\n\n\n",
 			sQuote(colname_x)
