@@ -1,6 +1,6 @@
 #' Validate that a CSV's Columns Are Correctly Ordered
 #'
-#' \code{vt_colorder} - Validates that a .csv file's
+#' \code{vt_column_order} - Validates that a .csv file's
 #' \code{\link[base]{data.frame}} columns are ordered as expected.
 #'
 #' @param data \code{\link[base]{data.frame}}.
@@ -8,7 +8,7 @@
 #' \code{required} (logical,; Is column required?).
 #' @param file.name An optional file name for use in reporting.
 #' @return Returns a list of validation results.
-#' @rdname vt_colorder
+#' @rdname vt_column_order
 #' @export
 #' @examples
 #' set.seed(10)
@@ -17,9 +17,9 @@
 #'     required = sample(c(TRUE, FALSE), ncol(mtcars), TRUE), stringsAsFactors = FALSE
 #' )
 #'
-#' vt_colorder(mtcars, map)
-#' str(vt_colorder(mtcars, map))
-vt_colorder <- function(data, map, file.name = NULL){
+#' vt_column_order(mtcars, map)
+#' str(vt_column_order(mtcars, map))
+vt_column_order <- function(data, map, file.name = NULL){
 
     if (is.null(file.name)) file.name <- "The file"
 
@@ -37,10 +37,10 @@ vt_colorder <- function(data, map, file.name = NULL){
 	colorder <- list(
 		valid = nrow(exp_vs_act) == 0,                          ## logical did enough (proportion) elements validate
 		locations =  exp_vs_act,
-		call = "vt_colorder",                                         ## function name that was called
+		call = "vt_column_order",                                         ## function name that was called
 		file_name = file.name
 	)
-	class(colorder) <-'vt_colorder'
+	class(colorder) <-'vt_column_order'
 	colorder
 }
 
@@ -52,15 +52,15 @@ cbind_fill <- function(...){
         rbind(x, matrix(, n-nrow(x), ncol(x)))))
 }
 
-#' Prints a vt_colorder Object
+#' Prints a vt_column_order Object
 #'
-#' Prints a vt_colorder object
+#' Prints a vt_column_order object
 #'
-#' @param x A vt_colorder object.
+#' @param x A vt_column_order object.
 #' @param \ldots ignored.
-#' @method print vt_colorder
+#' @method print vt_column_order
 #' @export
-print.vt_colorder <- function(x, ...){
+print.vt_column_order <- function(x, ...){
 
 	if (!isTRUE(x[["valid"]])) {
 

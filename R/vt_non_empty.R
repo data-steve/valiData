@@ -43,8 +43,8 @@ print.vt_non_empty <- function(x, ...){
 	if (!isTRUE(x[["valid"]])) {
 
 		message <- sprintf(
-			paste0(header("Duplicated Rows Test"),
-				"'%s' appears to have no rows.  Please inspect this file and add 1 or more rows.\n\n\n\n"
+			paste0(header("Table Not Empty"),
+				"'%s' appears to have no rows.  Please inspect this file and add 1 or more rows.\n We cannot run any further tests on this file until you do.\n\n\n\n"
 			),
 			x[["file_name"]]
 		)

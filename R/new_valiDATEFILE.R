@@ -20,44 +20,76 @@ validate_file <- function(path, file_name="academic", map=test,...){
             data[broken_csv[["locations"]][["rows"]]-1, ] <- NA
         }
 
-        has_header <- vt_header(data, file.name=file_name, map)
-         if (map[["table_level"]][["enough_cols"]]){
-             enough_cols <- vt_enough_cols(data, map, file.name=file_name)
-         } else {
-             enough_cols <- NULL
-         }
-
-        spaced_colnames <- vt_spaced_colnames(data, file.name=base_file)
-        correct_colnames  <- vt_colnames(data, core_data_map, file.name=base_file, ignore.case=TRUE)
-        non_empty <- vt_non_empty(data, file.name=base_file)  ## added non_empty report 11/20/15 Tyler
-        print(non_empty_report(non_empty))                         ## added non_empty report 11/20/15 Tyler
-        if (!non_empty[["valid"]]) return()
-
-
-        has_required_cols <- vt_required(data, core_data_map, file.name=base_file)
-        column_order <- vt_colorder(data, core_data_map, file.name=base_file)
-
-        ## grab info for column names ignoring case and space
-        if (!correct_colnames[["valid"]]){
-            correct_colnames_ignore_case_space <- vt_colnames(data, core_data_map, file.name=base_file, ignore.case=TRUE, ignore.space=TRUE)
+        if (map[["table_level"]][["header"]]){
+            header <- vt_header(data, map, file.name=file_name)
+        } else {
+            header <- NULL
         }
 
-        # print reports
+        if (map[["table_level"]][["spaced_columns"]]){
+            spaced_columns <- vt_spaced_columns(data, map, file.name=file_name)
+        } else {
+            spaced_columns <- NULL
+        }
 
-        # decide between print 4 or 5 reports based on whether
-        print(ncols_report(enough_cols))
-        print(colnames_report(correct_colnames))
-        print(spaced_colnames_report(spaced_colnames))
-        print(required_report(has_required_cols))
+        if (ignore_case){
+            if (map[["table_level"]][["column_names"]]){
+                column_names <- vt_column_names(data, map, file.name=file_name, ignore.case=TRUE)
+            } else {
+                column_names <- NULL
+            }
+        } else {
+            if (map[["table_level"]][["column_names"]]){
+                column_names <- vt_column_names(data, map, file.name=file_name)
+            } else {
+                column_names <- NULL
+            }
+        }
 
-        ## check for duplicated rows
-        data <- data[rowSums(!t(apply(data, 1, is.na))) != 0, ]
 
-        duplicated_rows <- vt_duplicated_rows(data, file.name=base_file)
-        print(duplicated_rows_report(duplicated_rows))
+        ## grab info for column names ignoring case and space
+        if (!column_names[["valid"]]){
+            column_names_ignore_case_space <- vt_column_names(data, map, file.name=file_name, ignore.case=TRUE, ignore.space=TRUE)
+        }
+
+
+        if (map[["table_level"]][["non_empty"]]){
+            non_empty <- vt_non_empty(data, map, file.name=file_name)
+        } else {
+            non_empty <- NULL
+        }
+        if (non_empty[["valid"]]) {
+            return(list(broken_csv, header, spaced_colums, column_names, non_empty))
+        }
+
+
+        if (map[["table_level"]][["required_columns"]]){
+            required_columns <- vt_required_columns(data, map, file.name=file_name)
+        } else {
+            required_columns <- NULL
+        }
+
+        if (map[["table_level"]][["columns_order"]]){
+            columns_order <- vt_columns_order(data, map, file.name=file_name)
+        } else {
+            columns_order <- NULL
+        }
+
+
+
+        if (map[["table_level"]][["duplicated_rows"]]){
+            duplicated_rows <- vt_duplicated_rows(data, map, file.name=file_name)
+        } else {
+            duplicated_rows <- NULL
+        }
 
         # check for nonASCII characters
-        non_ASCII <- vt_non_ASCII(data)
+        if (map[["table_level"]][["non_ASCII"]]){
+            non_ASCII <- vt_non_ASCII(data, map, file.name=file_name)
+        } else {
+            non_ASCII <- NULL
+        }
+
         if (non_ASCII) {
             data[] <- lapply(data, function(x) gsub("[[:cntrl:]]", "", suppressWarnings(stringi::stri_enc_toascii(x))))
         }
@@ -65,7 +97,7 @@ validate_file <- function(path, file_name="academic", map=test,...){
         #-------------------------------------# column level mapping [START] added by Tyler 11/20/15
 
         cat(header("Column-Wise Testing"))
-        columns_as_expected <- all(unlist(vc_column_apply(data, column_map)))
+        columns_as_expected <- all(unlist(vc_column_apply(data, map[["column_level"]])))
 
         #xxx
         if (columns_as_expected) {
@@ -73,16 +105,14 @@ validate_file <- function(path, file_name="academic", map=test,...){
         }
         #------------------------------------# column level mapping [END] added by Tyler 11/20/15
 
-        if (duplicated_rows[["valid"]] && enough_cols[["valid"]] &&
-            correct_colnames[["valid"]] && has_required_cols[["ls"]][["valid"]] &&
-            broken_csv[["valid"]] && columns_as_expected && !non_ASCII){   # tyler added `columns_as_expected` for vc_ tests on 11/20/15
-            print(report_all_is_well())
+        list(file_type, header, spaced_columns, column_names,
+             column_names_ignore_case_space, non_empty, required_columns,
+             column_order, duplicated_rows, non_ASCII, columns_as_expected)
         }
 
     } else {
 
-        # report on not csv
-        report_file_type(file_type)
+        list(file_type)
     }
 
 }

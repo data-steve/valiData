@@ -23,7 +23,8 @@ vt_duplicated_rows <- function(data, file.name = NULL) {
 
 	if (is.null(file.name)) file.name <- "The file"
 
-	dups <- duplicated(data)
+    not_missing <- rowSums(!t(apply(data, 1, is.na))) != 0
+	dups <- duplicated(data) & not_missing  #added the part after '&' to exclude NA from dup testing 5/18/2016
 
 	if (sum(dups)>0){
 
@@ -32,20 +33,11 @@ vt_duplicated_rows <- function(data, file.name = NULL) {
 
 		data.table::as.data.table(data.table::copy(data))[, c("GRP", "N") := .(.GRP, .N), by = names(data)][
 		    N > 1, list(list(.I)), by = GRP][["V1"]] %>%
-		    sapply(function(x) paste0("(", paste(x, collapse=","), ")", sep="")) %>%
+		    {.[sapply(., function(x){
+		        !all(x %in% which(!not_missing))
+		        })]} %>%
+		    sapply(function(x) paste0("(", paste(1 + x, collapse=","), ")", sep="")) %>%
 		    paste(collapse=" ") -> dup_groups
-
-# - Added data.table reporting of duplicate rows because dplyr approach couldn't
-#   handle duplicate column names:
-#		http://stackoverflow.com/questions/34314490/match-group-duplicate-rows-indices
-#
-# 		dplyr::add_rownames(data) %>%
-# 		    setNames(paste0(colnames(.), 1:ncol(.))) %>%
-# 		    dplyr::group_by_(.dots= names(.)) %>%
-# 		    dplyr::filter(n()>1) %>%
-# 		    dplyr::summarise(rn= paste(rowname, collapse=", ")) %>%
-# 		    .$rn %>%
-# 		    paste0("(", ., ")", collapse="") -> dup_groups
 
 	} else {
 
