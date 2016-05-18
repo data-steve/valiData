@@ -41,7 +41,7 @@ valiData <- function(path, core_data_map, column_map, delete = TRUE) {
 		all_subpaths <- get_paths_root_to_files(path)
 
 		# report on which folders had no csv files to report on
-		print(report_empty_subfolders(vf_empty_subfolders(all_subpaths, csv_subpaths)))
+		print(report_empty_subfolders(vd_empty_subfolders(all_subpaths, csv_subpaths)))  #shouldn't need thie csv_subpaths 5/10/16
 
 		invisible(lapply(csv_subpaths, function(x){
 			map_folder <- basename(dirname(x))

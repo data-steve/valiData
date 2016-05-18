@@ -20,14 +20,14 @@
 #' )
 #'
 #' vt_colnames(mtcars, map)
-#' colnames_report(vt_colnames(mtcars, map))
+#' str(vt_colnames(mtcars, map))
 vt_colnames <- function(data, map, ignore.case = FALSE, ignore.space = FALSE, file.name = NULL){
 
     if (is.null(file.name)) file.name <- "The file"
-    stopifnot(all(c("header", "required") %in% colnames(map)))
+
 
 	act_nms <- actual_names <- colnames(data)
-	exp_nms <- expected_names <- map[["header"]]
+	exp_nms <- expected_names <- names(map[["column_level"]][[file.name]])
 
 	if (ignore.case) {
 		actual_names <- tolower(actual_names)
@@ -47,7 +47,7 @@ vt_colnames <- function(data, map, ignore.case = FALSE, ignore.space = FALSE, fi
 
 	nullify <- function(x) {if(length(x) == 0) NULL else x}
 
-	list(
+	colnms <- list(
 		valid = length(not_found) == 0 ,                          ## logical did enough (proportion) elements validate
 		locations =  list(                                            ## location of those not validating
 			missing_headers = nullify(not_found),
@@ -59,19 +59,20 @@ vt_colnames <- function(data, map, ignore.case = FALSE, ignore.space = FALSE, fi
 		ignore_case = ignore.case,
 		ignore_space = ignore.space
 	)
+	class(colnms) <- 'vt_colnames'
+	colnms
 }
 
 
-#' Validate that a CSV's Columns Are Named Correctly
+#' Prints a vt_colnames Object
 #'
-#' \code{colnames_report} - Generates accomanying report.
+#' Prints a vt_colnames object
 #'
-#' @param x A file or table validation function's (prefixed with \code{vf_} or
-#' \code{vt_}) output.
+#' @param x A vt_colnames object.
 #' @param \ldots ignored.
-#' @rdname vt_colnames
+#' @method print vt_colnames
 #' @export
-colnames_report <- function(x, ...){
+print.vt_colnames <- function(x, ...){
 
 	if (!isTRUE(x[["valid"]])) {
 
@@ -133,13 +134,12 @@ colnames_report <- function(x, ...){
 	        paste(paste0("\t- ", x[["locations"]][["unexpected_headers"]]), collapse = "\n")
 		)
 
-
 		class(message) <- c('invalid_report', "character")
-		message
+		print(message)
 	} else {
 		message <- ""
 		class(message) <- c("valid_report", "character")
-		message
+		print(message)
 	}
 
 }

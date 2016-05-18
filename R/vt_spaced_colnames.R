@@ -11,30 +11,31 @@
 #' @examples
 #' df <- mtcars; colnames(df)[c(1, 5)]  <- c("split header", "foo bar"); df
 #' vt_spaced_colnames(df)
-#' spaced_colnames_report(vt_spaced_colnames(df))
+#' str(vt_spaced_colnames(df))
 vt_spaced_colnames <- function(data, file.name = NULL){
 
     if (is.null(file.name)) file.name <- "The file"
 	locs <- grep(" ", trimws(colnames(data)))
 
-	list(
+	spcols <- list(
 		valid = length(locs) == 0,                          ## logical did enough (proportion) elements validate
 		locations =  colnames(data)[locs],
 		call = "vt_spaced_colnames",                                         ## function name that was called
 		file_name = file.name
 	)
+	class(spcols) <- 'vt_spaced_colnames'
+	spcols
 }
 
-#' Validate that a CSV's Column Names Contain No Spaces
+#' Prints a vt_spaced_colnames  Object
 #'
-#' \code{spaced_colnames_report} - Generates accomanying report.
+#' Prints a vt_spaced_colnames  object
 #'
-#' @param x A file or table validation function's (prefixed with \code{vf_} or
-#' \code{vt_}) output.
+#' @param x A vt_spaced_colnames  object.
 #' @param \ldots ignored.
-#' @rdname vt_spaced_colnames
+#' @method print vt_spaced_colnames
 #' @export
-spaced_colnames_report <- function(x, ...){
+print.vt_spaced_colnames <- function(x, ...){
 
 	if (!isTRUE(x[["valid"]])) {
 
@@ -50,11 +51,11 @@ spaced_colnames_report <- function(x, ...){
 		)
 
 		class(message) <- c('invalid_report', "character")
-		message
+		print(message)
 	} else {
 		message <- ""
 		class(message) <- c("valid_report", "character")
-		message
+		print(message)
 	}
 
 }

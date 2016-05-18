@@ -7,8 +7,8 @@
 #' @param missing values non-response can take
 #' @param required whether the vector in the table is required
 #' @param file.name name of file containing the table of vectors
-#' @export
-#' @examples set.seed(10)
+#' @examples
+#' set.seed(10)
 #' x <- sample(c(NA, rep(LETTERS[1:10], 100)), 10000, TRUE)
 #' vc_non_response(x)
 vc_non_response <- function(x, prop.acceptable = 0,

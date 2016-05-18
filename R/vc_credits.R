@@ -1,26 +1,57 @@
-#' Validates and Reports If Formatted Like Credit
+#' Validates and If Formatted Like Credit
 #'
-#' Validates and Reports If Formatted Like Credit
+#' Validates and If Formatted Like Credit
 #'
-#' @param x character vector
-#' @param colname_x vector's colname
+#' @param data A data frame.
+#' @param x Column name from \code{data} (character string).
+#' @param \dots ignored.
 #' @export
-vc_credits <- function(x, colname_x = "the column"){
+#' @examples
+#' dat <- data.frame(
+#'     credits = c(NA, 1.21, 1.34, '4.0', '5.0', .1, 12, 1111),
+#'     stringsAsFactors = FALSE
+#' )
+#' vc_credits(dat, 'credits')
+vc_credits <- function(data, x, ...){
 
-	x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
+    ## select the column & replace missing with NA
+    col <- sub_out_missing(data[[x]])
 
-	original_na <- is.na(x)
-	is_credit <- stringi::stri_detect_regex(x,"[0-9]{1,2}\\.?[0-9]{0,2}")
-	are_credits <- all(is_credit|original_na)
+    ## record missing (NA)
+    is_na <- is.na(col)
 
-	if (!are_credits ){
+    ## expression to validate against (elementwise)
+	is_valid <-  stringi::stri_detect_regex(col, "^[0-9]{1,3}(\\.[0-9]{0,2})?$")# this could be tighter
+
+	## valid columnwise: Are all elelemnts either valid or NA?
+	are_valid <- all(is_valid|is_na)
+
+	## generate the comment
+	if (!are_valid){
 		message <- sprintf(
 			"The following rows of %s do not follow the format of allowable credits:\n\n%s\n\n\n\n",
-			sQuote(colname_x)
-			, output_truncate(which(!is_credit & !original_na)+1))
-		cat(message)
-
+			sQuote(x),
+		    output_truncate(which(!(is_valid|is_na)))
+		)
+	} else {
+	    message <- NULL
 	}
 
-	return(are_credits)
+    ## construct vc list & class
+    vc_output <- list(
+        column_name = x,
+        valid = are_valid,
+        message = message,
+        passing = is_valid,
+        missing = is_na,
+        call = 'vc_credits'
+    )
+
+    class(vc_output) <- 'vc'
+    vc_output
 }
+
+
+
+
+

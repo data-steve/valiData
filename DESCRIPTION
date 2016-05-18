@@ -12,7 +12,10 @@ Depends:
 Imports:
     parsedate,
     readr,
+    readxl,
+    stats,
     stringi,
+    tools,
     magrittr,
     data.table
 Date: 2016-05-02

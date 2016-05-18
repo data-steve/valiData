@@ -23,28 +23,21 @@
 #' df <- mtcars
 #' df[c(1, 4), c("drat", "cyl")] <- NA
 #' vt_required(df, map)
-#' required_report(vt_required(df, map))
-vt_required <- function(data, map, missing = c("", "NULL", "NA", "N/A", "na", "n/a"), prop.acceptable = 0, file.name = NULL){
+#' str(vt_required(df, map))
+vt_required <- function(data, map, missing = c("", "NULL", "NA", "N/A", "na", "n/a"),
+    prop.acceptable = 0, file.name = NULL){
 
     if (is.null(file.name)) file.name <- "The file"
-    stopifnot(all(c("header", "required") %in% colnames(map)))
-    prop.acceptable <- 0
 
-    map_cols <- map[["header"]]
+    map_cols <- map[['table_level']][['required_cols']][[file.name]]
+    required <- tolower(gsub("\\s+", "", map_cols))
 	colnames(data) <- gsub("\\s+", "", tolower(colnames(data)))
-	map[["header"]] <- gsub("\\s+", "", tolower(map_cols))
-	#map[["required"]][is.na(map[["required"]])] <- "FALSE"  # maybe remove once map gets improved
-
-	required <- map[['header']][as.logical(map[["required"]])]
-	map_cols <- map_cols[as.logical(map[["required"]])]
-	#fix the map because Tyler should never no never have hard-code a crutch instead of really fixing this problem
 
     # don't assess columns unless present in both data and map
 	required_columns <- data[, intersect(required, colnames(data)), drop=FALSE]
 
 	# for campus labs the following is an artifact of bad mapping...knowing what's required
 	# grep("[2-90]", required, value = TRUE, invert=TRUE)
- # browser()
 	required_list <- invisible(lapply(required_columns, vc_non_response,
 		prop.acceptable = prop.acceptable, missing = missing, required = TRUE))
 
@@ -66,7 +59,7 @@ vt_required <- function(data, map, missing = c("", "NULL", "NA", "N/A", "na", "n
 
 
 	miss_cols <- required_df[c("cols", "required", "valid")]
-
+browser()
 	list(cols =  map_cols[is.element(gsub("\\s+", "", tolower(map_cols)), names(required_columns))]
 		 , valid = all(required_df[["valid"]])
 		 , locations =  sort(unique(unlist(lapply(required_list, function(x) x[["locations"]] ) )))
@@ -79,21 +72,22 @@ vt_required <- function(data, map, missing = c("", "NULL", "NA", "N/A", "na", "n
 		 , missing_columns = miss_cols[miss_cols[["required"]] & !miss_cols[["valid"]], "cols"]
 	) -> required_list
 
-	return(list(df = required_df, ls = required_list ))
+	req <- list(df = required_df, ls = required_list )
+	class(req) <- 'vt_required'
+	req
 
 }
 
 
-#' Validate that a CSV Has No Missing/Null Values in Required Fields
+#' Prints a vt_required  Object
 #'
-#' \code{required_report} - Generates accomanying report.
+#' Prints a vt_required  object
 #'
-#' @param ls A file or table validation function's (prefixed with \code{vf_} or
-#' \code{vt_}) output.
+#' @param x A vt_required  object.
 #' @param \ldots ignored.
-#' @rdname vt_required
+#' @method print vt_required
 #' @export
-required_report <- function(ls, ...) {
+print.vt_required <- function(ls, ...) {
 	x <- ls[["ls"]]
 
 	if (!isTRUE(x[["valid"]])) {
@@ -109,11 +103,11 @@ required_report <- function(ls, ...) {
 		)
 
 		class(message) <- c("invalid_report", "character")
-		message
+		print(message)
 	} else {
 		message <- ""
 		class(message) <- c("valid_report", "character")
-		message
+		print(message)
 	}
 
 }

@@ -18,15 +18,14 @@
 #' )
 #'
 #' vt_colorder(mtcars, map)
-#' colorder_report(vt_colorder(mtcars, map))
+#' str(vt_colorder(mtcars, map))
 vt_colorder <- function(data, map, file.name = NULL){
 
     if (is.null(file.name)) file.name <- "The file"
-    stopifnot(all(c("header", "required") %in% colnames(map)))
 
-	exp_vs_act <- setNames(data.frame(
+	exp_vs_act <- stats::setNames(data.frame(
 		cbind_fill(
-			map[["header"]],
+			names(map[["column_level"]][[file.name]]),
 		    colnames(data)
 	    ),
 		stringsAsFactors = FALSE
@@ -35,12 +34,14 @@ vt_colorder <- function(data, map, file.name = NULL){
     exp_vs_act[["diff"]] <- apply(exp_vs_act, 1, function(x) {tolower(x[["Expected"]]) == tolower(x[["Actual"]])})
     exp_vs_act <- exp_vs_act[is.na(exp_vs_act[["diff"]]) | !exp_vs_act[["diff"]], c("Expected", "Actual")]
 
-	list(
+	colorder <- list(
 		valid = nrow(exp_vs_act) == 0,                          ## logical did enough (proportion) elements validate
 		locations =  exp_vs_act,
 		call = "vt_colorder",                                         ## function name that was called
 		file_name = file.name
 	)
+	class(colorder) <-'vt_colorder'
+	colorder
 }
 
 cbind_fill <- function(...){
@@ -51,16 +52,15 @@ cbind_fill <- function(...){
         rbind(x, matrix(, n-nrow(x), ncol(x)))))
 }
 
-#' Validate that a CSV's ColumnsAre Correctly Ordered
+#' Prints a vt_colorder Object
 #'
-#' \code{colorder_report} - Generates accomanying report.
+#' Prints a vt_colorder object
 #'
-#' @param x A file or table validation function's (prefixed with \code{vf_} or
-#' \code{vt_}) output.
+#' @param x A vt_colorder object.
 #' @param \ldots ignored.
-#' @rdname vt_colorder
+#' @method print vt_colorder
 #' @export
-colorder_report <- function(x, ...){
+print.vt_colorder <- function(x, ...){
 
 	if (!isTRUE(x[["valid"]])) {
 
@@ -82,11 +82,11 @@ colorder_report <- function(x, ...){
 		)
 
 		class(message) <- c('invalid_report', "character")
-		message
+		print(message)
 	} else {
 		message <- ""
 		class(message) <- c("valid_report", "character")
-		message
+		print(message)
 	}
 
 }

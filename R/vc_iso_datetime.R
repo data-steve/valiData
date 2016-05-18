@@ -2,37 +2,61 @@
 #'
 #' Validates and Reports If ISO 8601
 #'
-#' @param x character vector
-#' @param colname_x vector's colname
+#' @param data A data frame.
+#' @param x Column name from \code{data} (character string).
+#' @param \dots ignored.
 #' @export
-vc_iso_datetime <- function(x, colname_x = "the column"){
+#' @examples
+#' dat <- data.frame(
+#'     start = c("2016-01-01T09", "R2D2-3CPO", sprintf("2016-04-%sT09", 12:19), NA),
+#'     end = c(NA, sprintf("2016-01-%sT09", 11:20)),
+#'     stringsAsFactors = FALSE
+#' )
+#'
+#' vc_iso_datetime(dat, 'start')
+#' vc_iso_datetime(dat, 'end')
+vc_iso_datetime <- function(data, x, ...){
 
+    ## select the column & replace missing with NA
+    col <- sub_out_missing(data[[x]])
 
-	x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
+    ## record missing (NA)
+    is_na <- is.na(col)
 
-	original_na <- is.na(x)
-	x[!is.na(x)] <- parsedate::parse_iso_8601(trimws(x[!is.na(x)]))
-	locs <- which_non_iso <- setdiff(which(is.na(x)), which(original_na)) #Tyler switched order of these args on 12/2/15
-	are_iso_datetimes <- all(length(which_non_iso)==0)
+    ## expression to validate against (elementwise)
+    col[!is_na] <- parsedate::parse_iso_8601(trimws(col[!is_na]))
+    is_valid <- !c(is.na(col) & !is_na)
 
-	if (!are_iso_datetimes ){
+	## valid columnwise: Are all elelemnts either valid or NA?
+	are_valid <- all(is_valid|is_na)
+
+	## generate the comment
+	if (!are_valid){
 		message <- sprintf(
-			"%s contains %s rows that do not follow the ISO 8601 date format:\n\n%s\n\n\n\n"
-			, sQuote(colname_x)
-			, length(which_non_iso)
-			, output_truncate(locs))
-		cat(message)
-
+			"%s contains %s rows that do not follow the ISO 8601 date format:\n\n%s\n\n\n\n",
+			sQuote(x),
+		    length(!(is_valid|is_na)),
+		    output_truncate(which(!(is_valid|is_na)))
+		)
+	} else {
+	    message <- NULL
 	}
-	return(are_iso_datetimes)
 
+    ## construct vc list & class
+    vc_output <- list(
+        column_name = x,
+        valid = are_valid,
+        message = message,
+        passing = is_valid,
+        missing = is_na,
+        call = 'vc_iso_datetime'
+    )
+
+    class(vc_output) <- 'vc'
+    vc_output
 }
 
 
 
-###
-#parsedate::parse_iso_8601(x[8385:8385])
-# parsedate::parse_iso_8601(x)
-# head(x)
 
 

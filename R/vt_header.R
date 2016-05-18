@@ -20,33 +20,34 @@
 #'
 #' df <- mtcars; colnames(df) <- mtcars[1, ]
 #' vt_header(df, map)
-#' header_report(vt_header(df, map))
+#' str(vt_header(df, map))
 vt_header <- function(data, map, file.name = NULL){
 
     if (is.null(file.name)) file.name <- "The file"
 
-    list(
-        valid = sum(colnames(data) %in% map[["header"]]) > 0,  ## logical did enough (proportion) elements validate
+    headr <- list(
+        valid = sum(colnames(data) %in% names(map[["column_level"]][[file.name]])) > 0,  ## logical did enough (proportion) elements validate
         locations = NULL,                        ## location of those not validating
         call = "vt_header",                        ## function name that was called
         file_name = file.name,
-        expected_header = map[["header"]],
+        expected_header = names(map[["column_level"]][[file.name]]),
         actual_header = colnames(data)
     )
+    class(headr) <- 'vt_header'
+    headr
 
 }
 
 
-#' Validate that a CSV's has N Columns
+#' Prints a vt_duplicated_rows Object
 #'
-#' \code{header_report} - Generates accomanying report.
+#' Prints a vt_duplicated_rows object
 #'
-#' @param x A file or table validation function's (prefixed with \code{vf_} or
-#' \code{vt_}) output.
+#' @param x A vt_duplicated_rows object.
 #' @param \ldots ignored.
-#' @rdname vt_header
+#' @method print vt_duplicated_rows
 #' @export
-header_report <- function(x, ...){
+print.vt_header <- function(x, ...){
 
     if (!isTRUE(x[["valid"]])) {
 
@@ -67,11 +68,11 @@ header_report <- function(x, ...){
         )
 
         class(message) <- c("invalid_report", "character")
-        message
+        print(message)
     } else {
         message <- ""
         class(message) <- c("valid_report", "character")
-        message
+        print(message)
     }
 
 }

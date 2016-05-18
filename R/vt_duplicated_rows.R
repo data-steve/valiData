@@ -13,7 +13,7 @@
 #' @examples
 #' vt_duplicated_rows(CO2)
 #' vt_duplicated_rows(CO2[, 1:3])
-#' duplicated_rows_report(vt_duplicated_rows(CO2[, 1:3]))
+#' str(vt_duplicated_rows(CO2[, 1:3]))
 vt_duplicated_rows <- function(data, file.name = NULL) {
 
     . <- .GRP <- .N <- N <- .I <- GRP <- NULL
@@ -54,7 +54,7 @@ vt_duplicated_rows <- function(data, file.name = NULL) {
 		dup_groups <- NULL
 	}
 	# browser()
-	list(
+	duprows <- list(
 		valid = sum(dups) == 0,       ## logical did enough (proportion) elements validate
 		locations = dup_groups,       ## location of those not validating
 		# dup_groups = dup_groups,
@@ -62,21 +62,22 @@ vt_duplicated_rows <- function(data, file.name = NULL) {
 		call = "vt_duplicated_rows",  ## function name that was called
 		file_name = file.name
 	)
+	class(duprows) <- 'vt_duplicated_rows'
+	duprows
 
 }
 
 
 
-#' Validate a CSV Contains No Duplicate Rows
+#' Prints a vt_duplicated_rows Object
 #'
-#' \code{report_duplicated_rows} - Generates accomanying report.
+#' Prints a vt_duplicated_rows object
 #'
-#' @param x A file or table validation function's (prefixed with \code{vf_} or
-#' \code{vt_}) output.
+#' @param x A vt_duplicated_rows object.
 #' @param \ldots ignored.
-#' @rdname vt_duplicated_rows
+#' @method print vt_duplicated_rows
 #' @export
-duplicated_rows_report <- function(x, ...){
+print.vt_duplicated_rows <- function(x, ...){
 
 	if (!isTRUE(x[["valid"]])) {
 
@@ -106,11 +107,11 @@ duplicated_rows_report <- function(x, ...){
 	        locs
 		)
 		class(message) <- c("invalid_report", "character")
-		message
+		print(message)
 	} else {
 		message <- ""
 		class(message) <- c("valid_report", "character")
-		message
+		print(message)
 	}
 
 

@@ -2,29 +2,57 @@
 #'
 #' Validates and Reports If Unique
 #'
-#' @param x character vector
-#' @param colname_x vector's colname
+#' @param data A data frame.
+#' @param x Column name from \code{data} (character string).
+#' @param \dots ignored.
 #' @export
-vc_unique <- function(x,  colname_x = "the column"  ){
+#' @examples
+#' dat <- data.frame(
+#'     id = as.character(c(1:5, NA, 1, 4, 10:14)),
+#'     guid = c(1:12, NA)
+#' )
+#' vc_unique(dat, 'id')
+#' vc_unique(dat, 'guid')
+vc_unique <- function(data, x, regex, ...){
 
-    x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
+    ## select the column & replace missing with NA
+    col <- sub_out_missing(data[[x]])
 
-    is_unique <- duplicated(x)
-    are_unique <- all(!is_unique|is.na(x))
+    ## record missing (NA)
+    is_na <- is.na(col)
 
-    if (!are_unique){
-        locs <- which(is_unique)
+    ## expression to validate against (elementwise)
+    is_valid <- !duplicated(col)
+    is_valid[is_na] <- NA
 
-        message <- sprintf(
-            "%s contains %s duplicates.\nThe following rows are duplicates:\n\n%s\n\n\n\n",
-            sQuote(colname_x)
-            , sum(is_unique)
-            , output_truncate(locs))
-        cat(message)
+	## valid columnwise: Are all elelemnts either valid or NA?
+	are_valid <- all(is_valid|is_na)
 
-    }
+	## generate the comment
+	if (!are_valid){
+		message <- sprintf(
+			"%s contains %s duplicates.\nThe following rows are duplicates:\n\n%s\n\n\n\n",
+			sQuote(x),
+		    sum(!is_valid, na.rm =TRUE),
+		    output_truncate(which(!(is_valid|is_na)))
+		)
+	} else {
+	    message <- NULL
+	}
 
-    return(are_unique)
+    ## construct vc list & class
+    vc_output <- list(
+        column_name = x,
+        valid = are_valid,
+        message = message,
+        passing = is_valid,
+        missing = is_na,
+        call = 'vc_unique'
+    )
+
+    class(vc_output) <- 'vc'
+    vc_output
 }
+
 
 

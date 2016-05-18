@@ -2,31 +2,30 @@
 #'
 #' Switch Method Based On Type Of Data in Column
 #'
-#' @param x character vector
+#' @param data A data frame.
+#' @param x Column name from \code{data} (character string).
 #' @param type :  date_utc, datetime, email, enumerated, integer, logical, numeric, zipcode, cipcode
 #' guid,enumerated are handled outside by \code{vc_unique} and \code{vc_categories}
-#' @param colname_x the vector's colname
+#' @param \dots ignored.
 #' @export
-
-vc_type <- function(x, type, colname_x = "the column"){
+vc_type <- function(data, x, type, ...){
 
 	# message <- function(x, type, colname_x = "the column"  ) {
     # browser()
 		switch(type,
 			   "guid" = return(NULL),
                # "guid" = TRUE,
-			   "credit" = vc_credits(x, colname_x = colname_x  ),
-			   "datetime" = vc_iso_datetime(x, colname_x = colname_x  ),
-			   "date_utc" = vc_utc_date(x, colname_x = colname_x  ),
-			   "cip" = vc_cipcode(x, colname_x = colname_x  ),
-			   "email" = vc_email(x, colname_x = colname_x  ),
-			   "integer" = vc_integer(x, colname_x = colname_x  ),
-			   "zip" = vc_zipcode(x, colname_x = colname_x  ),
-			   "logical" = vc_categories(x, levels = c("true", "false"), colname_x = colname_x ),
+			   "credit" = vc_credits(data, x),
+			   "datetime" = vc_iso_datetime(data, x),
+			   "date_utc" = vc_utc_date(data, x),
+			   "cip" = vc_cipcode(data, x),
+			   "email" = vc_email(data, x),
+			   "integer" = vc_integer(data, x),
+			   "zip" = vc_zipcode(data, x),
+			   "logical" = vc_categories(data, x, levels = c("true", "false")),
 			   "enumerated" = return(NULL),
-               # "enumerated" = TRUE,
+               "numeric" = vc_numeric(data, x),
 			   "string" = return(NULL)
-               # "string" = TRUE
 		)
 
 	# }

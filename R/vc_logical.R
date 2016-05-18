@@ -1,25 +1,58 @@
-#' Validates and Reports If Logical
+#' Validates If Logical
 #'
-#' Validates and Reports If Logical
+#' Validates If Logical
 #'
-#' @param x character vector
-#' @param colname_x vector's colname
+#' @param data A data frame.
+#' @param x Column name from \code{data} (character string).
+#' @param \dots ignored.
 #' @export
-vc_logicial <- function(x, colname_x = "the column") {
+#' @examples
+#' dat <- data.frame(
+#'     check = c('T', 'TRUE', 'FALSE', 'F', 'false', 'true', NA, TRUE, FALSE, 'TURE'),
+#'     stringsAsFactors = FALSE
+#'  )
+#' vc_logical(dat, 'check')
+vc_logical <- function(data, x, ...){
 
-	x[(x %in% c("NULL", "NA", "N/A", "na", "n/a")) | grepl("^\\s*$", x)] <- NA
+    ## select the column & replace missing with NA
+    col <- sub_out_missing(data[[x]])
 
+    ## record missing (NA)
+    is_na <- is.na(col)
 
-	is_logical <- x %in% c("true", "false", "TRUE", "FALSE", "T", "F") | is.na(x)
-	are_logical <- all(is_logical|is.na(x))
+    ## expression to validate against (elementwise)
+	is_valid <- col %in% c("true", "false", "TRUE", "FALSE", "T", "F")
+    is_valid[is_na] <- NA
 
-	if (!are_logical){
+	## valid columnwise: Are all elelemnts either valid or NA?
+	are_valid <- all(is_valid|is_na)
+
+	## generate the comment
+	if (!are_valid){
 		message <- sprintf(
 			"The following rows of %s do not follow the format of true/false:\n\n%s\n\n\n\n",
-			sQuote(colname_x)
-			, output_truncate(which(!is_logical)+1))
-		cat(message)
-
+			sQuote(x),
+		    output_truncate(which(!(is_valid|is_na)))
+		)
+	} else {
+	    message <- NULL
 	}
-	return(are_logical)
+
+    ## construct vc list & class
+    vc_output <- list(
+        column_name = x,
+        valid = are_valid,
+        message = message,
+        passing = is_valid,
+        missing = is_na,
+        call = 'vc_logical'
+    )
+
+    class(vc_output) <- 'vc'
+    vc_output
 }
+
+
+
+
+

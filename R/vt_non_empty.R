@@ -5,38 +5,40 @@
 #'
 #' @param data \code{\link[base]{data.frame}}.
 #' @param file.name An optional file name for use in reporting.
+#' @param \ldots ignored.
 #' @return Returns a list of validation results.
 #' @rdname vt_non_empty
 #' @export
 #' @examples
 #' vt_non_empty(CO2)
-#' vt_non_empty(CO2[, 1:3])
-vt_non_empty <- function(data, file.name = NULL) {
+#' vt_non_empty(CO2[0, 1:3])
+#' str(vt_non_empty(CO2[0, 1:3]))
+vt_non_empty <- function(data, file.name = NULL, ...) {
 
 	if (is.null(file.name)) file.name <- "The file"
 
-	list(
+	non_empty <- list(
 		valid = nrow(data) > 0,                          ## logical did enough (proportion) elements validate
 		locations = NULL,    ## location of those not validating
 		proportion = NULL,                  ## proportion of those vaidating
 		call = "vt_non_empty",                        ## function name that was called
 		file_name = file.name
 	)
-
+    class(non_empty) <- 'vt_non_empty'
+    non_empty
 }
 
 
 
-#' Validate a CSV Contains Rows
+#' Prints a vt_non_empty  Object
 #'
-#' \code{report_duplicated_rows} - Generates accomanying report.
+#' Prints a vt_non_empty  object
 #'
-#' @param x A file or table validation function's (prefixed with \code{vf_} or
-#' \code{vt_}) output.
+#' @param x A vt_non_empty  object.
 #' @param \ldots ignored.
-#' @rdname vt_non_empty
+#' @method print vt_non_empty
 #' @export
-non_empty_report <- function(x, ...){
+print.vt_non_empty <- function(x, ...){
 
 	if (!isTRUE(x[["valid"]])) {
 
@@ -47,11 +49,11 @@ non_empty_report <- function(x, ...){
 			x[["file_name"]]
 		)
 		class(message) <- c("invalid_report", "character")
-		message
+		print(message)
 	} else {
 		message <- ""
 		class(message) <- c("valid_report", "character")
-		message
+		print(message)
 	}
 
 
