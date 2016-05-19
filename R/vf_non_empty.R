@@ -6,18 +6,18 @@
 #' @export
 #' @rdname vf_non_empty
 #' @examples
-#' writeLines("", '~/filename.csv')
-#' 		vf_non_empty('~/filename.csv') 		#  FALSE
-#' writeLines("hi", '~/filename1.csv')
-#' 		vf_non_empty('~/filename1.csv') 	#  TRUE
+#' writeLines("", '~/Desktop/filename.csv')
+#' 		vf_non_empty('~/Desktop/filename.csv') 		#  FALSE
+#' writeLines("hi", '~/Desktop/filename1.csv')
+#' 		vf_non_empty('~/Desktop/filename1.csv') 	#  TRUE
 
 vf_non_empty <- function(path, ...){
 
-if (length(readLines(path),n=10) == 0L) {    
+	if (length(readLines(path),n=10) == 0L) {    
 		message <- sprintf(
 			paste0(
 			    header("File Empty Test"),
-				"'%s' does not have any content.\n",
+				"'%s' does not have any contents.\n",
 				"Please either remove from upload\nor ensure required content is included.\n\n"
 			),
 			basename(path)
@@ -26,15 +26,15 @@ if (length(readLines(path),n=10) == 0L) {
         message <- ''
     }
 
-	file_type <- list(
+	non_empty <- list(
 		valid = length(readLines(path),n=10) != 0L,  ## logical did enough (proportion) elements validate
 		call = "vf_non_empty",                      ## function name that was called
 		file_name = basename(path),
 	    message = message
 	)
 
-	class(file_type) <- 'vf_non_empty'
-	file_type
+	class(non_empty) <- 'vf_non_empty'
+	non_empty
 }
 
 
