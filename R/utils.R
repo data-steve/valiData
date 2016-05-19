@@ -1,7 +1,7 @@
 condition_maker <- function(condition){
-    t <- paste0(   #condition, " <- ", "vt_", condition, "(data, file.name=file_name, map)\n",
+    t <- paste0(   #condition, " <- ", "vt_", condition, "(data, file_name=file_name, map)\n",
         'if (map[["table_level"]][["',condition,'"]]){\n',
-        '\t',condition,' <- vt_',condition,'(data, map, file.name=file_name)\n',
+        '\t',condition,' <- vt_',condition,'(data, map, file_name=file_name)\n',
         "} else {\n\t",condition," <- NULL\n}")
     clipr::write_clip(t)
     cat(t)

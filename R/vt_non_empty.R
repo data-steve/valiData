@@ -4,7 +4,7 @@
 #' \code{\link[base]{data.frame}} contains rows.
 #'
 #' @param data \code{\link[base]{data.frame}}.
-#' @param file.name An optional file name for use in reporting.
+#' @param file_name An optional file name for use in reporting.
 #' @param \ldots ignored.
 #' @return Returns a list of validation results.
 #' @rdname vt_non_empty
@@ -13,16 +13,16 @@
 #' vt_non_empty(CO2)
 #' vt_non_empty(CO2[0, 1:3])
 #' str(vt_non_empty(CO2[0, 1:3]))
-vt_non_empty <- function(data, file.name = NULL, ...) {
+vt_non_empty <- function(data, file_name = NULL, ...) {
 
-	if (is.null(file.name)) file.name <- "The file"
+	if (is.null(file_name)) file_name <- "The file"
 
 	non_empty <- list(
 		valid = nrow(data) > 0,                          ## logical did enough (proportion) elements validate
 		locations = NULL,    ## location of those not validating
 		proportion = NULL,                  ## proportion of those vaidating
 		call = "vt_non_empty",                        ## function name that was called
-		file_name = file.name
+		file_name = file_name
 	)
     class(non_empty) <- 'vt_non_empty'
     non_empty

@@ -6,7 +6,7 @@
 #' @param data \code{\link[base]{data.frame}}.
 #' @param map A \code{data.frame} with a \code{header} (header name) &
 #' \code{required} (logical,; Is column required?).
-#' @param file.name An optional file name for use in reporting.
+#' @param file_name An optional file name for use in reporting.
 #' @return Returns a list of validation results.
 #' @rdname vt_column_order
 #' @export
@@ -19,13 +19,13 @@
 #'
 #' vt_column_order(mtcars, map)
 #' str(vt_column_order(mtcars, map))
-vt_column_order <- function(data, map, file.name = NULL){
+vt_column_order <- function(data, map, file_name = NULL){
 
-    if (is.null(file.name)) file.name <- "The file"
+    if (is.null(file_name)) file_name <- "The file"
 
 	exp_vs_act <- stats::setNames(data.frame(
 		cbind_fill(
-			names(map[["column_level"]][[file.name]]),
+			names(map[["column_level"]][[file_name]]),
 		    colnames(data)
 	    ),
 		stringsAsFactors = FALSE
@@ -38,7 +38,7 @@ vt_column_order <- function(data, map, file.name = NULL){
 		valid = nrow(exp_vs_act) == 0,                          ## logical did enough (proportion) elements validate
 		locations =  exp_vs_act,
 		call = "vt_column_order",                                         ## function name that was called
-		file_name = file.name
+		file_name = file_name
 	)
 	class(colorder) <-'vt_column_order'
 	colorder

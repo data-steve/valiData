@@ -8,7 +8,7 @@
 #' \code{required} (logical,; Is column required?).
 #' @param ignore.case logical.  Should case be ignored?
 #' @param ignore.space logical.  Should whitespace be ignored?
-#' @param file.name An optional file name for use in reporting.
+#' @param file_name An optional file name for use in reporting.
 #' @return Returns a list of validation results.
 #' @rdname vt_column_names
 #' @export
@@ -21,13 +21,13 @@
 #'
 #' vt_column_names(mtcars, map)
 #' str(vt_column_names(mtcars, map))
-vt_column_names <- function(data, map, ignore.case = FALSE, ignore.space = FALSE, file.name = NULL){
+vt_column_names <- function(data, map, ignore.case = FALSE, ignore.space = FALSE, file_name = NULL){
 
-    if (is.null(file.name)) file.name <- "The file"
+    if (is.null(file_name)) file_name <- "The file"
 
 
 	act_nms <- actual_names <- colnames(data)
-	exp_nms <- expected_names <- names(map[["column_level"]][[file.name]])
+	exp_nms <- expected_names <- names(map[["column_level"]][[file_name]])
 
 	if (ignore.case) {
 		actual_names <- tolower(actual_names)
@@ -55,7 +55,7 @@ vt_column_names <- function(data, map, ignore.case = FALSE, ignore.space = FALSE
 		),
 		proportion =  1 - length(not_found)/length(expected_names),   ## proportion of those vaidating
 		call = "vt_column_names",                                         ## function name that was called
-		file_name = file.name,
+		file_name = file_name,
 		ignore_case = ignore.case,
 		ignore_space = ignore.space
 	)

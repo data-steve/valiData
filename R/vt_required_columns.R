@@ -9,7 +9,7 @@
 #' \code{required} (logical,; Is column required?).
 #' @param missing Values considered to be missing or null.
 #' @param prop.acceptable proportion of allowable missing
-#' @param file.name An optional file name for use in reporting.
+#' @param file_name An optional file name for use in reporting.
 #' @return Returns a list of validation results.
 #' @rdname vt_required_columns
 #' @export
@@ -25,11 +25,11 @@
 #' vt_required_columns(df, map)
 #' str(vt_required_columns(df, map))
 vt_required_columns <- function(data, map, missing = c("", "NULL", "NA", "N/A", "na", "n/a"),
-    prop.acceptable = 0, file.name = NULL){
+    prop.acceptable = 0, file_name = NULL){
 
-    if (is.null(file.name)) file.name <- "The file"
+    if (is.null(file_name)) file_name <- "The file"
 
-    map_cols <- map[['table_level']][['required_columns']][[file.name]]
+    map_cols <- map[['table_level']][['required_columns']][[file_name]]
     required <- tolower(gsub("\\s+", "", map_cols))
 	colnames(data) <- gsub("\\s+", "", tolower(colnames(data)))
 
@@ -54,7 +54,7 @@ vt_required_columns <- function(data, map, missing = c("", "NULL", "NA", "N/A", 
 				, call = sapply(required_list, function(x) x[["call"]])
 				, required = sapply(required_list, function(x) x[["required"]])
 				, prop_acceptable = sapply(required_list, function(x) x[["prop_acceptable"]])
-				, file_name = file.name
+				, file_name = file_name
 				, stringsAsFactors = FALSE) -> required_df
 
 
@@ -69,7 +69,7 @@ vt_required_columns <- function(data, map, missing = c("", "NULL", "NA", "N/A", 
 		 , call = unique(required_df[["call"]])
 		 , required = unique(required_df[["required"]])
 		 , prop_acceptable = unique(required_df[["prop_acceptable"]])
-		 , file_name = file.name
+		 , file_name = file_name
 		 , n_cols_missing = sum(sapply(required_list, function(x) x[["proportion"]]) != 1)
 		 , missing_columns = miss_cols[miss_cols[["required"]] & !miss_cols[["valid"]], "cols"]
 	     , required_and_absent = required_and_absent

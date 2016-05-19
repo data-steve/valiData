@@ -48,7 +48,7 @@ validate_file <- function(path, file_name="academic", map=test,...){
         }
 
         if (map[["table_level"]][["header"]]){
-            header <- vt_header(data, map, file.name=file_name)
+            header <- vt_header(data, map, file_name=file_name)
         } else {
             header <- NULL
         }
@@ -59,7 +59,7 @@ validate_file <- function(path, file_name="academic", map=test,...){
 
         ## check if column names have spaces
         if (!ignore_space){
-            spaced_columns <- vt_spaced_colnames(data, file.name=file_name)
+            spaced_columns <- vt_spaced_colnames(data, file_name=file_name)
         } else {
             spaced_columns <- NULL
         }
@@ -68,21 +68,13 @@ validate_file <- function(path, file_name="academic", map=test,...){
         column_names <- vt_column_names(
             data,
             map,
-            file.name=file_name,
+            file_name=file_name,
             ignore.case=ignore_case,
             ignore.space=ignore_space
         )
 
-## I think we can remove this.  It was never connected to
-## anything and people can control space and case now
-##
-# ## grab info for column names ignoring case and space
-# if (!column_names[["valid"]]){
-#     column_names_ignore_case_space <- vt_column_names(data, map, file.name=file_name, ignore.case=TRUE, ignore.space=TRUE)
-# }
-
         if (map[["table_level"]][["non_empty"]]){
-            non_empty <- vt_non_empty(data, map, file.name=file_name)
+            non_empty <- vt_non_empty(data, map, file_name=file_name)
         } else {
             non_empty <- NULL
         }
@@ -97,13 +89,13 @@ validate_file <- function(path, file_name="academic", map=test,...){
 
             ## This runs only if table was not empty (previous step)
             if (map[["table_level"]][["required_columns"]]){
-                required_columns <- vt_required_columns(data, map, file.name=file_name)
+                required_columns <- vt_required_columns(data, map, file_name=file_name)
             } else {
                 required_columns <- NULL
             }
 
             if (map[["table_level"]][["columns_order"]]){
-                columns_order <- vt_columns_order(data, map, file.name=file_name)
+                columns_order <- vt_columns_order(data, map, file_name=file_name)
             } else {
                 columns_order <- NULL
             }
@@ -111,14 +103,14 @@ validate_file <- function(path, file_name="academic", map=test,...){
 
 
             if (map[["table_level"]][["duplicated_rows"]]){
-                duplicated_rows <- vt_duplicated_rows(data, map, file.name=file_name)
+                duplicated_rows <- vt_duplicated_rows(data, map, file_name=file_name)
             } else {
                 duplicated_rows <- NULL
             }
 
             # check for nonASCII characters
             if (map[["table_level"]][["non_ASCII"]]){
-                non_ASCII <- vt_non_ASCII(data, map, file.name=file_name)
+                non_ASCII <- vt_non_ASCII(data, map, file_name=file_name)
             } else {
                 non_ASCII <- NULL
             }
@@ -132,7 +124,6 @@ validate_file <- function(path, file_name="academic", map=test,...){
 
             obj <- list(file_type = file_type, header = header,
                 spaced_columns = spaced_columns, column_names = column_names,
-                column_names_ignore_case_space = column_names_ignore_case_space,
                 non_empty = non_empty, required_columns = required_columns,
                 column_order = column_order, duplicated_rows = duplicated_rows,
                 non_ASCII = non_ASCII, columns_as_expected = columns_as_expected

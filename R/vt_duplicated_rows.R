@@ -4,7 +4,7 @@
 #' \code{\link[base]{data.frame}} contains no duplicated rows.
 #'
 #' @param data \code{\link[base]{data.frame}}.
-#' @param file.name An optional file name for use in reporting.
+#' @param file_name An optional file name for use in reporting.
 #' @return Returns a list of validation results.
 #' @rdname vt_duplicated_rows
 #' @export
@@ -14,14 +14,14 @@
 #' vt_duplicated_rows(CO2)
 #' vt_duplicated_rows(CO2[, 1:3])
 #' str(vt_duplicated_rows(CO2[, 1:3]))
-vt_duplicated_rows <- function(data, file.name = NULL) {
+vt_duplicated_rows <- function(data, file_name = NULL) {
 
     . <- .GRP <- .N <- N <- .I <- GRP <- NULL
     dups <- NULL
     loc <- NULL
     dup_groups <- NULL
 
-	if (is.null(file.name)) file.name <- "The file"
+	if (is.null(file_name)) file_name <- "The file"
 
     not_missing <- rowSums(!t(apply(data, 1, is.na))) != 0
 	dups <- duplicated(data) & not_missing  #added the part after '&' to exclude NA from dup testing 5/18/2016
@@ -52,7 +52,7 @@ vt_duplicated_rows <- function(data, file.name = NULL) {
 		# dup_groups = dup_groups,
 		proportion = prop,            ## proportion of those vaidating
 		call = "vt_duplicated_rows",  ## function name that was called
-		file_name = file.name
+		file_name = file_name
 	)
 	class(duprows) <- 'vt_duplicated_rows'
 	duprows

@@ -7,7 +7,7 @@
 #' @param data \code{\link[base]{data.frame}}.
 #' @param map A \code{data.frame} with a \code{header} (header name) &
 #' \code{required} (logical,; Is column required?).
-#' @param file.name An optional file name for use in reporting.
+#' @param file_name An optional file name for use in reporting.
 #' @return Returns a list of validation results.
 #' @rdname vt_header
 #' @export
@@ -21,16 +21,16 @@
 #' df <- mtcars; colnames(df) <- mtcars[1, ]
 #' vt_header(df, map)
 #' str(vt_header(df, map))
-vt_header <- function(data, map, file.name = NULL){
+vt_header <- function(data, map, file_name = NULL){
 
-    if (is.null(file.name)) file.name <- "The file"
+    if (is.null(file_name)) file_name <- "The file"
 
     headr <- list(
-        valid = sum(colnames(data) %in% names(map[["column_level"]][[file.name]])) > 0,  ## logical did enough (proportion) elements validate
+        valid = sum(colnames(data) %in% names(map[["column_level"]][[file_name]])) > 0,  ## logical did enough (proportion) elements validate
         locations = NULL,                        ## location of those not validating
         call = "vt_header",                        ## function name that was called
-        file_name = file.name,
-        expected_header = names(map[["column_level"]][[file.name]]),
+        file_name = file_name,
+        expected_header = names(map[["column_level"]][[file_name]]),
         actual_header = colnames(data)
     )
     class(headr) <- 'vt_header'

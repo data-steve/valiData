@@ -4,7 +4,7 @@
 #' \code{\link[base]{data.frame}} column names contain no spaces.
 #'
 #' @param data \code{\link[base]{data.frame}}.
-#' @param file.name An optional file name for use in reporting.
+#' @param file_name An optional file name for use in reporting.
 #' @return Returns a list of validation results.
 #' @rdname vt_spaced_colnames
 #' @export
@@ -12,16 +12,16 @@
 #' df <- mtcars; colnames(df)[c(1, 5)]  <- c("split header", "foo bar"); df
 #' vt_spaced_colnames(df)
 #' str(vt_spaced_colnames(df))
-vt_spaced_colnames <- function(data, file.name = NULL){
+vt_spaced_colnames <- function(data, file_name = NULL){
 
-    if (is.null(file.name)) file.name <- "The file"
+    if (is.null(file_name)) file_name <- "The file"
 	locs <- grep(" ", trimws(colnames(data)))
 
 	spcols <- list(
 		valid = length(locs) == 0,                          ## logical did enough (proportion) elements validate
 		locations =  colnames(data)[locs],
 		call = "vt_spaced_colnames",                                         ## function name that was called
-		file_name = file.name
+		file_name = file_name
 	)
 	class(spcols) <- 'vt_spaced_colnames'
 	spcols

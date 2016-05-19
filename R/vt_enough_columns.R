@@ -6,7 +6,7 @@
 #' @param data \code{\link[base]{data.frame}}.
 #' @param map A \code{data.frame} with a \code{header} (header name) &
 #' \code{required} (logical,; Is column required?).
-#' @param file.name An optional file name for use in reporting.
+#' @param file_name An optional file name for use in reporting.
 #' @return Returns a list of validation results.
 #' @rdname vt_enough_columns
 #' @export
@@ -19,17 +19,17 @@
 #'
 #' vt_enough_columns(mtcars, map)
 #' str(vt_enough_columns(mtcars, map))
-vt_enough_columns <- function(data, map, file.name = NULL){
+vt_enough_columns <- function(data, map, file_name = NULL){
 
-    if (is.null(file.name)) file.name <- "The file"
+    if (is.null(file_name)) file_name <- "The file"
 
 	ncolsr <- list(
-		valid = c(length(names(map[["column_level"]][[file.name]])) == ncol(data)),  ## logical did enough (proportion) elements validate
+		valid = c(length(names(map[["column_level"]][[file_name]])) == ncol(data)),  ## logical did enough (proportion) elements validate
 		locations = NULL,                        ## location of those not validating
 		proportion = ncol(data)/nrow(map),       ## proportion of those vaidating
 		call = "vt_enough_columns",                        ## function name that was called
-		file_name = file.name,
-		expected_ncols = length(names(map[["column_level"]][[file.name]])),
+		file_name = file_name,
+		expected_ncols = length(names(map[["column_level"]][[file_name]])),
 		actual_ncols = ncol(data)
 	)
 	class(ncolsr) <-'vt_enough_columns'
