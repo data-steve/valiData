@@ -17,50 +17,64 @@
 #' \dontrun{
 #' valiData("C:/Users/trinker/Desktop/myfolder", mymap)
 #' }
-valiData <- function(path, core_data_map, column_map, delete = TRUE) {
+valiData <- function(path, map, delete = TRUE) {
+
     . <- NULL
-	if (delete) {
-		delete_old_reports(path)
-	}
 
-	report_path <- file.path(path,"`Reports")
+    if (delete) {
+        delete_old_reports(path)
+    }
 
-	if (!file.exists(report_path)) dir.create(report_path)
+    report_path <- file.path(path,"`Reports")
 
-	if (file.info(path)[["isdir"]]) {
+    if (!file.exists(report_path)) dir.create(report_path)
 
-		# create file to capture console report
-		sink(
-			file.path(report_path, "valiData_report.txt"),
-			append = file.exists(file.path(report_path, "valiData_report.txt")),
-			split = TRUE
-		)
+    ## check that path points to a directory
+    is_directory <- vd_dir(path)
+    if (!is_directory[['valid']]) {
+        out <- list(is_directory = is_directory)
+        class(out) <- 'valiData'
+        return(out)
+    }
 
-		# csv_subpaths is only for subfolders that containing csv files
-		csv_subpaths   <- get_paths_to_csvs(path)
-		all_subpaths <- get_paths_root_to_files(path)
+    ## check that directory has stuff in it
+    non_empty_directory <- vd_non_empty(path)
+    if (!is_directory[['valid']]) {
+        out <- list(empty_directory = empty_directory)
+        class(out) <- 'valiData'
+        return(out)
+    }
 
-		# report on which folders had no csv files to report on
-		print(report_empty_subfolders(vd_empty_subfolders(all_subpaths, csv_subpaths)))  #shouldn't need thie csv_subpaths 5/10/16
 
-		invisible(lapply(csv_subpaths, function(x){
-			map_folder <- basename(dirname(x))
-			## Print csv folder name and path
-			print(report_print_arbitrary(header_file(basename(dirname(x)),
-				gsub("/+", "/", gsub("\\\\+", "/", gsub(path, "~/",  x, fixed=TRUE)))
-				)))
-			validate_file(file = x, core_data_map = core_data_map[[map_folder]], column_map[[map_folder]])
-		}))
+    # report on which folders had no csv files to report on
+    empty_folders <- vd_empty_subfolders(path)
 
-		sink()
+    has_files <- length(dir(path, pattern = paste0("\\.", map[["file"]][["type"]],"$")) )>0
 
-	} else {
-		map_folder <- strsplit(path, "/")[[1]] %>% .[length(.)-1]
+    # csv_subpaths is only for subfolders that containing csv files
+    csv_subpaths <- get_paths_to_csvs(path)
 
-		sink(file.path(report_path,
-					   paste(map_folder,"valiData_report.txt", sep="_")
-		), split = TRUE)
-		validate_file(path= path, core_data_map = core_data_map[[map_folder]], column_map[[map_folder]])
-		sink()
-	}
+    vld <- invisible(lapply(csv_subpaths, function(x){
+        if (has_files){
+            file_name <- tolower(tools::file_path_sans_ext(basename(x)))
+        } else {
+            file_name <- tolower(basename(dirname(x)))
+        }
+
+        ## Print csv folder name and path
+        header_info <- header_file(
+            basename(dirname(x)),
+            gsub("/+|\\\\+", "/", gsub(path, "~/",  x, fixed=TRUE) )
+        )
+        validated <- validate_file(path = x, file_name = file_name , map=map)
+        list(header_info, validated)
+    }))
+
+    out <- list(vld = vld, empty_folders = empty_folders,
+        csv_subpaths = csv_subpaths, has_files = has_files
+    )
+    class(out) <- 'valiData'
+    out
+
+
 }
