@@ -9,10 +9,11 @@ validate_file <- function(path, file_name="academic", map=test,...){
         ## check that csv is not broken
         broken_csv <- vf_csv_broken(path)
 
+        ##---------------##
+        ## Check columns ##
+        ##---------------##
 
-
-        ## Check columns
-
+        ## get data
         data <- suppressWarnings(readr::read_csv(path))
 
         ## converting broken rows from broken_csv to NA
@@ -27,7 +28,7 @@ validate_file <- function(path, file_name="academic", map=test,...){
         }
 
         if (map[["table_level"]][["spaced_columns"]]){
-            spaced_columns <- vt_spaced_columns(data, map, file.name=file_name)
+            spaced_columns <- vt_spaced_colnames(data, file.name=file_name)
         } else {
             spaced_columns <- NULL
         }
@@ -59,60 +60,59 @@ validate_file <- function(path, file_name="academic", map=test,...){
             non_empty <- NULL
         }
         if (non_empty[["valid"]]) {
-            return(list(broken_csv, header, spaced_colums, column_names, non_empty))
+            obj <- list(broken_csv, header, spaced_colums, column_names, non_empty)
+            class(obj) <- "validate_file"
+            return(obj)
         }
 
+            ## This runs only if table was not empty (previous step)
+            if (map[["table_level"]][["required_columns"]]){
+                required_columns <- vt_required_columns(data, map, file.name=file_name)
+            } else {
+                required_columns <- NULL
+            }
 
-        if (map[["table_level"]][["required_columns"]]){
-            required_columns <- vt_required_columns(data, map, file.name=file_name)
-        } else {
-            required_columns <- NULL
-        }
-
-        if (map[["table_level"]][["columns_order"]]){
-            columns_order <- vt_columns_order(data, map, file.name=file_name)
-        } else {
-            columns_order <- NULL
-        }
+            if (map[["table_level"]][["columns_order"]]){
+                columns_order <- vt_columns_order(data, map, file.name=file_name)
+            } else {
+                columns_order <- NULL
+            }
 
 
 
-        if (map[["table_level"]][["duplicated_rows"]]){
-            duplicated_rows <- vt_duplicated_rows(data, map, file.name=file_name)
-        } else {
-            duplicated_rows <- NULL
-        }
+            if (map[["table_level"]][["duplicated_rows"]]){
+                duplicated_rows <- vt_duplicated_rows(data, map, file.name=file_name)
+            } else {
+                duplicated_rows <- NULL
+            }
 
-        # check for nonASCII characters
-        if (map[["table_level"]][["non_ASCII"]]){
-            non_ASCII <- vt_non_ASCII(data, map, file.name=file_name)
-        } else {
-            non_ASCII <- NULL
-        }
+            # check for nonASCII characters
+            if (map[["table_level"]][["non_ASCII"]]){
+                non_ASCII <- vt_non_ASCII(data, map, file.name=file_name)
+            } else {
+                non_ASCII <- NULL
+            }
 
-        if (non_ASCII) {
-            data[] <- lapply(data, function(x) gsub("[[:cntrl:]]", "", suppressWarnings(stringi::stri_enc_toascii(x))))
-        }
+            if (non_ASCII) {
+                data[] <- lapply(data, function(x) gsub("[[:cntrl:]]", "", suppressWarnings(stringi::stri_enc_toascii(x))))
+            }
 
-        #-------------------------------------# column level mapping [START] added by Tyler 11/20/15
+            ## column level testing
+            columns_as_expected <- vc_column_apply(data, map[["column_level"]][[file_name]])
 
-        cat(header("Column-Wise Testing"))
-        columns_as_expected <- all(unlist(vc_column_apply(data, map[["column_level"]])))
+            obj <- list(file_type, header, spaced_columns, column_names,
+                 column_names_ignore_case_space, non_empty, required_columns,
+                 column_order, duplicated_rows, non_ASCII, columns_as_expected)
+            class(obj) <- "validate_file"
+            return(obj)
+    }
 
-        #xxx
-        if (columns_as_expected) {
-            cat("All columns meet expectations!\n\n\n\n")
-        }
-        #------------------------------------# column level mapping [END] added by Tyler 11/20/15
-
-        list(file_type, header, spaced_columns, column_names,
-             column_names_ignore_case_space, non_empty, required_columns,
-             column_order, duplicated_rows, non_ASCII, columns_as_expected)
-        }
 
     } else {
 
-        list(file_type)
+        obj <- list(file_type)
+        class(obj) <- "validate_file"
+        return(obj)
     }
 
 }

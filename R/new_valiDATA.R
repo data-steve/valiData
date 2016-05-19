@@ -21,7 +21,7 @@ valiData <- function(path, map, delete = TRUE) {
         # report on which folders had no csv files to report on
         empty_folders <- vd_empty_subfolders(path)
 
-        has_files <- length(dir(path, pattern = paste0("\\.",test[["file"]][["type"]],"$")) )>0
+        has_files <- length(dir(path, pattern = paste0("\\.", map[["file"]][["type"]],"$")) )>0
 
         # csv_subpaths is only for subfolders that containing csv files
         csv_subpaths <- get_paths_to_csvs(path)
@@ -34,8 +34,10 @@ valiData <- function(path, map, delete = TRUE) {
             }
 
             ## Print csv folder name and path
-            header_info <- header_file(basename(dirname(x)),
-                                                     gsub("/+", "/", gsub("\\\\+", "/", gsub(path, "~/",  x, fixed=TRUE) ) ) )
+            header_info <- header_file(
+                basename(dirname(x)),
+                gsub("/+|\\\\+", "/", gsub(path, "~/",  x, fixed=TRUE) )
+            )
             validated <- validate_file(file = x, file_name = file_name , map=map)
             list(header_info, validated)
         }))

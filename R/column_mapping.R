@@ -132,6 +132,6 @@ cl::tic()
 map <- import_map(path)
 cl::toc()
 
-
+#valiData()
 # path <- 'C:\\Users\\trinker\\Desktop\\hofstra'
 # path <- csv_subpaths[1]
