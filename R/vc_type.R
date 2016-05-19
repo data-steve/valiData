@@ -10,10 +10,8 @@
 #' @export
 vc_type <- function(data, x, type, ...){
 
-	# message <- function(x, type, colname_x = "the column"  ) {
-    # browser()
 		switch(type,
-			   "guid" = return(NULL),
+			   "guid" = vc_no_test(data, x),
                # "guid" = TRUE,
 			   "credit" = vc_credits(data, x),
 			   "datetime" = vc_iso_datetime(data, x),
@@ -23,10 +21,25 @@ vc_type <- function(data, x, type, ...){
 			   "integer" = vc_integer(data, x),
 			   "zip" = vc_zipcode(data, x),
 			   "logical" = vc_categories(data, x, levels = c("true", "false")),
-			   "enumerated" = return(NULL),
+			   "enumerated" = vc_no_test(data, x),
                "numeric" = vc_numeric(data, x),
-			   "string" = return(NULL)
+			   "string" = vc_no_test(data, x)
 		)
 
-	# }
+}
+
+vc_no_test <- function(data, x, ...){
+
+    ## construct vc list & class
+    vc_output <- list(
+        column_name = x,
+        valid = TRUE,
+        message = NULL,
+        passing = NULL,
+        missing = NULL,
+        call = 'vc_notest'
+    )
+
+    class(vc_output) <- 'vc'
+    vc_output
 }
