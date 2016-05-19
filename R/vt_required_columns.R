@@ -29,7 +29,7 @@ vt_required_columns <- function(data, map, missing = c("", "NULL", "NA", "N/A", 
 
     if (is.null(file.name)) file.name <- "The file"
 
-    map_cols <- map[['table_level']][['required_cols']][[file.name]]
+    map_cols <- map[['table_level']][['required_columns']][[file.name]]
     required <- tolower(gsub("\\s+", "", map_cols))
 	colnames(data) <- gsub("\\s+", "", tolower(colnames(data)))
 

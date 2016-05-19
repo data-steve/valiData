@@ -1,9 +1,9 @@
 pacman::p_load(dplyr, readr, readxl, tidyr, stringi, magrittr, googlesheets)
 
 
-home <- cl::l_drive_go("swiper/DataScience/valiData_remix")
 
-path <- cl::go(home,"Core_Data_Dictionary_DS_longforms.xlsx")
+
+
 
 
 # a lot of invisible NAs can get imputed in Excel
@@ -119,17 +119,17 @@ import_map <- function(file, method="excel", ...){
     }
 
     map <- tf_map(ll[["tfdct"]])
-    map$table$required_cols <- table_required(ll[["coldct"]])
+    map$table$required_columns <- table_required(ll[["coldct"]])
     map$column <- columns_map(ll[["coldct"]])
     stats::setNames(map, c("file_level", "table_level", "column_level") )
 }
 
-
+home <- cl::l_drive_go("swiper/DataScience/valiData_remix")
 file <- "Core_Data_Dictionary_DS_longforms.xlsx"
-path <- cl::go(home, file)
+# path <- cl::go(home, file)
 path1 <- cl::go("~/Desktop", file)
 cl::tic()
-map <- import_map(path)
+map <- import_map(path1)
 cl::toc()
 
 #valiData()
