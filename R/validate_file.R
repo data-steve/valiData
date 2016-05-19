@@ -16,151 +16,138 @@
 #' \dontrun{
 #' validate_file("C:/Users/trinker/Desktop/myfolder/totest.csv", core_data_map[["totest"]])
 #' }
-validate_file <- function(file, core_data_map, column_map,...){
+validate_file <- function(path, file_name="academic", map=test,...){
 
-    #on.exit(suppressWarnings(sink()))
-	## check that file is csv
-	file_type <- vf_file_type(file)
+    ## check that file is csv
+    file_type <- vf_file_type(path, type= map[["file_level"]][["type"]])
 
-	if (file_type[["valid"]]) {
+    if (file_type[["valid"]]) {
 
-		## check that csv is not broken
-		broken_csv <- vf_csv_broken(file)
-		print(broken_report(broken_csv))
-
-
-		## Check columns
-
-		data <- suppressWarnings(readr::read_csv(file))
-
-		## converting broken rows from broken_csv to NA
-		if (!broken_csv[["valid"]] && broken_csv[["error"]]=="comma-broken"){
-
-
-		    data[broken_csv[["locations"]][["rows"]]-1, ] <- NA
-		    #data <- data[which(!seq_len(nrow(data)) %in%  broken_csv[["locations"]][["rows"]]),]
-		}
-
-		base_file <- basename(file)
-		has_header <- vt_header(data, core_data_map, file.name=base_file)
-        if (!has_header[["valid"]]) {
-            print(header_report(has_header))
-            return(invisible())
+        ## check that file is not empty
+        empty_file <- vf_non_empty(path)
+        if (!empty_file[['valid']]) {
+            obj <- list(empty_file = empty_file)
+            class(obj) <- "validate_file"
+            return(obj)
         }
 
-		enough_cols <- vt_ncols(data, core_data_map, file.name=base_file)
-		spaced_colnames <- vt_spaced_colnames(data, file.name=base_file)
-		correct_colnames  <- vt_colnames(data, core_data_map, file.name=base_file, ignore.case=TRUE)
-		non_empty <- vt_non_empty(data, file.name=base_file)  ## added non_empty report 11/20/15 Tyler
-		print(non_empty_report(non_empty))                         ## added non_empty report 11/20/15 Tyler
-		if (!non_empty[["valid"]]) return()
 
+        ## check that csv is not broken
+        broken_csv <- vf_csv_broken(path)
 
-		has_required_cols <- vt_required(data, core_data_map, file.name=base_file)
-	    #column_order <- vt_colorder(data, core_data_map, file.name=base_file)
+        ##---------------##
+        ## Check columns ##
+        ##---------------##
 
-		## grab info for column names ignoring case and space
-		if (!correct_colnames[["valid"]]){
-			correct_colnames_ignore_case_space <- vt_colnames(data, core_data_map, file.name=base_file, ignore.case=TRUE, ignore.space=TRUE)
-		}
+        ## get data
+        data <- suppressWarnings(readr::read_csv(path))
 
-		# print reports
-
-		# decide between print 4 or 5 reports based on whether
-		print(ncols_report(enough_cols))
-		print(colnames_report(correct_colnames))
-		print(spaced_colnames_report(spaced_colnames))
-		print(required_report(has_required_cols))
-
-		## check for duplicated rows
-		data <- data[rowSums(!t(apply(data, 1, is.na))) != 0, ]
-
-		duplicated_rows <- vt_duplicated_rows(data, file.name=base_file)
-		print(duplicated_rows_report(duplicated_rows))
-
-		# check for nonASCII characters
-		non_ASCII <- vt_non_ASCII(data)
-		if (non_ASCII) {
-		    data[] <- lapply(data, function(x) gsub("[[:cntrl:]]", "", suppressWarnings(stringi::stri_enc_toascii(x))))
-		}
-
-        #-------------------------------------# column level mapping [START] added by Tyler 11/20/15
-
-		cat(header("Column-Wise Testing"))
-        columns_as_expected <- all(unlist(vc_column_apply(data, column_map)))
-
-#xxx
-        if (columns_as_expected) {
-            cat("All columns meet expectations!\n\n\n\n")
+        ## converting broken rows from broken_csv to NA
+        if (!broken_csv[["valid"]] && broken_csv[["error"]]=="comma-broken"){
+            data[broken_csv[["locations"]][["rows"]]-1, ] <- NA
         }
-        #------------------------------------# column level mapping [END] added by Tyler 11/20/15
 
-		if (duplicated_rows[["valid"]] && enough_cols[["valid"]] &&
-				correct_colnames[["valid"]] && has_required_cols[["ls"]][["valid"]] &&
-				broken_csv[["valid"]] && columns_as_expected && !non_ASCII){   # tyler added `columns_as_expected` for vc_ tests on 11/20/15
-		    print(report_all_is_well())
-		}
+        if (map[["table_level"]][["header"]]){
+            header <- vt_header(data, map, file.name=file_name)
+        } else {
+            header <- NULL
+        }
 
-	} else {
+        ## grab space and case specifications from the map
+        ignore_case <- map[["table_level"]][['ignore_case']]
+        ignore_space <- map[["table_level"]][['spaced_columns']]
 
-		# report on not csv
-		report_file_type(file_type)
-	}
+        ## check if column names have spaces
+        if (!ignore_space){
+            spaced_columns <- vt_spaced_colnames(data, file.name=file_name)
+        } else {
+            spaced_columns <- NULL
+        }
+
+        ## correct column names (using case and space specifications)
+        column_names <- vt_column_names(
+            data,
+            map,
+            file.name=file_name,
+            ignore.case=ignore_case,
+            ignore.space=ignore_space
+        )
+
+## I think we can remove this.  It was never connected to
+## anything and people can control space and case now
+##
+# ## grab info for column names ignoring case and space
+# if (!column_names[["valid"]]){
+#     column_names_ignore_case_space <- vt_column_names(data, map, file.name=file_name, ignore.case=TRUE, ignore.space=TRUE)
+# }
+
+        if (map[["table_level"]][["non_empty"]]){
+            non_empty <- vt_non_empty(data, map, file.name=file_name)
+        } else {
+            non_empty <- NULL
+        }
+        if (non_empty[["valid"]]) {
+            obj <- list(broken_csv = broken_csv, header = header,
+                spaced_columns = spaced_columns, column_names = column_names,
+                non_empty = non_empty
+            )
+            class(obj) <- "validate_file"
+            return(obj)
+        }
+
+            ## This runs only if table was not empty (previous step)
+            if (map[["table_level"]][["required_columns"]]){
+                required_columns <- vt_required_columns(data, map, file.name=file_name)
+            } else {
+                required_columns <- NULL
+            }
+
+            if (map[["table_level"]][["columns_order"]]){
+                columns_order <- vt_columns_order(data, map, file.name=file_name)
+            } else {
+                columns_order <- NULL
+            }
+
+
+
+            if (map[["table_level"]][["duplicated_rows"]]){
+                duplicated_rows <- vt_duplicated_rows(data, map, file.name=file_name)
+            } else {
+                duplicated_rows <- NULL
+            }
+
+            # check for nonASCII characters
+            if (map[["table_level"]][["non_ASCII"]]){
+                non_ASCII <- vt_non_ASCII(data, map, file.name=file_name)
+            } else {
+                non_ASCII <- NULL
+            }
+
+            if (non_ASCII) {
+                data[] <- lapply(data, function(x) gsub("[[:cntrl:]]", "", suppressWarnings(stringi::stri_enc_toascii(x))))
+            }
+
+            ## column level testing
+            columns_as_expected <- vc_column_apply(data, map[["column_level"]][[file_name]])
+
+            obj <- list(file_type = file_type, header = header,
+                spaced_columns = spaced_columns, column_names = column_names,
+                column_names_ignore_case_space = column_names_ignore_case_space,
+                non_empty = non_empty, required_columns = required_columns,
+                column_order = column_order, duplicated_rows = duplicated_rows,
+                non_ASCII = non_ASCII, columns_as_expected = columns_as_expected
+            )
+            class(obj) <- "validate_file"
+            return(obj)
+
+    } else {
+
+        obj <- list(file_type=file_type)
+        class(obj) <- "validate_file"
+        return(obj)
+    }
 
 }
 
-
-# validate_file <- function(file, core_data_map, ...){  #depracated on 11/20/15
-#
-# 	## check that file is csv
-# 	file_type <- vf_file_type(file)
-#
-# 	if (file_type[["valid"]]) {
-#
-# 		## check that csv is not broken
-# 		broken_csv <- vf_comma_broken(file)
-# 		print(report_comma_broken(broken_csv))
-#
-#
-# 		## Check columns
-# 		data <- read_csv_character(file)
-#
-# 		base_file <- basename(file)
-# 		enough_cols <- vt_ncols(data, core_data_map, file.name=base_file)
-# 		spaced_colnames <- vt_spaced_colnames(data, file.name=base_file)
-# 		correct_colnames  <- vt_colnames(data, core_data_map, file.name=base_file, ignore.case=TRUE)
-# 		has_required_cols <- vt_required(data, core_data_map, file.name=base_file)
-# 	    #column_order <- vt_colorder(data, core_data_map, file.name=base_file)
-#
-# 		## grab info for column names ignoring case and space
-# 		if (!correct_colnames[["valid"]]){
-# 			correct_colnames_ignore_case_space <- vt_colnames(data, core_data_map, file.name=base_file, ignore.case=TRUE, ignore.space=TRUE)
-# 		}
-#
-# 		# print reports
-#
-# 		# decide between print 4 or 5 reports based on whether
-# 		print(ncols_report(enough_cols))
-# 		print(colnames_report(correct_colnames))
-# 		print(spaced_colnames_report(spaced_colnames))
-# 		print(required_report(has_required_cols))
-#
-# 		## check for duplicated rows
-# 		duplicated_rows <- vt_duplicated_rows(data, file.name=base_file)
-# 		print(report_duplicated_rows(duplicated_rows))
-#
-# 		if (duplicated_rows[["valid"]] && enough_cols[["valid"]] &&
-# 				correct_colnames[["valid"]] && has_required_cols[["ls"]][["valid"]] &&
-# 				broken_csv[["valid"]]){
-# 		    print(report_all_is_well())
-# 		}
-#
-# 	} else {
-#
-# 		# report on not csv
-# 		report_file_type(file_type)
-# 	}
-#
-# }
 
 
