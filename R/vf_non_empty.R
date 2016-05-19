@@ -13,7 +13,7 @@
 
 vf_non_empty <- function(path, ...){
 
-if (length(readLines(path),n=10) == 0L) {
+if (length(readLines(path),n=10) == 0L) {    
 		message <- sprintf(
 			paste0(
 			    header("File Empty Test"),
