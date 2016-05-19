@@ -1,7 +1,11 @@
-# read_csv_character <- function(file, ...){
-# 	col_num <- ncol(readr::read_csv(file, n_max=1, ...))
-# 	readr::read_csv(file, col_types = cols(rep("c", col_num)), ...)
-# }
+condition_maker <- function(condition){
+    t <- paste0(   #condition, " <- ", "vt_", condition, "(data, file.name=file_name, map)\n",
+        'if (map[["table_level"]][["',condition,'"]]){\n',
+        '\t',condition,' <- vt_',condition,'(data, map, file.name=file_name)\n',
+        "} else {\n\t",condition," <- NULL\n}")
+    clipr::write_clip(t)
+    cat(t)
+}
 
 header <- function(x, len = nchar(x), char = "=", line.begin = "", additional =  NULL){
 	border <-paste(rep(char, len), collapse="")
