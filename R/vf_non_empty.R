@@ -12,7 +12,8 @@
 #' 		vf_non_empty('~/filename.csv') 	#  TRUE
 vf_non_empty <- function(path, ...){
 
-	if (readLines(path, n=10)=="") {
+    ten_lines <- paste(readLines(path, n=10), collapse="")
+	if (ten_lines=="") {
 		message <- sprintf(
 			paste0(
 			    header("File Empty Test"),
@@ -26,7 +27,7 @@ vf_non_empty <- function(path, ...){
     }
 
 	non_empty <- list(
-		valid = readLines(path, n=10) != "",  ## logical did enough (proportion) elements validate
+		valid = ten_lines != "",  ## logical did enough (proportion) elements validate
 		call = "vf_non_empty",                      ## function name that was called
 		file_name = basename(path),
 	    message = message
