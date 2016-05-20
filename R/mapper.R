@@ -63,7 +63,7 @@ compare_compiler <- function(x){
         comparison <- trimws(gsub(paste(objects,collapse ="|"),"", x))
         dateop <- ifelse(any(grepl("date",tolower(objects))),TRUE, FALSE)
         paste0('vc_compare('
-               ,paste(shQuote(objects),collapse=", ")
+               ,paste(shQuote(objects[2]),collapse=", ")
                ,", "
                ,paste0(shQuote(comparison))
                ,', date=',dateop,')')
