@@ -93,13 +93,13 @@ validate_file <- function(path, file_name, map, ...){
         }
 
             ## This runs only if table was not empty (previous step)
-            if (map[["table_level"]][["required_columns"]]){
+            if (file_name %in% map[["table_level"]][["required_columns"]]){
                 required_columns <- vt_required_columns(data, map, file_name=file_name)
             } else {
                 required_columns <- NULL
             }
 
-            if (map[["table_level"]][["columns_order"]]){
+            if (map[["table_level"]][["column_order"]]){
                 columns_order <- vt_columns_order(data, map, file_name=file_name)
             } else {
                 columns_order <- NULL
@@ -107,22 +107,23 @@ validate_file <- function(path, file_name, map, ...){
 
 
 
-            if (map[["table_level"]][["duplicated_rows"]]){
-                duplicated_rows <- vt_duplicated_rows(data, map, file_name=file_name)
+            if (map[["table_level"]][["duplicate_rows"]]){
+                duplicated_rows <- vt_duplicated_rows(data, file_name=file_name)
             } else {
                 duplicated_rows <- NULL
             }
 
-            # check for nonASCII characters
+            ## check for nonASCII characters
             if (map[["table_level"]][["non_ASCII"]]){
                 non_ASCII <- vt_non_ASCII(data, map, file_name=file_name)
             } else {
                 non_ASCII <- NULL
             }
 
-            if (non_ASCII) {
+            if (non_ASCII[['valid']]|is.null(non_ASCII)) {
                 data[] <- lapply(data, function(x) gsub("[[:cntrl:]]", "", suppressWarnings(stringi::stri_enc_toascii(x))))
             }
+
 
             ## column level testing
             columns_as_expected <- vc_column_apply(data, map[["column_level"]][[file_name]])
@@ -133,7 +134,9 @@ validate_file <- function(path, file_name, map, ...){
                     column_names = column_names, non_empty = non_empty,
                     required_columns = required_columns, duplicated_rows = duplicated_rows,
                     non_ASCII = non_ASCII),
-                column_level = columns_as_expected
+                column_level = columns_as_expected,
+                path = path,
+                file_name = file_name
             )
 
             class(obj) <- "validate_file"
@@ -150,3 +153,56 @@ validate_file <- function(path, file_name, map, ...){
 
 
 
+
+#' Prints a validate_file Object
+#'
+#' Prints a validate_file object
+#'
+#' @param x A validate_file object.
+#' @param as.report logical.  If \code{TRUE} a report will be generated in the
+#' directory indicated by \code{x$path}.
+#' @param delete logical.  If \code{TRUE} and \code{as.report = TRUE} any prior
+#' instances of `report will be deleted.
+#' @param \ldots ignored.
+#' @method print validate_file
+#' @export
+print.validate_file <- function(x, ...){
+
+    print(report_print_arbitrary(header_file(x[['file_name']], x[['path']])))
+
+    ## file level
+    vector_print(x[['file_level']])
+    file_all_valid <- assess_all_valid(x[['file_level']])
+
+    ## table level
+    invisible(lapply(x[['table_level']], print))
+    table_all_valid <- assess_all_valid(x[['table_level']])
+
+
+    ## column level
+    invisible(lapply(x[['table_level']], print))
+    columns_all_valid <- assess_all_valid(x[['table_level']])
+
+    ## cow say good if all columns valid
+    if (file_all_valid && table_all_valid && columns_all_valid){
+        print(report_all_is_well())
+    }
+}
+
+
+
+
+assess_valid <- function(x, ...){
+    is.null(x)|isTRUE(x[['valid']])
+}
+
+assess_all_valid <- function(x, ...){
+    all(sapply(x, assess_valid))
+}
+
+vector_print <- function(x, ...){
+    invisible(lapply(x, function(y){
+        if (is.null(y)) return(invisible(NULL))
+        print(y)
+    }))
+}
