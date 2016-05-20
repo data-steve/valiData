@@ -30,7 +30,7 @@ import <- function(file, method="excel", ...){
 import_excel <- function(file){
     sheets <- readxl::excel_sheets(file)
 
-    ll <- setNames(lapply(sheets, function(x) readxl::read_excel(file, sheet = x)),sheets)
+    setNames(lapply(sheets, function(x) readxl::read_excel(file, sheet = x)),sheets)
 }
 
 
@@ -41,6 +41,6 @@ import_gsheets <- function(file_name, new_user=FALSE){
 
     # get data
     sheets <- grep("table|column", googlesheets::gs_ws_ls(ss), value = TRUE)
-    ll <- setNames(lapply(sheets, function(x) googlesheets::gs_read(ss, ws = x)),sheets)
+    setNames(lapply(sheets, function(x) googlesheets::gs_read(ss, ws = x)),sheets)
 
 }
