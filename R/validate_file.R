@@ -2,20 +2,14 @@
 #'
 #' Validate a .csv file.
 #'
-#' @param file A path to a .csv file to be validated.
-#' @param core_data_map A \code{data.frame} with a \code{header} (header name) &
-#' \code{required} (logical,; Is column required?).
-#' @param column_map A \code{data.frame} with a \code{header} (header name) &
-#' \code{required} (logical,; Is column required?).
+#' @param path A path to a .csv file to be validated.
+#' @param file_name The file name within the \code{map} to test.
+#' @param map A valiData map.
 #' @param \ldots ignored.
 #' @return Prints a report to the console of tests for file type, comma broken
 #' csv, number of columns, spaces in column headers, correct column names,
 #' required columns containing values.
 #' @export
-#' @examples
-#' \dontrun{
-#' validate_file("C:/Users/trinker/Desktop/myfolder/totest.csv", core_data_map[["totest"]])
-#' }
 validate_file <- function(path, file_name, map, ...){
 
     ## check that file is csv
@@ -86,7 +80,9 @@ validate_file <- function(path, file_name, map, ...){
                     broken_csv = broken_csv),
                 table_level = list(header = header, spaced_columns = spaced_columns,
                     column_names = column_names, non_empty = non_empty),
-                column_level = NULL
+                column_level = NULL,
+                path = path,
+                file_name = file_name
             )
             class(obj) <- "validate_file"
             return(obj)
@@ -100,7 +96,7 @@ validate_file <- function(path, file_name, map, ...){
             }
 
             if (map[["table_level"]][["column_order"]]){
-                columns_order <- vt_columns_order(data, map, file_name=file_name)
+                columns_order <- vt_column_order(data, map, file_name=file_name)
             } else {
                 columns_order <- NULL
             }
@@ -144,7 +140,13 @@ validate_file <- function(path, file_name, map, ...){
 
     } else {
 
-        obj <- list(file_level = list(file_type=file_type))
+        obj <- list(
+            file_level = list(file_type=file_type),
+            table_level = NULL,
+            column_level = NULL,
+            path = path,
+            file_name = file_name
+        )
         class(obj) <- "validate_file"
         return(obj)
     }
@@ -159,34 +161,27 @@ validate_file <- function(path, file_name, map, ...){
 #' Prints a validate_file object
 #'
 #' @param x A validate_file object.
-#' @param as.report logical.  If \code{TRUE} a report will be generated in the
-#' directory indicated by \code{x$path}.
-#' @param delete logical.  If \code{TRUE} and \code{as.report = TRUE} any prior
-#' instances of `report will be deleted.
 #' @param \ldots ignored.
 #' @method print validate_file
 #' @export
 print.validate_file <- function(x, ...){
 
-    print(report_print_arbitrary(header_file(x[['file_name']], x[['path']])))
+    #print(header_file(x[['file_name']], x[['path']]))
 
-    ## file level
+    # file level
     file_all_valid <- assess_all_valid(x[['file_level']])
-    if (!file_all_valid) cat(header("File Level Testing", char = "#"))
+    if (!file_all_valid) cat(header("File Level Testing", char = "="))
     vector_print(x[['file_level']])
-
 
 
     ## table level
     table_all_valid <- assess_all_valid(x[['table_level']])
-    if (!table_all_valid) cat(header("Table Level Testing", char = "#"))
+    if (!table_all_valid) cat(header("Table Level Testing", char = "="))
     vector_print(x[['table_level']])
 
-
-
     ## column level
-    columns_all_valid <- assess_all_valid(x[['column_level']])
-    if (!columns_all_valid) cat(header("Column Level Testing", char = "#"))
+    columns_all_valid <- assess_all_valid_multi(x[['column_level']])
+    if (!columns_all_valid) cat(header("Column Level Testing", char = "="))
     vector_print(unlist(x[['column_level']], recursive=FALSE))
 
 
@@ -203,9 +198,23 @@ assess_valid <- function(x, ...){
     is.null(x)|isTRUE(x[['valid']])
 }
 
+
 assess_all_valid <- function(x, ...){
     all(sapply(x, assess_valid))
 }
+
+
+assess_valid_multi <- function(x, ...){
+    all(sapply(x, function(x) {
+        isTRUE(x[['valid']])|is.null(x[['valid']])
+    }))
+}
+
+
+assess_all_valid_multi <- function(x, ...){
+    all(sapply(x, assess_valid_multi))
+}
+
 
 vector_print <- function(x, ...){
     invisible(lapply(x, function(y){
