@@ -26,7 +26,7 @@ validate_file <- function(path, file_name, map,...){
         ## check that file is not empty
         empty_file <- vf_non_empty(path)
         if (!empty_file[['valid']]) {
-            obj <- list(empty_file = empty_file)
+            obj <- list(file_level = list(empty_file = empty_file), table_level =NULL, column_level = NULL)
             class(obj) <- "validate_file"
             return(obj)
         }
@@ -78,10 +78,15 @@ validate_file <- function(path, file_name, map,...){
         } else {
             non_empty <- NULL
         }
-        if (non_empty[["valid"]]) {
-            obj <- list(broken_csv = broken_csv, header = header,
-                spaced_columns = spaced_columns, column_names = column_names,
-                non_empty = non_empty
+
+        ## if table is empty it stops here (no column level checks)
+        if (!non_empty[["valid"]]) {
+            obj <- list(
+                file_level = list(file_type = file_type, empty_file = empty_file,
+                    broken_csv = broken_csv),
+                table_level = list(header = header, spaced_columns = spaced_columns,
+                    column_names = column_names, non_empty = non_empty),
+                column_level = NULL
             )
             class(obj) <- "validate_file"
             return(obj)
@@ -122,18 +127,21 @@ validate_file <- function(path, file_name, map,...){
             ## column level testing
             columns_as_expected <- vc_column_apply(data, map[["column_level"]][[file_name]])
 
-            obj <- list(file_type = file_type, header = header,
-                spaced_columns = spaced_columns, column_names = column_names,
-                non_empty = non_empty, required_columns = required_columns,
-                column_order = column_order, duplicated_rows = duplicated_rows,
-                non_ASCII = non_ASCII, columns_as_expected = columns_as_expected
+            obj <- list(
+                file_level = list(empty_file = empty_file, broken_csv = broken_csv),
+                table_level = list(header = header, spaced_columns = spaced_columns,
+                    column_names = column_names, non_empty = non_empty,
+                    required_columns = required_columns, duplicated_rows = duplicated_rows,
+                    non_ASCII = non_ASCII),
+                column_level = columns_as_expected
             )
+
             class(obj) <- "validate_file"
             return(obj)
 
     } else {
 
-        obj <- list(file_type=file_type)
+        obj <- list(file_level = list(file_type=file_type))
         class(obj) <- "validate_file"
         return(obj)
     }

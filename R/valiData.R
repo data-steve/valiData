@@ -29,11 +29,12 @@ valiData <- function(path, map, delete = TRUE) {
 
     if (!file.exists(report_path)) dir.create(report_path)
 
+    ## Directory Level ##
     ## check that path points to a directory
     is_directory <- vd_dir(path)
     if (!is_directory[['valid']]) {
         out <- list(is_directory = is_directory)
-        class(out) <- 'valiData'
+        class(out) <- 'valiData_dir_level'
         return(out)
     }
 
@@ -41,10 +42,9 @@ valiData <- function(path, map, delete = TRUE) {
     non_empty_directory <- vd_non_empty(path)
     if (!is_directory[['valid']]) {
         out <- list(empty_directory = empty_directory)
-        class(out) <- 'valiData'
+        class(out) <- 'valiData_dir_level'
         return(out)
     }
-
 
     # report on which folders had no csv files to report on
     empty_folders <- vd_empty_subfolders(path)
@@ -70,11 +70,8 @@ valiData <- function(path, map, delete = TRUE) {
         list(header_info, validated)
     }))
 
-    out <- list(vld = vld, empty_folders = empty_folders,
-        csv_subpaths = csv_subpaths, has_files = has_files
-    )
-    class(out) <- 'valiData'
-    out
+    class(vld) <- 'valiData'
+    vld
 
 
 }
