@@ -10,13 +10,13 @@
 #' ll <- mapper(ll)
 #' }
 mapper <- function(dict_list){
-    map <- tf_map(dict_list[["tfdct"]])
-    map$table$required_columns <- required_columns_map(dict_list[["coldct"]])
-    map$column <- columns_map(dict_list[["coldct"]])
+    map <- mapper_table_files(dict_list[["tfdct"]])
+    map$table$required_columns <- mapper_required_columns(dict_list[["coldct"]])
+    map$column <- mapper_columns(dict_list[["coldct"]])
     stats::setNames(map, c("file_level", "table_level", "column_level") )
 }
 
-tf_map <- function(tfdct){
+mapper_table_files <- function(tfdct){
     tt <- split(tfdct, tfdct$level)
     lapply(tt, function(x){
         tf <- x[c("rule", "condition")]
@@ -26,7 +26,7 @@ tf_map <- function(tfdct){
 }
 
 
-required_columns_map <- function(d){
+mapper_required_columns <- function(d){
     dd <- split(d, d[["file"]])
     lapply(dd, function(x){
         x[tolower(x$required)=="yes", "variable"]
@@ -35,7 +35,7 @@ required_columns_map <- function(d){
 
 
 
-columns_map <- function(coldct) {
+mapper_columns <- function(coldct) {
     dd <- split(coldct, coldct[["file"]])
     lapply(dd, function(x){
         field <- trimws(x[["variable"]])
@@ -49,7 +49,7 @@ columns_map <- function(coldct) {
                                                            gsub("\r|\n","", z[["condition"]])
                                                            , "\\s*,\\s*")[[1]]), collapse=",")
                                                        , "))")     ) )
-        compare_funs <- ifelse(any(grepl("<|>=|<=|>|==|!=|~=",x[["compare"]]))
+        compare_funs <- ifelse(grepl("<|>=|<=|>|==|!=|~=",x[["compare"]])
                                , compare_compiler(x[["compare"]])
                                , NA)
         lapply(split(
