@@ -7,7 +7,7 @@
 #' @param levels Levels of the category.
 #' @param \dots ignored.
 #' @export
-#' @returns Returns a \code{vc} classed list object.
+#' @return Returns a \code{vc} classed list object.
 #' @examples
 #' vc_categories(mtcars, 'cyl', c(6, 8))
 #' str(vc_categories(mtcars, 'cyl', c(6, 8)))

@@ -6,7 +6,7 @@
 #' @param x Column name from \code{data} (character string).
 #' @param \dots ignored.
 #' @export
-#' @returns Returns a \code{vc} classed list object.
+#' @return Returns a \code{vc} classed list object.
 #' @examples
 #' dat <- data.frame(
 #'     cips = c('9.99.99', '22', '22.', '22.34', '22.234', '22.2344', '22.2345', NA),

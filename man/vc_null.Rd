@@ -4,26 +4,29 @@
 \alias{vc_null}
 \title{Checks For Null Elements In Vector}
 \usage{
-vc_null(x, prop.acceptable = 0, null = c("", "NULL"), required = FALSE,
-  file.name = NULL)
+vc_null(data, x, prop.acceptable = 0, missing = c("", "NULL"),
+  required = FALSE, ...)
 }
 \arguments{
-\item{x}{char vector}
+\item{data}{A data frame.}
 
-\item{prop.acceptable}{proportion of allowable null}
+\item{x}{Column name from \code{data} (character string).}
 
-\item{null}{values null can take}
+\item{prop.acceptable}{proportion of allowable missing.}
 
-\item{required}{whether the vector in the table is required}
+\item{missing}{values that missing can take.}
 
-\item{file.name}{name of file containing the table of vectors}
+\item{required}{whether the vector in the table is required.}
+
+\item{\dots}{ignored.}
 }
 \description{
 Checks For Null Elements In Vector
 }
 \examples{
 set.seed(10)
-x <- sample(c(NA, rep(LETTERS[1:10], 100)), 10000, TRUE)
-vc_null(x)
+dat <- data.frame(x = sample(c("NULL", rep(LETTERS[1:10])), 10000, TRUE))
+vc_null(dat, 'x')
+vc_null(dat, 'x', prop.acceptable = .1)
 }
 

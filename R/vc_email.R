@@ -8,7 +8,8 @@
 #' @export
 #' @examples
 #' dat <- data.frame(
-#'     email =c('cookie@cookiemonster.com', 'joe@hometown.uni', 'meet@seven', '@Jim', 'joe@gmail.com', NA),
+#'     email =c('cookie@cookiemonster.com', 'joe@hometown.uni'
+#'     , 'meet@seven', '@Jim', 'joe@gmail.com', NA),
 #'     stringsAsFactors = FALSE
 #' )
 #' vc_email(dat, 'email')

@@ -10,15 +10,6 @@
 #' @return Returns a list of validation results.
 #' @rdname vt_column_order
 #' @export
-#' @examples
-#' set.seed(10)
-#' map <- data.frame(
-#'     header = sample(colnames(mtcars)),
-#'     required = sample(c(TRUE, FALSE), ncol(mtcars), TRUE), stringsAsFactors = FALSE
-#' )
-#'
-#' vt_column_order(mtcars, map)
-#' str(vt_column_order(mtcars, map))
 vt_column_order <- function(data, map, file_name = NULL){
 
     if (is.null(file_name)) file_name <- "The file"

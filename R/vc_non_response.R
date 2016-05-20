@@ -7,6 +7,7 @@
 #' @param missing values non-response can take
 #' @param required whether the vector in the table is required
 #' @param file_name name of file containing the table of vectors
+#' @export
 #' @examples
 #' set.seed(10)
 #' x <- sample(c(NA, rep(LETTERS[1:10], 100)), 10000, TRUE)

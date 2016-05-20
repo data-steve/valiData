@@ -5,6 +5,7 @@
 #' @param path path in directory
 #' @param \ldots ignored.
 #' @export
+#' @examples
 #' vd_dir(system.file())
 #' vd_dir(system.file("INDEX"))
 vd_dir <- function(path, ...) {

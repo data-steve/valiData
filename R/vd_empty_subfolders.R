@@ -3,9 +3,11 @@
 #' Validate Which Folders Contain CSVs
 #'
 #' @param path path to project directory
+#' @param \dots ignored.
 #' @return Returns a list of validation results.
 #' @rdname vd_empty_subfolders
 #' @export
+#' @examples
 #' dir_name <- file.path(tempdir(), "delete_me")
 #' dir.create(dir_name)
 #' dir(dir_name)

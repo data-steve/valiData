@@ -2,16 +2,27 @@
 % Please edit documentation in R/vc_integer.R
 \name{vc_integer}
 \alias{vc_integer}
-\title{Validates and Reports If Integer}
+\title{Validates If Integer}
 \usage{
-vc_integer(x, colname_x = "the column")
+vc_integer(data, x, ...)
 }
 \arguments{
-\item{x}{character vector}
+\item{data}{A data frame.}
 
-\item{colname_x}{vector's colname}
+\item{x}{Column name from \code{data} (character string).}
+
+\item{\dots}{ignored.}
 }
 \description{
-Validates and Reports If Integer
+Validates If Integer
+}
+\examples{
+dat <- data.frame(
+    vals = c('9.99.99', '22', '22.', '22.34', '22.234', '23,456', '12,23', 'dog', NA),
+    vals2 = c('123', '123,456', NA, 1, 0, 0, 0, 0, ""),
+    stringsAsFactors = FALSE
+)
+vc_integer(dat, 'vals')
+vc_integer(dat, 'vals2')
 }
 

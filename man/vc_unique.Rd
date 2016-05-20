@@ -4,14 +4,24 @@
 \alias{vc_unique}
 \title{Validates and Reports If Unique}
 \usage{
-vc_unique(x, colname_x = "the column")
+vc_unique(data, x, ...)
 }
 \arguments{
-\item{x}{character vector}
+\item{data}{A data frame.}
 
-\item{colname_x}{vector's colname}
+\item{x}{Column name from \code{data} (character string).}
+
+\item{\dots}{ignored.}
 }
 \description{
 Validates and Reports If Unique
+}
+\examples{
+dat <- data.frame(
+    id = as.character(c(1:5, NA, 1, 4, 10:14)),
+    guid = c(1:12, NA)
+)
+vc_unique(dat, 'id')
+vc_unique(dat, 'guid')
 }
 

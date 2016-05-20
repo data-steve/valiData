@@ -13,17 +13,6 @@
 #' @return Returns a list of validation results.
 #' @rdname vt_required_columns
 #' @export
-#' @examples
-#' set.seed(10)
-#' map <- data.frame(
-#'     header = colnames(mtcars),
-#'     required = sample(c(TRUE, FALSE), ncol(mtcars), TRUE), stringsAsFactors = FALSE
-#' )
-#'
-#' df <- mtcars
-#' df[c(1, 4), c("drat", "cyl")] <- NA
-#' vt_required_columns(df, map)
-#' str(vt_required_columns(df, map))
 vt_required_columns <- function(data, map, missing = c("", "NULL", "NA", "N/A", "na", "n/a"),
     prop.acceptable = 0, file_name = NULL){
 
@@ -87,7 +76,7 @@ vt_required_columns <- function(data, map, missing = c("", "NULL", "NA", "N/A", 
 #'
 #' Prints a vt_required_columns  object
 #'
-#' @param x A vt_required_columns  object.
+#' @param ls A vt_required_columns  object.
 #' @param \ldots ignored.
 #' @method print vt_required_columns
 #' @export

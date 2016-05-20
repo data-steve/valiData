@@ -4,16 +4,26 @@
 \alias{vc_regex}
 \title{Validates and Reports If Formatted Like Regex Provided}
 \usage{
-vc_regex(x, regex, colname_x = "the column")
+vc_regex(data, x, regex, ...)
 }
 \arguments{
-\item{x}{character vector}
+\item{data}{A data frame.}
 
-\item{regex}{regex}
+\item{x}{Column name from \code{data} (character string).}
 
-\item{colname_x}{vector's colname}
+\item{regex}{the regular expression to be tested against.}
+
+\item{\dots}{ignored.}
 }
 \description{
 Validates and Reports If Formatted Like Regex Provided
+}
+\examples{
+dat <- data.frame(
+    vals = c('Greg', 'John', 'Tyrone', 'Susan', 'Kyra', 'Nells12', NA, ""),
+    stringsAsFactors = FALSE
+ )
+vc_regex(dat, 'vals', '^[A-Z][^0-9]+$')
+vc_regex(dat, 'vals', '^[A-Z].+$')
 }
 

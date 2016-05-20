@@ -14,4 +14,20 @@ vt_non_ASCII(data, ...)
 \description{
 Validates and Reports If Non-ASCII characters present
 }
+\examples{
+dat <- data.frame(
+    txt = c(
+        "fa\\xE7ile test of showNonASCII():",
+        "\\\\details{",
+        "   This is a good line",
+        "   This has an \\xfcmlaut in it.",
+        "   OK again.",
+        "}"
+    ),
+    x = 1:6,
+    stringsAsFactors = FALSE
+)
+vt_non_ASCII(dat)
+str(vt_non_ASCII(dat))
+}
 

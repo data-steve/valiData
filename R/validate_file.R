@@ -3,10 +3,8 @@
 #' Validate a .csv file.
 #'
 #' @param file A path to a .csv file to be validated.
-#' @param core_data_map A \code{data.frame} with a \code{header} (header name) &
-#' \code{required} (logical,; Is column required?).
-#' @param column_map A \code{data.frame} with a \code{header} (header name) &
-#' \code{required} (logical,; Is column required?).
+#' @param file_name name of file for which details need to be extracted from map.
+#' @param map mapping of dictionary of data tests to be applied to import files.
 #' @param \ldots ignored.
 #' @return Prints a report to the console of tests for file type, comma broken
 #' csv, number of columns, spaces in column headers, correct column names,
@@ -14,7 +12,7 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' validate_file("C:/Users/trinker/Desktop/myfolder/totest.csv", core_data_map[["totest"]])
+#' validate_file("C:/Users/trinker/Desktop/myfolder/totest.csv", file_name="totest", map=map)
 #' }
 validate_file <- function(path, file_name, map, ...){
 

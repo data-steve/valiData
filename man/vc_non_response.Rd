@@ -5,7 +5,7 @@
 \title{Checks For Non-Response Elements In Vector}
 \usage{
 vc_non_response(x, prop.acceptable = 0, missing = c("", "NULL", "NA", "N/A",
-  "na", "n/a"), required = FALSE, file.name = NULL)
+  "na", "n/a"), required = FALSE, file_name = NULL)
 }
 \arguments{
 \item{x}{char vector}
@@ -16,7 +16,7 @@ vc_non_response(x, prop.acceptable = 0, missing = c("", "NULL", "NA", "N/A",
 
 \item{required}{whether the vector in the table is required}
 
-\item{file.name}{name of file containing the table of vectors}
+\item{file_name}{name of file containing the table of vectors}
 }
 \description{
 Checks For Non-Response Elements In Vector

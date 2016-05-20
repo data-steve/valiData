@@ -12,15 +12,6 @@
 #' @return Returns a list of validation results.
 #' @rdname vt_column_names
 #' @export
-#' @examples
-#' set.seed(10)
-#' map <- data.frame(
-#'     header = c("foobar", colnames(mtcars)[-1]),
-#'     required = sample(c(TRUE, FALSE), ncol(mtcars), TRUE), stringsAsFactors = FALSE
-#' )
-#'
-#' vt_column_names(mtcars, map)
-#' str(vt_column_names(mtcars, map))
 vt_column_names <- function(data, map, ignore.case = FALSE, ignore.space = FALSE, file_name = NULL){
 
     if (is.null(file_name)) file_name <- "The file"
