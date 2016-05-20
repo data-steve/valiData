@@ -6,9 +6,10 @@
 #' @param x Column name from \code{data} (character string).
 #' @param expr An string that can be evaluated elementwise as an expression to
 #' test on \code{x} column (include column \code{x} as seen in Examples below).
+#' @param augment_comment details to be added to message, if any
 #' @param \dots ignored.
 #' @export
-#' @returns Returns a \code{vc} classed list object.
+#' @return Returns a \code{vc} classed list object.
 #' @examples
 #' vc_(mtcars, 'mpg', 'abs(scale(mpg)) < 2')
 #' vc_(mtcars, 'mpg', 'abs(scale(mpg)) < 2',

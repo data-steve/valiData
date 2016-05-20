@@ -3,21 +3,13 @@
 #' Validate a directory of dubdirectories of .csv files.
 #'
 #' @param path Path to a directory with drecories of .csv files.
-#' @param core_data_map A mapping (\code{list} of \code{data.frame}s).  One
-#' \code{data.frame} per .csv file with a \code{header} (header name) &
-#' \code{required} (logical,; Is column required?).
-#' @param column_map A list (one per file) of lists (one per column in each file)
-#' of the desired tests to run on columns (see \code{read_column_map_dir}).
-#' @param delete logical.  If \code{TRUE} the old report is deleted.
-#' @return Returns a report \file{~/`Reports/valiData_report.txt}.
+#' @param map mapping of dictionary of data tests to be applied to import files.
+#' @param \ldots ignored.
+#' @return Returns a valiData object.
 #' @export
 #' @importFrom magrittr %>%
 #' @seealso \code{\link[valiData]{validate_file}}
-#' @examples
-#' \dontrun{
-#' valiData("C:/Users/trinker/Desktop/myfolder", mymap)
-#' }
-valiData <- function(path, map, delete = TRUE, ...) {
+valiData <- function(path, map, ...) {
 
     . <- NULL
 
@@ -31,7 +23,7 @@ valiData <- function(path, map, delete = TRUE, ...) {
     }
 
     ## check that directory has stuff in it
-    non_empty_directory <- valiData_dir_level(path)
+    non_empty_directory <- vd_non_empty(path)
     if (!is_directory[['valid']]) {
         out <- list(path=path, empty_directory = empty_directory)
         class(out) <- 'valiData_dir_level'
@@ -159,9 +151,10 @@ print.valiData <- function(x, as.report = FALSE, delete = TRUE, ...){
 
     }
 
-###
-#    Print stuff here
-#####
+    invisible(lapply(x[['per_file']], function(x){
+        cat(x[[1]])
+        print(x[[2]])
+    }))
 
     if (isTRUE(as.report)) sink()
 }

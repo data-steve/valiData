@@ -2,16 +2,28 @@
 % Please edit documentation in R/vc_cipcode.R
 \name{vc_cipcode}
 \alias{vc_cipcode}
-\title{Validates and Reports If Valid CIP Code}
+\title{Validates If Valid CIP Code}
 \usage{
-vc_cipcode(x, colname_x = "the column")
+vc_cipcode(data, x, ...)
 }
 \arguments{
-\item{x}{character vector}
+\item{data}{A data frame.}
 
-\item{colname_x}{vector's colname}
+\item{x}{Column name from \code{data} (character string).}
+
+\item{\dots}{ignored.}
+}
+\value{
+Returns a \code{vc} classed list object.
 }
 \description{
-Validates and Reports If Valid CIP Code
+Validates If Valid CIP Code
+}
+\examples{
+dat <- data.frame(
+    cips = c('9.99.99', '22', '22.', '22.34', '22.234', '22.2344', '22.2345', NA),
+    stringsAsFactors = FALSE
+)
+vc_cipcode(dat, 'cips')
 }
 

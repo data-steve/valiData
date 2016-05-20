@@ -3,6 +3,7 @@
 #' Checks If File Not Empty
 #'
 #' @param path path to file
+#' @param \dots ignored.
 #' @export
 #' @rdname vf_non_empty
 #' @examples

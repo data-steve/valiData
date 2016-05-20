@@ -4,6 +4,7 @@
 #'
 #' @param data A data frame.
 #' @param x Column name from \code{data} (character string).
+#' @param regex the regular expression to be tested against.
 #' @param \dots ignored.
 #' @export
 #' @examples

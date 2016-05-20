@@ -13,7 +13,7 @@
 #' )
 #' vc_unique(dat, 'id')
 #' vc_unique(dat, 'guid')
-vc_unique <- function(data, x, regex, ...){
+vc_unique <- function(data, x, ...){
 
     ## select the column & replace missing with NA
     col <- sub_out_missing(data[[x]])

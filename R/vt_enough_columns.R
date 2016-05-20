@@ -10,15 +10,6 @@
 #' @return Returns a list of validation results.
 #' @rdname vt_enough_columns
 #' @export
-#' @examples
-#' set.seed(10)
-#' map <- data.frame(
-#'     header = colnames(mtcars)[-1],
-#'     required = sample(c(TRUE, FALSE), -1 + ncol(mtcars), TRUE), stringsAsFactors = FALSE
-#' )
-#'
-#' vt_enough_columns(mtcars, map)
-#' str(vt_enough_columns(mtcars, map))
 vt_enough_columns <- function(data, map, file_name = NULL){
 
     if (is.null(file_name)) file_name <- "The file"

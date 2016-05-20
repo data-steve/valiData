@@ -4,14 +4,26 @@
 \alias{vc_iso_datetime}
 \title{Validates and Reports If ISO 8601}
 \usage{
-vc_iso_datetime(x, colname_x = "the column")
+vc_iso_datetime(data, x, ...)
 }
 \arguments{
-\item{x}{character vector}
+\item{data}{A data frame.}
 
-\item{colname_x}{vector's colname}
+\item{x}{Column name from \code{data} (character string).}
+
+\item{\dots}{ignored.}
 }
 \description{
 Validates and Reports If ISO 8601
+}
+\examples{
+dat <- data.frame(
+    start = c("2016-01-01T09", "R2D2-3CPO", sprintf("2016-04-\%sT09", 12:19), NA),
+    end = c(NA, sprintf("2016-01-\%sT09", 11:20)),
+    stringsAsFactors = FALSE
+)
+
+vc_iso_datetime(dat, 'start')
+vc_iso_datetime(dat, 'end')
 }
 

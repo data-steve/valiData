@@ -4,10 +4,12 @@
 \alias{valiData}
 \title{Validate a Directory of Subdirectories of CSV Files}
 \usage{
-valiData(path, core_data_map, column_map, delete = TRUE)
+valiData(path, map, delete = TRUE, ...)
 }
 \arguments{
 \item{path}{Path to a directory with drecories of .csv files.}
+
+\item{delete}{logical.  If \code{TRUE} the old report is deleted.}
 
 \item{core_data_map}{A mapping (\code{list} of \code{data.frame}s).  One
 \code{data.frame} per .csv file with a \code{header} (header name) &
@@ -15,8 +17,6 @@ valiData(path, core_data_map, column_map, delete = TRUE)
 
 \item{column_map}{A list (one per file) of lists (one per column in each file)
 of the desired tests to run on columns (see \code{read_column_map_dir}).}
-
-\item{delete}{logical.  If \code{TRUE} the old report is deleted.}
 }
 \value{
 Returns a report \file{~/`Reports/valiData_report.txt}.

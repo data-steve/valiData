@@ -4,15 +4,17 @@
 \alias{vc_type}
 \title{Switch Method Based On Type Of Data in Column}
 \usage{
-vc_type(x, type, colname_x = "the column")
+vc_type(data, x, type, ...)
 }
 \arguments{
-\item{x}{character vector}
+\item{data}{A data frame.}
+
+\item{x}{Column name from \code{data} (character string).}
 
 \item{type}{:  date_utc, datetime, email, enumerated, integer, logical, numeric, zipcode, cipcode
 guid,enumerated are handled outside by \code{vc_unique} and \code{vc_categories}}
 
-\item{colname_x}{the vector's colname}
+\item{\dots}{ignored.}
 }
 \description{
 Switch Method Based On Type Of Data in Column

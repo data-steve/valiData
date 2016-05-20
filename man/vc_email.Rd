@@ -2,16 +2,26 @@
 % Please edit documentation in R/vc_email.R
 \name{vc_email}
 \alias{vc_email}
-\title{Validates and Reports If Email}
+\title{Validates If Email}
 \usage{
-vc_email(x, colname_x = "the column")
+vc_email(data, x, ...)
 }
 \arguments{
-\item{x}{character vector}
+\item{data}{A data frame.}
 
-\item{colname_x}{vector's colname}
+\item{x}{Column name from \code{data} (character string).}
+
+\item{\dots}{ignored.}
 }
 \description{
-Validates and Reports If Email
+Validates If Email
+}
+\examples{
+dat <- data.frame(
+    email =c('cookie@cookiemonster.com', 'joe@hometown.uni'
+    , 'meet@seven', '@Jim', 'joe@gmail.com', NA),
+    stringsAsFactors = FALSE
+)
+vc_email(dat, 'email')
 }
 

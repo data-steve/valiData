@@ -4,14 +4,25 @@
 \alias{vc_numeric}
 \title{Validates and Reports If Numeric}
 \usage{
-vc_numeric(x, colname_x = "the column")
+vc_numeric(data, x, ...)
 }
 \arguments{
-\item{x}{character vector}
+\item{data}{A data frame.}
 
-\item{colname_x}{vector's colname}
+\item{x}{Column name from \code{data} (character string).}
+
+\item{\dots}{ignored.}
 }
 \description{
 Validates and Reports If Numeric
+}
+\examples{
+dat <- data.frame(
+    vals = c('9.99.99', '22', '22.', '22.34', '22.234', '23,456', '12,23', 'dog', NA),
+    vals2 = c('123', '123,456', '-1,234,123.456', '-1,234,123', '.2', NA, 1, 0, ""),
+    stringsAsFactors = FALSE
+)
+vc_numeric(dat, 'vals')
+vc_numeric(dat, 'vals2')
 }
 

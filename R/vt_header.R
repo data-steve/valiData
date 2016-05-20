@@ -39,13 +39,13 @@ vt_header <- function(data, map, file_name = NULL){
 }
 
 
-#' Prints a vt_duplicated_rows Object
+#' Prints a vt_header Object
 #'
-#' Prints a vt_duplicated_rows object
+#' Prints a vt_header object
 #'
-#' @param x A vt_duplicated_rows object.
+#' @param x A vt_header object.
 #' @param \ldots ignored.
-#' @method print vt_duplicated_rows
+#' @method print vt_header
 #' @export
 print.vt_header <- function(x, ...){
 

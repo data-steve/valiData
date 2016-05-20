@@ -2,16 +2,27 @@
 % Please edit documentation in R/vc_zipcode.R
 \name{vc_zipcode}
 \alias{vc_zipcode}
-\title{Validates and Reports If ZipCode}
+\title{Validates If ZipCode}
 \usage{
-vc_zipcode(x, colname_x = "the column")
+vc_zipcode(data, x, ...)
 }
 \arguments{
-\item{x}{character vector}
+\item{data}{A data frame.}
 
-\item{colname_x}{vector's colname}
+\item{x}{Column name from \code{data} (character string).}
+
+\item{\dots}{ignored.}
 }
 \description{
-Validates and Reports If ZipCode
+Validates If ZipCode
+}
+\examples{
+dat <- data.frame(
+    zip1 = c('14222', '14222-1234', '123456', 'dog', '', 'NULL', 'NA'),
+    zip2 = c('14222', '14222-1234', '12345', 'n/a', '', 'NULL', 'NA'),
+    stringsAsFactors = FALSE
+)
+vc_zipcode(dat, 'zip1')
+vc_zipcode(dat, 'zip2')
 }
 

@@ -4,26 +4,29 @@
 \alias{vc_missing}
 \title{Checks For Missing Elements In Vector}
 \usage{
-vc_missing(x, prop.acceptable = 0, missing = c("", "NULL", "NA", "N/A",
-  "na", "n/a"), required = FALSE, file.name = NULL)
+vc_missing(data, x, prop.acceptable = 0, missing = c("", "NULL", "NA",
+  "N/A", "na", "n/a"), required = FALSE, ...)
 }
 \arguments{
-\item{x}{char vector}
+\item{data}{A data frame.}
 
-\item{prop.acceptable}{proportion of allowable missing}
+\item{x}{Column name from \code{data} (character string).}
 
-\item{missing}{values for missing can take}
+\item{prop.acceptable}{proportion of allowable missing.}
 
-\item{required}{whether the vector in the table is required}
+\item{missing}{values that missing can take.}
 
-\item{file.name}{name of file containing the table of vectors}
+\item{required}{whether the vector in the table is required.}
+
+\item{\dots}{ignored.}
 }
 \description{
 Checks For Missing Elements In Vector
 }
 \examples{
 set.seed(10)
-x <- sample(c(NA, rep(LETTERS[1:10], 100)), 10000, TRUE)
-vc_missing(x)
+dat <- data.frame(x = sample(c(NA, rep(LETTERS[1:10])), 10000, TRUE))
+vc_missing(dat, 'x')
+vc_missing(dat, 'x', prop.acceptable = .1)
 }
 

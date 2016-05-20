@@ -3,6 +3,7 @@
 #' Checks If Dir Not Empty
 #'
 #' @param path path to Dir
+#' @param \dots ignored.
 #' @export
 #' @rdname vd_non_empty
 #' @examples

@@ -2,16 +2,25 @@
 % Please edit documentation in R/vc_credits.R
 \name{vc_credits}
 \alias{vc_credits}
-\title{Validates and Reports If Formatted Like Credit}
+\title{Validates and If Formatted Like Credit}
 \usage{
-vc_credits(x, colname_x = "the column")
+vc_credits(data, x, ...)
 }
 \arguments{
-\item{x}{character vector}
+\item{data}{A data frame.}
 
-\item{colname_x}{vector's colname}
+\item{x}{Column name from \code{data} (character string).}
+
+\item{\dots}{ignored.}
 }
 \description{
-Validates and Reports If Formatted Like Credit
+Validates and If Formatted Like Credit
+}
+\examples{
+dat <- data.frame(
+    credits = c(NA, 1.21, 1.34, '4.0', '5.0', .1, 12, 1111),
+    stringsAsFactors = FALSE
+)
+vc_credits(dat, 'credits')
 }
 

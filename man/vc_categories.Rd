@@ -2,18 +2,27 @@
 % Please edit documentation in R/vc_categories.R
 \name{vc_categories}
 \alias{vc_categories}
-\title{Validates and Reports If Correct Categories Used}
+\title{Validates If Correct Categories Used}
 \usage{
-vc_categories(x, levels = "the levels", colname_x = "the column")
+vc_categories(data, x, levels = "the levels", ...)
 }
 \arguments{
-\item{x}{character vector}
+\item{data}{A data frame.}
 
-\item{levels}{levels of the category}
+\item{x}{Column name from \code{data} (character string).}
 
-\item{colname_x}{vector's colname}
+\item{levels}{Levels of the category.}
+
+\item{\dots}{ignored.}
+}
+\value{
+Returns a \code{vc} classed list object.
 }
 \description{
-Validates and Reports If Correct Categories Used
+Validates If Correct Categories Used
+}
+\examples{
+vc_categories(mtcars, 'cyl', c(6, 8))
+str(vc_categories(mtcars, 'cyl', c(6, 8)))
 }
 

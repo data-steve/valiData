@@ -7,8 +7,6 @@
 #' @param \dots ignored.
 #' @export
 #' @examples
-#' @export
-#' @examples
 #' dat <- data.frame(
 #'     vals = c('9.99.99', '22', '22.', '22.34', '22.234', '23,456', '12,23', 'dog', NA),
 #'     vals2 = c('123', '123,456', '-1,234,123.456', '-1,234,123', '.2', NA, 1, 0, ""),

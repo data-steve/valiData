@@ -7,7 +7,7 @@ condition_maker <- function(condition){
     cat(t)
 }
 
-header <- function(x, len = nchar(x), char = "=", line.begin = "", additional =  NULL){
+header <- function(x, len = nchar(x), char = "-", line.begin = "", additional =  NULL){
 	border <-paste(rep(char, len), collapse="")
 	paste(border, paste(paste0(line.begin, c(x, additional)), collapse="\n"), border, "\n", sep="\n")
 }

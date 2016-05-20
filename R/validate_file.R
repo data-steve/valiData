@@ -3,8 +3,8 @@
 #' Validate a .csv file.
 #'
 #' @param path A path to a .csv file to be validated.
-#' @param file_name The file name within the \code{map} to test.
-#' @param map A valiData map.
+#' @param file_name name of file for which details need to be extracted from map.
+#' @param map mapping of dictionary of data tests to be applied to import files.
 #' @param \ldots ignored.
 #' @return Prints a report to the console of tests for file type, comma broken
 #' csv, number of columns, spaces in column headers, correct column names,

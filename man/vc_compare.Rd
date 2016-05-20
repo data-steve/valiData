@@ -2,21 +2,18 @@
 % Please edit documentation in R/vc_compare.R
 \name{vc_compare}
 \alias{vc_compare}
-\title{Validates and Reports If Comparison Met}
+\title{Validates If Comparison Met}
 \usage{
-vc_compare(x, y, comparison, colname_x = "the X column",
-  colname_y = "the Y column", date = FALSE, ...)
+vc_compare(data, x, y, comparison, date = FALSE, ...)
 }
 \arguments{
-\item{x}{character vector to be coerced}
+\item{data}{A data frame.}
 
-\item{y}{character vector to be coerced and compared}
+\item{x}{Column name from \code{data} (character string).}
+
+\item{y}{Column name from \code{data} (character string) to be compared to.}
 
 \item{comparison}{logical operator for the comparison}
-
-\item{colname_x}{X vector's colname}
-
-\item{colname_y}{Y vector's colname}
 
 \item{date}{logical.  If \code{TRUE} x and y are converted to dates via
 \code{parsedate::parse_iso_8601}.}
@@ -24,6 +21,20 @@ vc_compare(x, y, comparison, colname_x = "the X column",
 \item{\ldots}{ignored.}
 }
 \description{
-Validates and Reports If Comparison Met
+Validates If Comparison Met
+}
+\examples{
+dat <- data.frame(
+    a = c(NA, 1:10),
+    b = c(0, 1, 2:10+1),
+    d1 = c(NA, sprintf("2016-01-\%sT09", 11:20)),
+    d2 = c("2016-01-01T09", "2016-01-11T09", sprintf("2016-05-\%sT09", 12:20)),
+    stringsAsFactors = FALSE
+)
+
+vc_compare(dat, x = 'a', y = 'b', '<')
+vc_compare(dat, x = 'a', y = 'b', '<=')
+vc_compare(dat, x = 'd1', y = 'd2', '<', date=TRUE)
+vc_compare(dat, x = 'd1', y = 'd2', '<=', date=TRUE)
 }
 
