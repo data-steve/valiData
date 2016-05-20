@@ -16,7 +16,7 @@
 #' \dontrun{
 #' validate_file("C:/Users/trinker/Desktop/myfolder/totest.csv", core_data_map[["totest"]])
 #' }
-validate_file <- function(path, file_name, map,...){
+validate_file <- function(path, file_name, map, ...){
 
     ## check that file is csv
     file_type <- vf_file_type(path, type= map[["file_level"]][["type"]])

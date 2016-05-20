@@ -17,7 +17,7 @@
 #' \dontrun{
 #' valiData("C:/Users/trinker/Desktop/myfolder", mymap)
 #' }
-valiData <- function(path, map, delete = TRUE) {
+valiData <- function(path, map, delete = TRUE, ...) {
 
     . <- NULL
 
