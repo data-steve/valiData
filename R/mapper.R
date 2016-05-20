@@ -38,6 +38,7 @@ mapper_required_columns <- function(d){
 mapper_columns <- function(coldct) {
     dd <- split(coldct, coldct[["file"]])
     lapply(dd, function(x){
+        # browser()
         field <- trimws(x[["variable"]])
         unique_funs <- ifelse(tolower(x[["unique"]])=="yes", "vc_unique()", NA)
         type_funs <- paste0("vc_type(\"", x[["type"]], "\")")
@@ -49,9 +50,7 @@ mapper_columns <- function(coldct) {
                                                            gsub("\r|\n","", z[["condition"]])
                                                            , "\\s*,\\s*")[[1]]), collapse=",")
                                                        , "))")     ) )
-        compare_funs <- ifelse(grepl("<|>=|<=|>|==|!=|~=",x[["compare"]])
-                               , compare_compiler(x[["compare"]])
-                               , NA)
+        compare_funs <- unlist(lapply(x[["compare"]], compare_compiler))
         lapply(split(
             cbind( unique_funs, type_funs, rule_funs, compare_funs)
             , field), function(x) c(na.omit(x)))
@@ -59,14 +58,18 @@ mapper_columns <- function(coldct) {
 }
 
 compare_compiler <- function(x){
-    objects <- strsplit(x, "<|>=|<=|>|==|!=|~=")[[1]]
-    comparison <- trimws(gsub(paste(objects,collapse ="|"),"", x))
-    dateop <- ifelse(any(grepl("date",tolower(objects))),TRUE, FALSE)
-    paste0('vc_compare('
-           ,paste(shQuote(objects),collapse=" , ")
-           ,","
-           ,paste0(shQuote(comparison))
-           ,', date=',dateop,')')
+    if (grepl("<|>=|<=|>|==|!=|~=",x)){
+        objects <- trimws(strsplit(x, "<|>=|<=|>|==|!=|~=")[[1]])
+        comparison <- trimws(gsub(paste(objects,collapse ="|"),"", x))
+        dateop <- ifelse(any(grepl("date",tolower(objects))),TRUE, FALSE)
+        paste0('vc_compare('
+               ,paste(shQuote(objects),collapse=", ")
+               ,", "
+               ,paste0(shQuote(comparison))
+               ,', date=',dateop,')')
+    } else {
+        NA
+    }
 }
 
 
