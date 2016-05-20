@@ -29,7 +29,7 @@ tf_map <- function(tfdct){
 required_columns_map <- function(d){
     dd <- split(d, d[["file"]])
     lapply(dd, function(x){
-        as.list(x[tolower(x$required)=="yes", "variable"])$variable
+        x[tolower(x$required)=="yes", "variable"]
     })
 }
 
