@@ -170,18 +170,27 @@ print.validate_file <- function(x, ...){
 
     print(report_print_arbitrary(header_file(x[['file_name']], x[['path']])))
 
+browser()
+
     ## file level
-    vector_print(x[['file_level']])
     file_all_valid <- assess_all_valid(x[['file_level']])
+    if (!file_all_valid) cat(header("File Level Testing", char = "*"))
+    vector_print(x[['file_level']])
+
+
 
     ## table level
-    invisible(lapply(x[['table_level']], print))
     table_all_valid <- assess_all_valid(x[['table_level']])
+    if (!table_all_valid) cat(header("Table Level Testing", char = "*"))
+    vector_print(x[['table_level']])
+
 
 
     ## column level
-    invisible(lapply(x[['table_level']], print))
-    columns_all_valid <- assess_all_valid(x[['table_level']])
+    columns_all_valid <- assess_all_valid(x[['column_level']])
+    if (!columns_all_valid) cat(header("Column Level Testing", char = "*"))
+    vector_print(x[['column_level']])
+
 
     ## cow say good if all columns valid
     if (file_all_valid && table_all_valid && columns_all_valid){
@@ -202,7 +211,10 @@ assess_all_valid <- function(x, ...){
 
 vector_print <- function(x, ...){
     invisible(lapply(x, function(y){
-        if (is.null(y)) return(invisible(NULL))
-        print(y)
+        if (is.null(y)) {
+            cat("")
+        } else {
+            print(y)
+        }
     }))
 }

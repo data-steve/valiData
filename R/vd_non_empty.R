@@ -16,7 +16,7 @@ vd_non_empty <- function(path, ...){
 	if (length(dir(path))==0L) {
 		message <- sprintf(
 			paste0(
-			    header("Directory Empty Test"),
+			    header("Directory Empty Test", char="~"),
 				"'%s' does not have any files/folders.\n",
 				"No further tests can be run until data files are included.\n",
 				"Please retry once content is included.\n\n"

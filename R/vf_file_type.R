@@ -15,7 +15,7 @@ vf_file_type <- function(file, type= "csv") {
 	if (tools::file_ext(file) != type) {
 		message <- sprintf(
 			paste0(
-			    header("File Type = CSV Test"),
+			    header("File Type Test"),
 				"'%s' does not have the expected .%s file extension.\n",
 				"It appears to be a .%s file extension.\n\n",
 				"Please upload a .%s file type."

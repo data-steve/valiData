@@ -10,7 +10,7 @@
 vd_dir <- function(path, ...) {
 	out <- list(
 		valid = file.info(path)[["isdir"]],
-	    message = paste0(
+	    message = paste0(header("Directory Test", char="~"),
 	        "The following path is not a directory:\n\n\t-",
             path,
             "\n\nCurrently, `valiData` operates on a directory with files -OR- a ",
