@@ -27,7 +27,7 @@ vt_non_ASCII <- function(data, ...){
     if (any(is_non_ASCII)){
         which_hv_nonASCII <- names(is_non_ASCII[is_non_ASCII])
         where_is_nonASCII <- lapply(data[which_hv_nonASCII], function(x) grep("[[:cntrl:]]", suppressWarnings(stringi::stri_enc_toascii(x)) ))
-        message <- paste0(
+        message <- paste0(header("Non-ASCII Test"),
             "The following rows of "
             , sQuote(which_hv_nonASCII)
             , " contain non-ASCII characters:\n\n"

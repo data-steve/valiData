@@ -83,7 +83,7 @@ print.vt_duplicated_rows <- function(x, ...){
 			locs <- paste(x[["locations"]], collapse=", ")
 		}
 		message <- sprintf(
-			paste0(#header("Duplicated Rows Test"),
+			paste0(header("Duplicated Rows Test"),
 				"'%s' appears to have %s duplicated rows.\n",
 				"This is often the result of not using unique IDs/GUIDs or a data entry error.\n\n",
 				"These suggestions are likey to fix the problem:\n",
