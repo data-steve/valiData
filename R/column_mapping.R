@@ -1,4 +1,4 @@
-pacman::p_load(dplyr, readr, readxl, tidyr, stringi, magrittr, googlesheets)
+#pacman::p_load(dplyr, readr, readxl, tidyr, stringi, magrittr, googlesheets)
 
 
 
@@ -124,14 +124,3 @@ import_map <- function(file, method="excel", ...){
     stats::setNames(map, c("file_level", "table_level", "column_level") )
 }
 
-home <- cl::l_drive_go("swiper/DataScience/valiData_remix")
-file <- "Core_Data_Dictionary_DS_longforms.xlsx"
-# path <- cl::go(home, file)
-path1 <- cl::go("~/Desktop", file)
-cl::tic()
-map <- import_map(path1)
-cl::toc()
-
-#valiData()
-# path <- 'C:\\Users\\trinker\\Desktop\\hofstra'
-# path <- csv_subpaths[1]

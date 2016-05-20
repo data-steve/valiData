@@ -18,7 +18,7 @@ vd_non_empty <- function(path, ...){
 			paste0(
 			    header("Directory Empty Test"),
 				"'%s' does not have any files/folders.\n",
-				"No further tests can be run until data files are included.\n"
+				"No further tests can be run until data files are included.\n",
 				"Please retry once content is included.\n\n"
 			),
 			dirname(path)
