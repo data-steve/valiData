@@ -7,11 +7,11 @@
 validate_file(path, file_name, map, ...)
 }
 \arguments{
+\item{path}{A path to a .csv file to be validated.}
+
 \item{file_name}{name of file for which details need to be extracted from map.}
 
 \item{map}{mapping of dictionary of data tests to be applied to import files.}
-
-\item{file}{A path to a .csv file to be validated.}
 
 \item{\ldots}{ignored.}
 }
@@ -22,10 +22,5 @@ required columns containing values.
 }
 \description{
 Validate a .csv file.
-}
-\examples{
-\dontrun{
-validate_file("C:/Users/trinker/Desktop/myfolder/totest.csv", file_name="totest", map=map)
-}
 }
 

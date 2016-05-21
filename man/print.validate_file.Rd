@@ -9,12 +9,6 @@
 \arguments{
 \item{x}{A validate_file object.}
 
-\item{as.report}{logical.  If \code{TRUE} a report will be generated in the
-directory indicated by \code{x$path}.}
-
-\item{delete}{logical.  If \code{TRUE} and \code{as.report = TRUE} any prior
-instances of `report will be deleted.}
-
 \item{\ldots}{ignored.}
 }
 \description{
