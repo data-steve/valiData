@@ -1,12 +1,14 @@
 Package: valiData
 Title: Data Validation
-Version: 0.1.2
-Authors@R: c(person("Steven", "Simpson", email =
+Version: 0.1.4
+Authors@R: c(person("Steve", "Simpson", email =
         "steven.troy.simpson@gmail.com", role = c("aut", "cre")),
         person("Tyler", "Rinker", email = "tyler.rinker@gmail.com",
         role = c("aut")))
 Maintainer: Steven Simpson <steven.troy.simpson@gmail.com>
 Description: Validates data imports against a mapping of data conditions.
+URL: https://github.com/data-steve/valiData
+BugReports: https://github.com/data-steve/valiData/issues
 Depends:
     R (>= 3.2.2)
 Imports:

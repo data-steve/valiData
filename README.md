@@ -8,7 +8,7 @@ state and is being actively
 developed.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active)
 [![Build
 Status](https://travis-ci.org/data-steve/valiData.svg?branch=master)](https://travis-ci.org/data-steve/valiData)
-<a href="https://img.shields.io/badge/Version-0.1.2-orange.svg"><img src="https://img.shields.io/badge/Version-0.1.2-orange.svg" alt="Version"/></a>
+<a href="https://img.shields.io/badge/Version-0.1.4-orange.svg"><img src="https://img.shields.io/badge/Version-0.1.4-orange.svg" alt="Version"/></a>
 
 
 
