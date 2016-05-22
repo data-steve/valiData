@@ -8,9 +8,9 @@ citEntry(entry = "manual",
     address = "Buffalo, New York",
     note = "version 0.0.2",
     year = "2015",
-    url = "http://github.com/steventsimpson/valiData",
+    url = "http://github.com/data-steve/valiData",
     textVersion  = paste("Simpson, S. & Rinker, T. W. (2015).",
         "valiData: Data validation.",
         "version 0.0.2. Campus Labs. Buffalo, New York.",
-        "http://github.com/steventsimpson/valiData")
+        "http://github.com/data-steve/valiData")
 )

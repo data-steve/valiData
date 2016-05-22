@@ -1,4 +1,4 @@
-pacman::p_install_gh("steventsimpson/valiData")
+pacman::p_install_gh("data-steve/valiData")
 
 clDev::source_R_folder("~/Documents/repos/github_packages/valiData/R/")
 # clDev::source_R_folder()
