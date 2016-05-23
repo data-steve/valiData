@@ -25,7 +25,7 @@ valiData <- function(path, map, ...) {
     ## check that directory has stuff in it
     non_empty_directory <- vd_non_empty(path)
     if (!is_directory[['valid']]) {
-        out <- list(path=path, empty_directory = empty_directory)
+        out <- list(path=path, empty_directory = non_empty_directory)
         class(out) <- 'valiData_dir_level'
         return(out)
     }

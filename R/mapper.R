@@ -21,7 +21,7 @@ mapper_table_files <- function(tfdct){
     lapply(tt, function(x){
         tf <- x[c("rule", "condition")]
         l <- as.list(trimws(tf$condition))
-        setNames(ifelse(tolower(l)=="true", TRUE, ifelse(tolower(l)=="false", FALSE, l)), trimws(tf$rule))
+        stats::setNames(ifelse(tolower(l)=="true", TRUE, ifelse(tolower(l)=="false", FALSE, l)), trimws(tf$rule))
     })
 }
 
@@ -53,7 +53,7 @@ mapper_columns <- function(coldct) {
         compare_funs <- unlist(lapply(x[["compare"]], compare_compiler))
         lapply(split(
             cbind( unique_funs, type_funs, rule_funs, compare_funs)
-            , field), function(x) c(na.omit(x)))
+            , field), function(x) c(stats::na.omit(x)))
     })
 }
 

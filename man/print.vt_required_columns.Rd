@@ -4,10 +4,10 @@
 \alias{print.vt_required_columns}
 \title{Prints a vt_required_columns  Object}
 \usage{
-\method{print}{vt_required_columns}(ls, ...)
+\method{print}{vt_required_columns}(x, ...)
 }
 \arguments{
-\item{ls}{A vt_required_columns  object.}
+\item{x}{A vt_required_columns  object.}
 
 \item{\ldots}{ignored.}
 }

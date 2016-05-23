@@ -23,14 +23,14 @@ import <- function(file, method="excel", ...){
     coldct <- cleaner( ll[grep("column", tolower(names(ll)))][[1]]
                                 )[c("import", "file", "variable", "type", "rule"
                                     , "condition", "unique", "required", "compare")]
-    setNames(list(tfdct, coldct),c("tfdct", "coldct"))
+    stats::setNames(list(tfdct, coldct),c("tfdct", "coldct"))
 }
 
 
 import_excel <- function(file){
     sheets <- readxl::excel_sheets(file)
 
-    setNames(lapply(sheets, function(x) readxl::read_excel(file, sheet = x)),sheets)
+    stats::setNames(lapply(sheets, function(x) readxl::read_excel(file, sheet = x)),sheets)
 }
 
 
@@ -41,6 +41,6 @@ import_gsheets <- function(file_name, new_user=FALSE){
 
     # get data
     sheets <- grep("table|column", googlesheets::gs_ws_ls(ss), value = TRUE)
-    setNames(lapply(sheets, function(x) googlesheets::gs_read(ss, ws = x)),sheets)
+    stats::setNames(lapply(sheets, function(x) googlesheets::gs_read(ss, ws = x)),sheets)
 
 }

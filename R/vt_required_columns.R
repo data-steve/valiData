@@ -76,12 +76,12 @@ vt_required_columns <- function(data, map, missing = c("", "NULL", "NA", "N/A", 
 #'
 #' Prints a vt_required_columns  object
 #'
-#' @param ls A vt_required_columns  object.
+#' @param x A vt_required_columns  object.
 #' @param \ldots ignored.
 #' @method print vt_required_columns
 #' @export
-print.vt_required_columns <- function(ls, ...) {
-	x <- ls[["ls"]]
+print.vt_required_columns <- function(x, ...) {
+	x <- x[["ls"]]
 
 	if (!isTRUE(x[["required_list"]][["valid"]])) {
 
