@@ -40,8 +40,8 @@ vc_compare <- function(data, x, y, comparison, date = FALSE, ...){
         coly[!is.na(coly)] <- parsedate::parse_iso_8601(trimws(coly[!is.na(coly)]))
     }
 
-    if (all(is.na(colx))|all(is.na(coly))) {
-        message <- sprintf("The date formats used in either %s or %s or both do not follow the ISO 8601 required.\n\n\n\n", x, y)
+    if (all(!is_na & is.na(colx))|all(!is_na & is.na(coly))) {
+        message <- sprintf("All of the date formats used in either %s or %s or both do not follow the ISO 8601 required.\n\n\n\n", x, y)
         is_valid <- rep(FALSE, length(colx))
         are_valid <- FALSE
     } else {
