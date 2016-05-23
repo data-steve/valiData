@@ -73,13 +73,17 @@ validate_file <- function(path, file_name, map, ...){
             non_empty <- NULL
         }
 
+        # testing for rows that are NA only
+        na_only_rows <- vt_na_rows(data)
+
         ## if table is empty it stops here (no column level checks)
         if (!non_empty[["valid"]]) {
             obj <- list(
                 file_level = list(file_type = file_type, empty_file = empty_file,
                     broken_csv = broken_csv),
                 table_level = list(header = header, spaced_columns = spaced_columns,
-                    column_names = column_names, non_empty = non_empty),
+                    column_names = column_names, non_empty = non_empty
+                    , na_only_rows= na_only_rows),
                 column_level = NULL,
                 path = path,
                 file_name = file_name
@@ -129,7 +133,7 @@ validate_file <- function(path, file_name, map, ...){
                 table_level = list(header = header, spaced_columns = spaced_columns,
                     column_names = column_names, non_empty = non_empty,
                     required_columns = required_columns, duplicated_rows = duplicated_rows,
-                    non_ASCII = non_ASCII),
+                    non_ASCII = non_ASCII, na_only_rows= na_only_rows),
                 column_level = columns_as_expected,
                 path = path,
                 file_name = file_name
