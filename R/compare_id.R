@@ -42,7 +42,7 @@ compare_column <- function(path, column, parent, child, ignore.case = TRUE, ...)
     validated <- lapply(na.omit(child_file), function(x){
         child_table <- suppressWarnings(readr::read_csv(x))
         if (isTRUE(ignore.case)){colnames(child_table) <- tolower(colnames(child_table))}
-        vc_id_found(child_table, column, parent_table, ignore.case=ignore.case)
+        vc_id_found(child_table, column, parent_table, ignore.case=ignore.case, parent=parent)
     })
 
 
@@ -66,7 +66,7 @@ compare_column <- function(path, column, parent, child, ignore.case = TRUE, ...)
 }
 
 
-vc_id_found <- function(data, x, data2, ignore.case, ...) {
+vc_id_found <- function(data, x, data2, ignore.case, parent = 'the parent data', ...) {
 
     col <- sub_out_missing(data[[x]])
     is_na <- is.na(col)
@@ -77,8 +77,8 @@ vc_id_found <- function(data, x, data2, ignore.case, ...) {
     is_valid[is_na] <- NA
     are_valid <- all(is_valid)
     if (!are_valid) {
-        message <- sprintf("The following rows of %s contain elements not found in the parent data:\n\n%s\n\n\n\n",
-            sQuote(x), output_truncate(which(!is_valid)))
+        message <- sprintf("The following rows of %s contain elements not found in %s:\n\n%s\n\n\n\n",
+            sQuote(x), parent, output_truncate(which(!is_valid)))
     } else {
         message <- NULL
     }
