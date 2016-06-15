@@ -17,7 +17,8 @@
 vc_nchar <- function(data, x, nchar, ...){
 
     ## select the column & replace missing with NA
-    col <- sub_out_missing(data[[x]])
+    # also convert it to UTF-8, as this has caused problems
+    col <- iconv(sub_out_missing(data[[x]]), to="UTF-8")
 
     ## record missing (NA)
     is_na <- is.na(col)
