@@ -5,8 +5,8 @@
 #' @param data the data
 #' @param file_name the file name
 #' @export
-#' @example
-#' #' set.seed(10)
+#' @examples
+#' set.seed(10)
 #' test <- data.frame(matrix(rep(NA,ncol(mtcars)*2), nrow=2))
 #' test2 <- rbind(mtcars, stats::setNames( test, names(mtcars) ))
 #'
