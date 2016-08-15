@@ -18,7 +18,7 @@ vf_file_type <- function(file, type= "csv") {
 			    header("File Type Test"),
 				"'%s' does not have the expected .%s file extension.\n",
 				"It appears to be a .%s file extension.\n\n",
-				"Please upload a .%s file type."
+				"Please upload a .%s file type.\n\n\n\n"
 			),
 			basename(file),
 			type,

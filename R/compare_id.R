@@ -39,7 +39,7 @@ compare_column <- function(path, column, parent, child, ignore.case = TRUE, ...)
     dupes <- vt_duplicated_rows(parent_table[, !parent_table %in% c(column)])
     if (!dupes[['valid']]) {return(dupes)}
 
-    validated <- lapply(na.omit(child_file), function(x){
+    validated <- lapply(stats::na.omit(child_file), function(x){
         child_table <- suppressWarnings(readr::read_csv(x))
         if (isTRUE(ignore.case)){colnames(child_table) <- tolower(colnames(child_table))}
         vc_id_found(child_table, column, parent_table, ignore.case=ignore.case, parent=parent)
@@ -47,7 +47,7 @@ compare_column <- function(path, column, parent, child, ignore.case = TRUE, ...)
 
 
 
-    dir_info <- invisible(lapply(na.omit(child_file), function(x){
+    dir_info <- invisible(lapply(stats::na.omit(child_file), function(x){
         file_name <- basename(dirname(x))
 
         ## Print csv folder name and path

@@ -46,9 +46,17 @@ valiData <- function(path, map, ...) {
 
     has_files <- length(dir(path, pattern = paste0("\\.", map[["file"]][["type"]],"$")) )>0
 
-    # csv_subpaths is only for subfolders that containing csv files
+    # csv_subpaths is only for mapped subfolders that contain csv files
     csv_subpaths <- get_paths_to_csvs(path)
 
+    ## report on unmapped subfolders that contain a csv
+    unmapped_csv <- vd_unmapped_csv(csv_subpaths, map)
+
+    if (!unmapped_csv[['valid']]){
+        csv_subpaths <- csv_subpaths[!unmapped_csv[['logical_locations']]  ]
+    }
+
+    ## file level validation
     vld <- invisible(lapply(csv_subpaths, function(x){
         if (has_files){
             file_name <- tolower(tools::file_path_sans_ext(basename(x)))
@@ -65,7 +73,14 @@ valiData <- function(path, map, ...) {
         list(header_info, validated)
     }))
 
-    out <- list(path = path, per_file = vld)
+    out <- list(
+        path = path,
+        dir_lev = list(
+            empty_folders = empty_folders,
+            unmapped_csv = unmapped_csv
+        ),
+        per_file = vld
+    )
 
     class(out) <- 'valiData'
     out
@@ -150,6 +165,12 @@ print.valiData <- function(x, as.report = FALSE, delete = TRUE, ...){
 		)
 
     }
+
+    cat(header(paste("Directory:", x[['path']]), char='~'))
+
+    invisible(lapply(x[['dir_lev']], function(x){
+        print(x)
+    }))
 
     invisible(lapply(x[['per_file']], function(x){
         cat(x[[1]])

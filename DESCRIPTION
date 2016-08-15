@@ -22,7 +22,7 @@ Imports:
     data.table,
     clipr,
     googlesheets
-Date: 2016-05-20
+Date: 2016-08-15
 License: GPL-2
 LazyData: TRUE
 Roxygen: list(wrap = FALSE)
