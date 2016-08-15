@@ -35,6 +35,7 @@ validate_file <- function(path, file_name, map, ...){
 
         ## get data
         data <- suppressWarnings(readr::read_csv(path))
+        colnames(data) <- gsub("^[^ -~]", "", colnames(data))  # put in to remove the <U+FEFF> character read_csv puts in first column header 8/15/2016
 
         ## converting broken rows from broken_csv to NA
         if (!broken_csv[["valid"]] && broken_csv[["error"]]=="comma-broken"){
