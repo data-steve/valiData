@@ -31,7 +31,7 @@ print.report_print_arbitrary <- function(x, ...){
 
 get_paths_to_csvs <- function(path){
     . <- NULL
-	invisible(lapply(dir(path, pattern = ".csv$",recursive = TRUE), function(x) file.path(path,x))) %>%
+	invisible(lapply(dir(path, pattern = ".csv$|.CSV$",recursive = TRUE), function(x) file.path(path,x))) %>%
 		sapply(., "[[",1) %>%
 		sapply(.,function(x) gsub("//","/", x), USE.NAMES = FALSE) %>%
 		sapply(.,function(x) gsub("~",path.expand("~"), x), USE.NAMES = FALSE)
