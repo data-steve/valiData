@@ -11,7 +11,7 @@
 #' required columns containing values.
 #' @export
 validate_file <- function(path, file_name, map, ...){
-
+# browser()
     ## check that file is csv
     file_type <- vf_file_type(path, type= map[["file_level"]][["type"]])
 

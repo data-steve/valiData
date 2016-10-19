@@ -24,7 +24,7 @@
 #' vc_compare(dat, x = 'd1', y = 'd2', '<', date=TRUE)
 #' vc_compare(dat, x = 'd1', y = 'd2', '<=', date=TRUE)
 vc_compare <- function(data, x, y, comparison, date = FALSE, ...){
-
+# browser()
     # if(missing(x)) (return())
     # if(missing(y)) (return())
 
@@ -52,28 +52,54 @@ vc_compare <- function(data, x, y, comparison, date = FALSE, ...){
     	## valid columnwise: Are all elelemnts either valid or NA?
     	are_valid <- all(is_valid|is_na)
 
-    	## generate the comment
-    	if (!are_valid){
-            message <- sprintf(
-                "The following rows of %s are not valid \nbecause they are %s %s:\n\n%s\n\n\n\n",
-                    sQuote(x),
-                    switch(comparison,
-                        "==" = "not equal to",
-                        "!=" = "equal to",
-                        ">"  = "not greater than",
-                        "<"  = "not less than",
-                        ">=" = "not greater than or equal to",
-                        "<=" = "not less than or equal to",
-                        "~=" = "not almost equal (enough)",
-                        "invalid `compare` argument"
-                    ),
-                    sQuote(y),
-                    output_truncate(which(!(is_valid|is_na)))
-            )
-    	} else {
-    	    message <- NULL
-    	}
+    # 	## generate the comment
+    # 	if (!are_valid){
+    #         message <- sprintf(
+    #             "The following rows of %s are not valid \nbecause they are %s %s:\n\n%s\n\n\n\n",
+    #                 sQuote(x),
+    #                 switch(comparison,
+    #                     "==" = "not equal to",
+    #                     "!=" = "equal to",
+    #                     ">"  = "not greater than",
+    #                     "<"  = "not less than",
+    #                     ">=" = "not greater than or equal to",
+    #                     "<=" = "not less than or equal to",
+    #                     "~=" = "not almost equal (enough)",
+    #                     "invalid `compare` argument"
+    #                 ),
+    #                 sQuote(y),
+    #                 output_truncate(which(!(is_valid|is_na)))
+    #         )
+    # 	} else {
+    # 	    message <- NULL
+    # 	}
 
+    	if (is.na(are_valid)){
+
+    	  message <- sprintf(
+    	    "The following rows of %s and %s are not valid \nbecause they are all missing values:\n\n%s\n\n\n\n",
+    	    sQuote(x),
+    	    sQuote(y),
+    	    output_truncate(which(!(is_na))) )
+    	} else if (!are_valid) {
+    	  message <- sprintf(
+    	    "The following rows of %s are not valid \nbecause they are %s %s:\n\n%s\n\n\n\n",
+    	    sQuote(x),
+    	    switch(comparison,
+    	           "==" = "not equal to",
+    	           "!=" = "equal to",
+    	           ">"  = "not greater than",
+    	           "<"  = "not less than",
+    	           ">=" = "not greater than or equal to",
+    	           "<=" = "not less than or equal to",
+    	           "~=" = "not almost equal (enough)",
+    	           "invalid `compare` argument"
+    	    ),
+    	    sQuote(y),
+    	    output_truncate(which(!(is_valid|is_na))) )
+    	} else {
+    	  message <- NULL
+    	}
     }
 
     ## construct vc list & class

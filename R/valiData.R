@@ -10,7 +10,7 @@
 #' @importFrom magrittr %>%
 #' @seealso \code{\link[valiData]{validate_file}}
 valiData <- function(path, map, ...) {
-
+# browser()
     . <- NULL
 
     ## Directory Level ##
@@ -58,6 +58,7 @@ valiData <- function(path, map, ...) {
 
     ## file level validation
     vld <- invisible(lapply(csv_subpaths, function(x){
+      # browser()
         if (has_files){
             file_name <- tolower(tools::file_path_sans_ext(basename(x)))
         } else {
