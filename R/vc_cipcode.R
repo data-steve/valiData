@@ -27,7 +27,7 @@ vc_cipcode <- function(data, x, ...){
     #    #cipregex <- "(^0$)(*SKIP)(*FAIL)|((^\\s*\\d{1,2}\\.??\\s*$)|(^\\s*\\d{1,2}\\.(\\d{2,4})\\s*$))"
     #    #is_valid <- grepl(cipregex, col, perl=TRUE)
 
-    is_valid <- col %in% cips
+    is_valid <- col %in% valid_cips
     is_valid[is_na] <- NA
 
     ## valid columnwise: Are all elelemnts either valid or NA?
