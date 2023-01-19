@@ -41,4 +41,3 @@ You are welcome to:
 - submit suggestions and bug-reports at: <https://github.com/data-steve/valiData/issues> 
 - send a pull request on:
 <https://github.com/data-steve/valiData/> 
-- compose a friendly e-mail to: <steven.troy.simpson@gmail.com>
